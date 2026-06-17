@@ -377,9 +377,53 @@ async function api(method,table,body,params='') {
 async function init() {
   load('Loading Firstfruits...');
   try {
-    await getMonth(); await loadAll(); renderAll();
+    await getMonth();
+    await loadAll();
+    // Auto-seed if this is a fresh month with no data
+    if (incItems.length === 0 && expCats.length === 0) {
+      load('Setting up your budget...');
+      await seedData();
+      await loadAll();
+    }
+    renderAll();
   } catch(e) { console.error(e); toast('Connection error — check internet','error'); }
   hideLoad();
+}
+
+async function seedData() {
+  // INCOME
+  const income = [
+    {name:'Ministry',planned:0,received:0,sort_order:0},
+    {name:'Brite Lounge',planned:0,received:0,sort_order:1},
+    {name:'Aquifer Springs',planned:0,received:0,sort_order:2},
+    {name:'Disability Tax Credit',planned:0,received:0,sort_order:3},
+  ];
+  for (const i of income) {
+    i.budget_month_id = mid;
+    await api('POST','income_sources',i);
+  }
+  // CATEGORIES + ITEMS
+  const cats = [
+    { name:'Savings', items:[{name:'Emergency Fund',planned:0,spent:0}] },
+    { name:'Housing', items:[{name:'Rent',planned:500,spent:0}] },
+    { name:'Transportation', items:[{name:'Gas',planned:0,spent:0},{name:'Maintenance',planned:0,spent:0},{name:'Insurance',planned:0,spent:0}] },
+    { name:'Food', items:[{name:'Groceries',planned:250,spent:0},{name:'Restaurants',planned:0,spent:0}] },
+    { name:'Personal', items:[{name:'Clothing',planned:75,spent:0},{name:'Hair',planned:50,spent:0},{name:'Cosmetics',planned:0,spent:0},{name:'Storage Locker',planned:0,spent:0},{name:'Peptides',planned:300,spent:0}] },
+    { name:'Entertainment', items:[{name:'Pot',planned:360,spent:0},{name:'Eating Out',planned:250,spent:0},{name:'Spotify',planned:0,spent:0},{name:'Claude AI',planned:31.36,spent:0}] },
+    { name:'Health', items:[{name:'Gym',planned:0,spent:0},{name:'Vitamins & Supplements',planned:150,spent:0},{name:'Retatrutide',planned:0,spent:0},{name:'BPC-157',planned:0,spent:0},{name:'TB-500',planned:0,spent:0}] },
+    { name:'Aquifer Springs', items:[{name:'Modo',planned:0,spent:0},{name:'Jugs 3gal',planned:325,spent:0},{name:'Jugs 5gal',planned:450,spent:0},{name:'Caps',planned:30,spent:0},{name:'Stickers',planned:75,spent:0},{name:'Advertising',planned:100,spent:0},{name:'App',planned:0,spent:0}] },
+    { name:'Brite Lounge', items:[{name:'Supplies',planned:0,spent:0},{name:'Marketing',planned:0,spent:0},{name:'Equipment',planned:0,spent:0}] },
+  ];
+  for (let ci=0; ci<cats.length; ci++) {
+    const cat = cats[ci];
+    const cr = await api('POST','expense_categories',{budget_month_id:mid,name:cat.name,sort_order:ci});
+    if (!cr) continue;
+    const cat_id = cr[0].id;
+    for (let ii=0; ii<cat.items.length; ii++) {
+      const item = {...cat.items[ii], budget_month_id:mid, category_id:cat_id, is_tithe:false, is_recurring:false, sort_order:ii};
+      await api('POST','expense_items',item);
+    }
+  }
 }
 
 async function getMonth() {
