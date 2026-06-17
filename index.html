@@ -7,34 +7,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f4f5f7;
+  --bg: #f5f3f0;
   --white: #ffffff;
-  --border: #e2e4e8;
-  --border-light: #eef0f3;
-  --text: #1a1d23;
-  --text-muted: #6b7280;
-  --text-dim: #9ca3af;
+  --border: #e4ddd5;
+  --border-light: #ede8e3;
+  --text: #1c1916;
+  --text-muted: #6b6560;
+  --text-dim: #a89f97;
   --green: #16a34a;
   --green-bg: #f0fdf4;
   --red: #dc2626;
   --red-bg: #fef2f2;
-  --blue: #2563eb;
-  --blue-bg: #eff6ff;
-  --purple: #7c3aed;
+  --blue: #c2410c;
+  --blue-bg: #fff7ed;
+  --purple: #92400e;
   --orange: #ea580c;
-  --header-bg: #1e2433;
+  --header-bg: #1c1510;
   --header-text: #ffffff;
-  --accent: #4f8ef7;
+  --accent: #c2410c;
+  --accent-light: #fff7ed;
+  --warm: #f97316;
   --radius: 8px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
   --font: 'Inter', -apple-system, sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; min-height: 100vh; }
 
 /* HEADER */
-.app-header { background: var(--header-bg); padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.app-header { background: #1c1510; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 .app-title { font-size: 20px; font-weight: 700; color: var(--header-text); letter-spacing: -0.02em; }
 .app-title span { color: var(--accent); }
 .month-nav { display: flex; align-items: center; gap: 12px; }
@@ -52,7 +54,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .summary-amount { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); }
 .summary-amount.positive { color: var(--green); }
 .summary-amount.negative { color: var(--red); }
-.summary-amount.accent { color: var(--accent); }
+.summary-amount.accent { color: #c2410c; }
 
 /* TABS */
 .tab-bar { background: var(--white); border-bottom: 2px solid var(--border); display: flex; padding: 0 24px; }
@@ -88,10 +90,11 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .item-name { font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 8px; }
 .badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
 .badge-auto { background: #fef3c7; color: #92400e; }
-.badge-recurring { background: var(--blue-bg); color: var(--blue); }
+.badge-recurring { background: #fff7ed; color: #c2410c; }
 .cell { text-align: right; }
-.cell input { background: transparent; border: none; color: var(--text); font-family: var(--font); font-size: 13px; font-weight: 500; text-align: right; width: 100%; padding: 3px 6px; border-radius: 4px; outline: none; transition: background 0.15s; }
-.cell input:focus { background: #f0f4ff; }
+.cell input { background: transparent; border: none; color: var(--text); font-family: var(--font); font-size: 13px; font-weight: 500; text-align: right; width: 100%; padding: 3px 6px; border-radius: 4px; outline: none; transition: background 0.15s; -moz-appearance: textfield; }
+.cell input::-webkit-outer-spin-button, .cell input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.cell input:focus { background: #fff3e8; }
 .cell input[readonly] { color: var(--text-muted); cursor: default; }
 .avail-cell { font-size: 13px; font-weight: 700; text-align: right; }
 .avail-cell.pos { color: var(--green); }
@@ -166,15 +169,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .form-group { margin-bottom: 16px; }
 .form-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 6px; }
 .form-input { width: 100%; background: #f8f9fb; border: 1.5px solid var(--border); color: var(--text); padding: 9px 12px; border-radius: 6px; font-family: var(--font); font-size: 13px; outline: none; transition: border-color 0.15s; }
-.form-input:focus { border-color: var(--accent); background: var(--white); }
+.form-input:focus { border-color: var(--accent); background: #fffaf7; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .date-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
 .date-chip { padding: 4px 9px; border-radius: 20px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 500; cursor: pointer; background: var(--white); color: var(--text-muted); transition: all 0.15s; }
-.date-chip.sel { background: var(--accent); border-color: var(--accent); color: var(--white); }
+.date-chip.sel { background: #c2410c; border-color: #c2410c; color: var(--white); }
 .date-chip:hover:not(.sel) { border-color: var(--text-muted); }
 .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
-.btn-primary { flex: 1; padding: 11px; background: var(--accent); color: var(--white); border: none; border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
-.btn-primary:hover { background: #3b7de8; }
+.btn-primary { flex: 1; padding: 11px; background: #c2410c; color: var(--white); border: none; border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+.btn-primary:hover { background: #9a3412; }
 .btn-secondary { padding: 11px 18px; background: var(--white); border: 1.5px solid var(--border); color: var(--text-muted); border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
 .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
 .btn-danger { padding: 11px 16px; background: var(--white); border: 1.5px solid #fca5a5; color: var(--red); border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
@@ -479,12 +482,12 @@ function renderIncome() {
     const dates=(item.scheduled_dates||[]).join(', ');
     const r=document.createElement('div'); r.className='line-row';
     const datesHtml=dates
-      ? `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">&#128197; Days: ${dates}</div>`
-      : `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;cursor:pointer;" onclick="openModal('income','${item.id}')">&#128197; Set payment days</div>`;
+      ? `<div style="font-size:12px;color:#c2410c;font-weight:600;margin-top:3px;">&#128197; Days: ${dates}</div>`
+      : `<div style="font-size:12px;color:#a89f97;margin-top:3px;cursor:pointer;text-decoration:underline dotted;" onclick="openModal('income','${item.id}')">&#128197; Set payment days</div>`;
     r.innerHTML=`
       <div class="item-name"><div><div style="display:flex;align-items:center;gap:6px;">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>${datesHtml}</div></div>
-      <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ip-${item.id}" oninput="inlineCalc('income','${item.id}','planned',this.value)" onchange="pIncome('${item.id}','planned',this.value)" min="0" step="0.01"></div>
-      <div class="cell"><input type="number" value="${item.received||''}" placeholder="0.00" id="ir-${item.id}" oninput="inlineCalc('income','${item.id}','received',this.value)" onchange="pIncome('${item.id}','received',this.value)" min="0" step="0.01"></div>
+      <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ip-${item.id}" oninput="inlineCalc('income','${item.id}','planned',this.value)" onchange="pIncome('${item.id}','planned',this.value)" min="0" step="0.01" inputmode="decimal"></div>
+      <div class="cell"><input type="number" value="${item.received||''}" placeholder="0.00" id="ir-${item.id}" oninput="inlineCalc('income','${item.id}','received',this.value)" onchange="pIncome('${item.id}','received',this.value)" min="0" step="0.01" inputmode="decimal"></div>
       <div class="avail-cell ${av>=0?'pos':'neg'}" id="ia-${item.id}">${fmt(av)}</div>
       <div><span class="acct-tag" onclick="qTag('income','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
       <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pIncome('${item.id}','notes',this.value)"></div>
@@ -568,12 +571,12 @@ function renderExpenses() {
       const r=document.createElement('div'); r.className='line-row';
       const edates=(item.scheduled_dates||[]).join(', ');
       const edatesHtml=edates
-        ? `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">&#128197; Days: ${edates}</div>`
-        : `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;cursor:pointer;" onclick="openModal('expense','${item.id}',null,'${cat.id}')">&#128197; Set payment days</div>`;
+        ? `<div style="font-size:12px;color:#c2410c;font-weight:600;margin-top:3px;">&#128197; Days: ${edates}</div>`
+        : `<div style="font-size:12px;color:#a89f97;margin-top:3px;cursor:pointer;text-decoration:underline dotted;" onclick="openModal('expense','${item.id}',null,'${cat.id}')">&#128197; Set payment days</div>`;
       r.innerHTML=`
         <div class="item-name"><div><div style="display:flex;align-items:center;gap:6px;">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>${edatesHtml}</div></div>
-        <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ep-${item.id}" oninput="inlineCalc('expense','${item.id}','planned',this.value)" onchange="pExpense('${item.id}','planned',this.value)" min="0" step="0.01"></div>
-        <div class="cell"><input type="number" value="${item.spent||''}" placeholder="0.00" id="es-${item.id}" oninput="inlineCalc('expense','${item.id}','spent',this.value)" onchange="pExpense('${item.id}','spent',this.value)" min="0" step="0.01"></div>
+        <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ep-${item.id}" oninput="inlineCalc('expense','${item.id}','planned',this.value)" onchange="pExpense('${item.id}','planned',this.value)" min="0" step="0.01" inputmode="decimal"></div>
+        <div class="cell"><input type="number" value="${item.spent||''}" placeholder="0.00" id="es-${item.id}" oninput="inlineCalc('expense','${item.id}','spent',this.value)" onchange="pExpense('${item.id}','spent',this.value)" min="0" step="0.01" inputmode="decimal"></div>
         <div class="avail-cell ${a>=0?'pos':'neg'}" id="ea-${item.id}">${fmt(a)}</div>
         <div><span class="acct-tag" onclick="qTag('expense','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
         <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pExpense('${item.id}','notes',this.value)"></div>
