@@ -476,13 +476,17 @@ function renderIncome() {
   const c=document.getElementById('incRows'); c.innerHTML='';
   incItems.forEach(item=>{
     const av=parseFloat(item.received||0)-parseFloat(item.planned||0);
+    const dates=(item.scheduled_dates||[]).join(', ');
     const r=document.createElement('div'); r.className='line-row';
+    const datesHtml=dates
+      ? `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">&#128197; Days: ${dates}</div>`
+      : `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;cursor:pointer;" onclick="openModal('income','${item.id}')">&#128197; Set payment days</div>`;
     r.innerHTML=`
-      <div class="item-name">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>
-      <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" onchange="pIncome('${item.id}','planned',this.value)" min="0" step="0.01"></div>
-      <div class="cell"><input type="number" value="${item.received||''}" placeholder="0.00" onchange="pIncome('${item.id}','received',this.value)" min="0" step="0.01"></div>
-      <div class="avail-cell ${av>=0?'pos':'neg'}">${fmt(av)}</div>
-      <div><span class="acct-tag" onclick="qTag('income','${item.id}')">${esc(item.account_tag||'— tag')}</span></div>
+      <div class="item-name"><div><div style="display:flex;align-items:center;gap:6px;">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>${datesHtml}</div></div>
+      <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ip-${item.id}" oninput="inlineCalc('income','${item.id}','planned',this.value)" onchange="pIncome('${item.id}','planned',this.value)" min="0" step="0.01"></div>
+      <div class="cell"><input type="number" value="${item.received||''}" placeholder="0.00" id="ir-${item.id}" oninput="inlineCalc('income','${item.id}','received',this.value)" onchange="pIncome('${item.id}','received',this.value)" min="0" step="0.01"></div>
+      <div class="avail-cell ${av>=0?'pos':'neg'}" id="ia-${item.id}">${fmt(av)}</div>
+      <div><span class="acct-tag" onclick="qTag('income','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
       <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pIncome('${item.id}','notes',this.value)"></div>
       <div><button class="act-btn" onclick="openModal('income','${item.id}')">&#9998;</button></div>`;
     c.appendChild(r);
@@ -491,6 +495,25 @@ function renderIncome() {
   document.getElementById('fIncRec').textContent=fmt(totalInRec());
   const av=totalInRec()-totalInPlan();
   const el=document.getElementById('fIncAvail'); el.textContent=fmt(av); el.className='foot-val '+(av>=0?'pos':'neg');
+}
+
+function inlineCalc(type, id, field, value) {
+  if(type==='income') {
+    const item=incItems.find(x=>x.id===id); if(!item) return;
+    const plan=field==='planned'?parseFloat(value)||0:parseFloat(item.planned||0);
+    const rec=field==='received'?parseFloat(value)||0:parseFloat(item.received||0);
+    const av=rec-plan;
+    const el=document.getElementById('ia-'+id);
+    if(el){el.textContent=fmt(av);el.className='avail-cell '+(av>=0?'pos':'neg');}
+  } else {
+    const item=expItems.find(x=>x.id===id); if(!item) return;
+    const plan=field==='planned'?parseFloat(value)||0:parseFloat(item.planned||0);
+    const spent=field==='spent'?parseFloat(value)||0:parseFloat(item.spent||0);
+    const av=plan-spent;
+    const el=document.getElementById('ea-'+id);
+    if(el){el.textContent=fmt(av);el.className='avail-cell '+(av>=0?'pos':'neg');}
+  }
+  renderSummary(); renderTithe();
 }
 
 function renderTithe() {
@@ -543,12 +566,16 @@ function renderExpenses() {
     items.forEach(item=>{
       const a=parseFloat(item.planned||0)-parseFloat(item.spent||0);
       const r=document.createElement('div'); r.className='line-row';
+      const edates=(item.scheduled_dates||[]).join(', ');
+      const edatesHtml=edates
+        ? `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">&#128197; Days: ${edates}</div>`
+        : `<div style="font-size:11px;color:var(--text-dim);margin-top:2px;cursor:pointer;" onclick="openModal('expense','${item.id}',null,'${cat.id}')">&#128197; Set payment days</div>`;
       r.innerHTML=`
-        <div class="item-name">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>
-        <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" onchange="pExpense('${item.id}','planned',this.value)" min="0" step="0.01"></div>
-        <div class="cell"><input type="number" value="${item.spent||''}" placeholder="0.00" onchange="pExpense('${item.id}','spent',this.value)" min="0" step="0.01"></div>
-        <div class="avail-cell ${a>=0?'pos':'neg'}">${fmt(a)}</div>
-        <div><span class="acct-tag" onclick="qTag('expense','${item.id}')">${esc(item.account_tag||'— tag')}</span></div>
+        <div class="item-name"><div><div style="display:flex;align-items:center;gap:6px;">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>${edatesHtml}</div></div>
+        <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ep-${item.id}" oninput="inlineCalc('expense','${item.id}','planned',this.value)" onchange="pExpense('${item.id}','planned',this.value)" min="0" step="0.01"></div>
+        <div class="cell"><input type="number" value="${item.spent||''}" placeholder="0.00" id="es-${item.id}" oninput="inlineCalc('expense','${item.id}','spent',this.value)" onchange="pExpense('${item.id}','spent',this.value)" min="0" step="0.01"></div>
+        <div class="avail-cell ${a>=0?'pos':'neg'}" id="ea-${item.id}">${fmt(a)}</div>
+        <div><span class="acct-tag" onclick="qTag('expense','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
         <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pExpense('${item.id}','notes',this.value)"></div>
         <div><button class="act-btn" onclick="openModal('expense','${item.id}',null,'${cat.id}')">&#9998;</button></div>`;
       rc.appendChild(r);
