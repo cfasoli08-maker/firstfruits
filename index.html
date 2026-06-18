@@ -7,36 +7,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f3f0;
+  --bg: #f0f2f5;
   --white: #ffffff;
-  --border: #e4ddd5;
-  --border-light: #ede8e3;
-  --text: #1c1916;
-  --text-muted: #6b6560;
-  --text-dim: #a89f97;
+  --border: #dde1e7;
+  --border-light: #eaecf0;
+  --text: #1a1d23;
+  --text-muted: #6b7280;
+  --text-dim: #9ca3af;
   --green: #16a34a;
   --green-bg: #f0fdf4;
   --red: #dc2626;
   --red-bg: #fef2f2;
-  --blue: #c2410c;
-  --blue-bg: #fff7ed;
-  --purple: #92400e;
+  --blue: #1d4ed8;
+  --blue-bg: #eff6ff;
+  --purple: #7c3aed;
   --orange: #ea580c;
-  --header-bg: #1c1510;
+  --header-bg: #1e3a5f;
   --header-text: #ffffff;
-  --accent: #c2410c;
-  --accent-light: #fff7ed;
-  --warm: #f97316;
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
   --radius: 8px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
   --font: 'Inter', -apple-system, sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; min-height: 100vh; }
 
 /* HEADER */
-.app-header { background: #1c1510; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.app-header { background: #1e3a5f; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 .app-title { font-size: 20px; font-weight: 700; color: var(--header-text); letter-spacing: -0.02em; }
 .app-title span { color: var(--accent); }
 .month-nav { display: flex; align-items: center; gap: 12px; }
@@ -47,17 +46,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px; }
 
 /* SUMMARY BAR */
-.summary-bar { background: var(--white); border-bottom: 1px solid var(--border); display: flex; }
+.summary-bar { background: var(--white); border-bottom: 1px solid var(--border); display: flex; position: sticky; top: 60px; z-index: 90; }
+.tab-bar { background: var(--white); border-bottom: 2px solid var(--border); display: flex; padding: 0 24px; position: sticky; top: 112px; z-index: 89; }
 .summary-item { flex: 1; padding: 18px 24px; border-right: 1px solid var(--border); }
 .summary-item:last-child { border-right: none; }
 .summary-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
 .summary-amount { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); }
 .summary-amount.positive { color: var(--green); }
 .summary-amount.negative { color: var(--red); }
-.summary-amount.accent { color: #c2410c; }
+.summary-amount.accent { color: #2563eb; }
 
 /* TABS */
-.tab-bar { background: var(--white); border-bottom: 2px solid var(--border); display: flex; padding: 0 24px; }
+/* tab-bar now sticky above */
 .tab-btn { padding: 14px 20px; border: none; background: none; color: var(--text-muted); font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; letter-spacing: 0.02em; text-transform: uppercase; transition: color 0.15s; }
 .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-btn:hover:not(.active) { color: var(--text); }
@@ -90,11 +90,11 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .item-name { font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 8px; }
 .badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
 .badge-auto { background: #fef3c7; color: #92400e; }
-.badge-recurring { background: #fff7ed; color: #c2410c; }
+.badge-recurring { background: #eff6ff; color: #1d4ed8; }
 .cell { text-align: right; }
 .cell input { background: transparent; border: none; color: var(--text); font-family: var(--font); font-size: 13px; font-weight: 500; text-align: right; width: 100%; padding: 3px 6px; border-radius: 4px; outline: none; transition: background 0.15s; -moz-appearance: textfield; }
 .cell input::-webkit-outer-spin-button, .cell input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.cell input:focus { background: #fff3e8; }
+.cell input:focus { background: #eff6ff; }
 .cell input[readonly] { color: var(--text-muted); cursor: default; }
 .avail-cell { font-size: 13px; font-weight: 700; text-align: right; }
 .avail-cell.pos { color: var(--green); }
@@ -169,15 +169,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .form-group { margin-bottom: 16px; }
 .form-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 6px; }
 .form-input { width: 100%; background: #f8f9fb; border: 1.5px solid var(--border); color: var(--text); padding: 9px 12px; border-radius: 6px; font-family: var(--font); font-size: 13px; outline: none; transition: border-color 0.15s; }
-.form-input:focus { border-color: var(--accent); background: #fffaf7; }
+.form-input:focus { border-color: var(--accent); background: #f8faff; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .date-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
 .date-chip { padding: 4px 9px; border-radius: 20px; border: 1.5px solid var(--border); font-size: 12px; font-weight: 500; cursor: pointer; background: var(--white); color: var(--text-muted); transition: all 0.15s; }
-.date-chip.sel { background: #c2410c; border-color: #c2410c; color: var(--white); }
+.date-chip.sel { background: #2563eb; border-color: #2563eb; color: var(--white); }
 .date-chip:hover:not(.sel) { border-color: var(--text-muted); }
 .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
-.btn-primary { flex: 1; padding: 11px; background: #c2410c; color: var(--white); border: none; border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
-.btn-primary:hover { background: #9a3412; }
+.btn-primary { flex: 1; padding: 11px; background: #2563eb; color: var(--white); border: none; border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+.btn-primary:hover { background: #1d4ed8; }
 .btn-secondary { padding: 11px 18px; background: var(--white); border: 1.5px solid var(--border); color: var(--text-muted); border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
 .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
 .btn-danger { padding: 11px 16px; background: var(--white); border: 1.5px solid #fca5a5; color: var(--red); border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
@@ -334,6 +334,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
       <div class="cf-legend-item"><div class="cf-dot" style="background:var(--red)"></div>Negative balance</div>
     </div>
   </div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);">
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:12px;">Running Balance — Month View</div>
+    <canvas id="cfChart" height="80" style="width:100%;display:block;"></canvas>
+  </div>
   <div class="cf-col-heads">
     <div class="cf-col-head">Day</div><div class="cf-col-head">Activity</div>
     <div class="cf-col-head">Day Net</div><div class="cf-col-head">Running Balance</div>
@@ -482,12 +486,12 @@ function renderIncome() {
     const dates=(item.scheduled_dates||[]).join(', ');
     const r=document.createElement('div'); r.className='line-row';
     const datesHtml=dates
-      ? `<div style="font-size:12px;color:#c2410c;font-weight:600;margin-top:3px;">&#128197; Days: ${dates}</div>`
-      : `<div style="font-size:12px;color:#a89f97;margin-top:3px;cursor:pointer;text-decoration:underline dotted;" onclick="openModal('income','${item.id}')">&#128197; Set payment days</div>`;
+      ? `<div style="font-size:12px;color:#2563eb;font-weight:600;margin-top:3px;">&#128197; Days: ${dates}</div>`
+      : `<div style="font-size:12px;color:#2563eb;font-weight:500;margin-top:3px;cursor:pointer;" onclick="openModal('income','${item.id}')">+ Set payment days</div>`;
     r.innerHTML=`
       <div class="item-name"><div><div style="display:flex;align-items:center;gap:6px;">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>${datesHtml}</div></div>
-      <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ip-${item.id}" oninput="inlineCalc('income','${item.id}','planned',this.value)" onchange="pIncome('${item.id}','planned',this.value)" min="0" step="0.01" inputmode="decimal"></div>
-      <div class="cell"><input type="number" value="${item.received||''}" placeholder="0.00" id="ir-${item.id}" oninput="inlineCalc('income','${item.id}','received',this.value)" onchange="pIncome('${item.id}','received',this.value)" min="0" step="0.01" inputmode="decimal"></div>
+      <div class="cell"><input type="text" value="${item.planned?'$'+parseFloat(item.planned).toFixed(2):''}" placeholder="$0.00" id="ip-${item.id}" inputmode="decimal" onfocus="this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||'';" oninput="inlineCalc('income','${item.id}','planned',this.value.replace(/[^0-9.]/g,''))" onblur="pIncome('${item.id}','planned',this.value.replace(/[^0-9.]/g,'')); this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||0?'$'+(parseFloat(this.value.replace(/[^0-9.]/g,''))||0).toFixed(2):'';" style="-moz-appearance:textfield;"></div>
+      <div class="cell"><input type="text" value="${item.received?'$'+parseFloat(item.received).toFixed(2):''}" placeholder="$0.00" id="ir-${item.id}" inputmode="decimal" onfocus="this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||'';" oninput="inlineCalc('income','${item.id}','received',this.value.replace(/[^0-9.]/g,''))" onblur="pIncome('${item.id}','received',this.value.replace(/[^0-9.]/g,'')); this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||0?'$'+(parseFloat(this.value.replace(/[^0-9.]/g,''))||0).toFixed(2):'';" style="-moz-appearance:textfield;"></div>
       <div class="avail-cell ${av>=0?'pos':'neg'}" id="ia-${item.id}">${fmt(av)}</div>
       <div><span class="acct-tag" onclick="qTag('income','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
       <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pIncome('${item.id}','notes',this.value)"></div>
@@ -503,18 +507,40 @@ function renderIncome() {
 function inlineCalc(type, id, field, value) {
   if(type==='income') {
     const item=incItems.find(x=>x.id===id); if(!item) return;
-    const plan=field==='planned'?parseFloat(value)||0:parseFloat(item.planned||0);
-    const rec=field==='received'?parseFloat(value)||0:parseFloat(item.received||0);
-    const av=rec-plan;
+    item[field]=parseFloat(value)||0;
+    const av=parseFloat(item.received||0)-parseFloat(item.planned||0);
     const el=document.getElementById('ia-'+id);
     if(el){el.textContent=fmt(av);el.className='avail-cell '+(av>=0?'pos':'neg');}
+    // update income footer live
+    document.getElementById('fIncPlan').textContent=fmt(totalInPlan());
+    document.getElementById('fIncRec').textContent=fmt(totalInRec());
+    const fav=totalInRec()-totalInPlan();
+    const fel=document.getElementById('fIncAvail'); if(fel){fel.textContent=fmt(fav);fel.className='foot-val '+(fav>=0?'pos':'neg');}
   } else {
     const item=expItems.find(x=>x.id===id); if(!item) return;
-    const plan=field==='planned'?parseFloat(value)||0:parseFloat(item.planned||0);
-    const spent=field==='spent'?parseFloat(value)||0:parseFloat(item.spent||0);
-    const av=plan-spent;
+    item[field]=parseFloat(value)||0;
+    const av=parseFloat(item.planned||0)-parseFloat(item.spent||0);
     const el=document.getElementById('ea-'+id);
     if(el){el.textContent=fmt(av);el.className='avail-cell '+(av>=0?'pos':'neg');}
+    // update category footer live
+    const cat=expCats.find(c=>c.id===item.category_id);
+    if(cat){
+      const catItems=expItems.filter(e=>e.category_id===cat.id&&!e.is_tithe);
+      const pl=catItems.reduce((s,e)=>s+parseFloat(e.planned||0),0);
+      const sp=catItems.reduce((s,e)=>s+parseFloat(e.spent||0),0);
+      const cav=pl-sp;
+      // find footer cells in this category's section
+      const sec=document.getElementById('cb-'+cat.id);
+      if(sec){
+        const foot=sec.parentElement.querySelector('.section-foot');
+        if(foot){
+          const vals=foot.querySelectorAll('.foot-val');
+          if(vals[0]) vals[0].textContent=fmt(pl);
+          if(vals[1]) vals[1].textContent=fmt(sp);
+          if(vals[2]){vals[2].textContent=fmt(cav);vals[2].className='foot-val '+(cav>=0?'pos':'neg');}
+        }
+      }
+    }
   }
   renderSummary(); renderTithe();
 }
@@ -571,12 +597,12 @@ function renderExpenses() {
       const r=document.createElement('div'); r.className='line-row';
       const edates=(item.scheduled_dates||[]).join(', ');
       const edatesHtml=edates
-        ? `<div style="font-size:12px;color:#c2410c;font-weight:600;margin-top:3px;">&#128197; Days: ${edates}</div>`
-        : `<div style="font-size:12px;color:#a89f97;margin-top:3px;cursor:pointer;text-decoration:underline dotted;" onclick="openModal('expense','${item.id}',null,'${cat.id}')">&#128197; Set payment days</div>`;
+        ? `<div style="font-size:12px;color:#2563eb;font-weight:600;margin-top:3px;">&#128197; Days: ${edates}</div>`
+        : `<div style="font-size:12px;color:#2563eb;font-weight:500;margin-top:3px;cursor:pointer;" onclick="openModal('expense','${item.id}',null,'${cat.id}')">+ Set payment days</div>`;
       r.innerHTML=`
         <div class="item-name"><div><div style="display:flex;align-items:center;gap:6px;">${esc(item.name)}${item.is_recurring?'<span class="badge badge-recurring">recurring</span>':''}</div>${edatesHtml}</div></div>
-        <div class="cell"><input type="number" value="${item.planned||''}" placeholder="0.00" id="ep-${item.id}" oninput="inlineCalc('expense','${item.id}','planned',this.value)" onchange="pExpense('${item.id}','planned',this.value)" min="0" step="0.01" inputmode="decimal"></div>
-        <div class="cell"><input type="number" value="${item.spent||''}" placeholder="0.00" id="es-${item.id}" oninput="inlineCalc('expense','${item.id}','spent',this.value)" onchange="pExpense('${item.id}','spent',this.value)" min="0" step="0.01" inputmode="decimal"></div>
+        <div class="cell"><input type="text" value="${item.planned?'$'+parseFloat(item.planned).toFixed(2):''}" placeholder="$0.00" id="ep-${item.id}" inputmode="decimal" onfocus="this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||'';" oninput="inlineCalc('expense','${item.id}','planned',this.value.replace(/[^0-9.]/g,''))" onblur="pExpense('${item.id}','planned',this.value.replace(/[^0-9.]/g,'')); this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||0?'$'+(parseFloat(this.value.replace(/[^0-9.]/g,''))||0).toFixed(2):'';" style="-moz-appearance:textfield;"></div>
+        <div class="cell"><input type="text" value="${item.spent?'$'+parseFloat(item.spent).toFixed(2):''}" placeholder="$0.00" id="es-${item.id}" inputmode="decimal" onfocus="this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||'';" oninput="inlineCalc('expense','${item.id}','spent',this.value.replace(/[^0-9.]/g,''))" onblur="pExpense('${item.id}','spent',this.value.replace(/[^0-9.]/g,'')); this.value=parseFloat(this.value.replace(/[^0-9.]/g,''))||0?'$'+(parseFloat(this.value.replace(/[^0-9.]/g,''))||0).toFixed(2):'';" style="-moz-appearance:textfield;"></div>
         <div class="avail-cell ${a>=0?'pos':'neg'}" id="ea-${item.id}">${fmt(a)}</div>
         <div><span class="acct-tag" onclick="qTag('expense','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
         <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pExpense('${item.id}','notes',this.value)"></div>
@@ -592,23 +618,38 @@ function renderCashFlow() {
   const td=new Date(), isCur=td.getMonth()+1===curM&&td.getFullYear()===curY, todD=td.getDate();
   const ev={};
   for(let d=1;d<=days;d++) ev[d]=[];
+  // Income: items WITH dates plot on those days; items WITHOUT dates plot on day 1
   incItems.forEach(item=>{
     const dates=item.scheduled_dates||[];
-    if(!dates.length) return;
-    const split=parseFloat(item.planned||0)/dates.length;
-    dates.forEach(d=>{ const n=parseInt(d); if(n>=1&&n<=days) ev[n].push({name:item.name,type:'income',amount:split}); });
+    const amt=parseFloat(item.planned||0);
+    if(!amt) return;
+    if(dates.length){
+      const split=amt/dates.length;
+      dates.forEach(d=>{ const n=parseInt(d); if(n>=1&&n<=days) ev[n].push({name:item.name,type:'income',amount:split}); });
+    } else {
+      ev[1].push({name:item.name,type:'income',amount:amt,noDate:true});
+    }
   });
+  // Expenses: items WITH dates plot on those days; items WITHOUT dates plot on day 1
   expItems.filter(e=>!e.is_tithe).forEach(item=>{
     const dates=item.scheduled_dates||[];
-    if(!dates.length) return;
-    const split=parseFloat(item.planned||0)/dates.length;
-    dates.forEach(d=>{ const n=parseInt(d); if(n>=1&&n<=days) ev[n].push({name:item.name,type:'expense',amount:split}); });
+    const amt=parseFloat(item.planned||0);
+    if(!amt) return;
+    if(dates.length){
+      const split=amt/dates.length;
+      dates.forEach(d=>{ const n=parseInt(d); if(n>=1&&n<=days) ev[n].push({name:item.name,type:'expense',amount:split}); });
+    } else {
+      ev[1].push({name:item.name,type:'expense',amount:amt,noDate:true});
+    }
   });
-  let bal=0;
+  // Add tithe on day 1 if set
+  if(titheAmt()>0) ev[1].push({name:'Tithe',type:'expense',amount:titheAmt(),noDate:true});
+  let bal=0; const cfBalances=[];
   for(let d=1;d<=days;d++){
     const events=ev[d];
     const net=events.reduce((s,e)=>s+(e.type==='income'?e.amount:-e.amount),0);
     bal+=net;
+    cfBalances.push(bal);
     const isNeg=bal<0, isToday=isCur&&d===todD, hasSched=events.length>0;
     const dn=new Date(curY,curM-1,d).toLocaleDateString('en-US',{weekday:'short'});
     const el=document.createElement('div');
@@ -786,6 +827,54 @@ function toggleSec(id) {
 }
 
 function toggleCfDay(id) { const el=document.getElementById(id); if(el) el.classList.toggle('open'); }
+
+function renderCfChart(balances, days) {
+  const canvas = document.getElementById('cfChart');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 900;
+  const H = 80;
+  canvas.width = W; canvas.height = H;
+  ctx.clearRect(0,0,W,H);
+  if(!balances.length) return;
+  const min = Math.min(0, ...balances);
+  const max = Math.max(0, ...balances);
+  const range = max - min || 1;
+  const pad = 4;
+  const stepX = (W - pad*2) / (days - 1);
+  const toY = v => pad + (1 - (v - min)/range) * (H - pad*2);
+  const zeroY = toY(0);
+  // Zero line
+  ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad, zeroY); ctx.lineTo(W-pad, zeroY); ctx.stroke();
+  // Fill area
+  ctx.beginPath();
+  ctx.moveTo(pad, toY(balances[0]));
+  for(let i=1;i<balances.length;i++) ctx.lineTo(pad + i*stepX, toY(balances[i]));
+  ctx.lineTo(pad + (balances.length-1)*stepX, H-pad);
+  ctx.lineTo(pad, H-pad);
+  ctx.closePath();
+  const anyNeg = balances.some(b=>b<0);
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0, anyNeg ? 'rgba(220,38,38,0.15)' : 'rgba(22,163,74,0.15)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = grad; ctx.fill();
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(pad, toY(balances[0]));
+  for(let i=1;i<balances.length;i++) ctx.lineTo(pad + i*stepX, toY(balances[i]));
+  ctx.strokeStyle = anyNeg ? '#dc2626' : '#16a34a';
+  ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+  // Today marker
+  const td = new Date();
+  if(td.getMonth()+1===curM && td.getFullYear()===curY) {
+    const tx = pad + (td.getDate()-1)*stepX;
+    ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 1.5;
+    ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(tx,0); ctx.lineTo(tx,H); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
 function toggleMenu() { document.getElementById('tabBar').classList.toggle('open'); }
 function load(t) { document.getElementById('loadingText').textContent=t||'Loading...'; document.getElementById('loadingOverlay').classList.add('show'); }
 function hideLoad() { document.getElementById('loadingOverlay').classList.remove('show'); }
