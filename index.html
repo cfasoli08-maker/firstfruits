@@ -185,6 +185,32 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .checkbox-row { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text); margin-top: 10px; }
 .checkbox-row input { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
 
+/* SIDE PANEL */
+.panel-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 250; }
+.panel-backdrop.open { display: block; }
+.side-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 400px; max-width: 100vw; background: var(--white); z-index: 260; box-shadow: -8px 0 40px rgba(0,0,0,0.15); transform: translateX(100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; overflow: hidden; }
+.side-panel.open { transform: translateX(0); }
+.panel-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.panel-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.panel-type-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 20px; margin-left: 8px; }
+.panel-type-badge.income { background: #dcfce7; color: #15803d; }
+.panel-type-badge.expense { background: #eff6ff; color: #1d4ed8; }
+.panel-close { width: 30px; height: 30px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--text-muted); transition: all 0.15s; flex-shrink: 0; }
+.panel-close:hover { border-color: var(--text-muted); color: var(--text); }
+.panel-stat-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.panel-stat { flex: 1; padding: 14px 16px; text-align: center; border-right: 1px solid var(--border); }
+.panel-stat:last-child { border-right: none; }
+.panel-stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 4px; }
+.panel-stat-val { font-size: 18px; font-weight: 800; }
+.panel-stat-val.pos { color: var(--green); }
+.panel-stat-val.neg { color: var(--red); }
+.panel-stat-val.neutral { color: var(--text); }
+.panel-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.panel-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 18px 0 10px; }
+.panel-section-title:first-child { margin-top: 0; }
+.panel-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
+@media (max-width: 768px) { .side-panel { width: 100vw; } }
+
 /* TOAST */
 .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: var(--white); border-radius: 8px; padding: 11px 18px; font-size: 13px; font-weight: 500; z-index: 300; transform: translateY(70px); opacity: 0; transition: all 0.25s; box-shadow: var(--shadow-md); }
 .toast.show { transform: translateY(0); opacity: 1; }
@@ -362,6 +388,21 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   </div>
 </div>
 
+<!-- SIDE PANEL -->
+<div class="panel-backdrop" id="panelBackdrop" onclick="closePanel()"></div>
+<div class="side-panel" id="sidePanel">
+  <div class="panel-header">
+    <div style="display:flex;align-items:center;">
+      <span class="panel-title" id="panelTitle"></span>
+      <span class="panel-type-badge" id="panelBadge"></span>
+    </div>
+    <button class="panel-close" onclick="closePanel()">&#10005;</button>
+  </div>
+  <div class="panel-stat-bar" id="panelStats"></div>
+  <div class="panel-body" id="panelBody"></div>
+  <div class="panel-footer" id="panelFooter"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -495,7 +536,7 @@ function renderIncome() {
       <div class="avail-cell ${av>=0?'pos':'neg'}" id="ia-${item.id}">${fmt(av)}</div>
       <div><span class="acct-tag" onclick="qTag('income','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
       <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pIncome('${item.id}','notes',this.value)"></div>
-      <div><button class="act-btn" onclick="openModal('income','${item.id}')">&#9998;</button></div>`;
+      <div><button class="act-btn" onclick="openPanel('income','${item.id}')">&#9998;</button></div>`;
     c.appendChild(r);
   });
   document.getElementById('fIncPlan').textContent=fmt(totalInPlan());
@@ -606,7 +647,7 @@ function renderExpenses() {
         <div class="avail-cell ${a>=0?'pos':'neg'}" id="ea-${item.id}">${fmt(a)}</div>
         <div><span class="acct-tag" onclick="qTag('expense','${item.id}')">${esc(item.account_tag||'-- tag')}</span></div>
         <div><input class="form-input" style="font-size:12px;padding:3px 6px;" type="text" value="${esc(item.notes||'')}" placeholder="notes" onchange="pExpense('${item.id}','notes',this.value)"></div>
-        <div><button class="act-btn" onclick="openModal('expense','${item.id}',null,'${cat.id}')">&#9998;</button></div>`;
+        <div><button class="act-btn" onclick="openPanel('expense','${item.id}','${cat.id}')">&#9998;</button></div>`;
       rc.appendChild(r);
     });
   });
@@ -772,6 +813,104 @@ function chips(days,sel) {
 function selDates() { return Array.from(document.querySelectorAll('.date-chip.sel')).map(e=>e.textContent.trim()); }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 function closeModalOut(e) { if(e.target===document.getElementById('modalOverlay')) closeModal(); }
+
+// SIDE PANEL
+function openPanel(type, id, catId) {
+  const dIM = new Date(curY, curM, 0).getDate();
+  const bd = document.getElementById('panelBackdrop');
+  const sp = document.getElementById('sidePanel');
+  const title = document.getElementById('panelTitle');
+  const badge = document.getElementById('panelBadge');
+  const stats = document.getElementById('panelStats');
+  const body = document.getElementById('panelBody');
+  const footer = document.getElementById('panelFooter');
+  eType = type; eId = id || null; eCatId = catId || null;
+
+  if (type === 'income') {
+    const item = incItems.find(i => i.id === id);
+    if (!item) return;
+    const planned = parseFloat(item.planned || 0);
+    const received = parseFloat(item.received || 0);
+    const avail = received - planned;
+    const sel = (item.scheduled_dates || []).map(String);
+    badge.className = 'panel-type-badge income'; badge.textContent = 'Income';
+    title.textContent = item.name;
+    stats.innerHTML = `
+      <div class="panel-stat"><div class="panel-stat-label">Planned</div><div class="panel-stat-val neutral">${fmt(planned)}</div></div>
+      <div class="panel-stat"><div class="panel-stat-label">Received</div><div class="panel-stat-val neutral">${fmt(received)}</div></div>
+      <div class="panel-stat"><div class="panel-stat-label">Difference</div><div class="panel-stat-val ${avail >= 0 ? 'pos' : 'neg'}">${fmt(avail)}</div></div>`;
+    body.innerHTML = `
+      <div class="panel-section-title">Source Name</div>
+      <input class="form-input" id="pName" value="${esc(item.name)}" placeholder="e.g. Aquifer Springs">
+      <div class="panel-section-title">Amounts</div>
+      <div class="form-row">
+        <div><label class="form-label">Planned</label><input class="form-input" id="pPlan" type="number" value="${item.planned || ''}" placeholder="0.00" min="0" step="0.01"></div>
+        <div><label class="form-label">Received</label><input class="form-input" id="pRec" type="number" value="${item.received || ''}" placeholder="0.00" min="0" step="0.01"></div>
+      </div>
+      <div class="panel-section-title">Account Tag</div>
+      <input class="form-input" id="pAcct" value="${esc(item.account_tag || '')}" placeholder="e.g. Scotiabank">
+      <div class="panel-section-title">Notes</div>
+      <input class="form-input" id="pNotes" value="${esc(item.notes || '')}" placeholder="Optional">
+      <div class="panel-section-title">Scheduled Days This Month</div>
+      <div class="date-chips">${chips(dIM, sel)}</div>
+      <label class="checkbox-row" style="margin-top:16px;"><input type="checkbox" id="pRecur" ${item.is_recurring ? 'checked' : ''}> Recurring monthly</label>`;
+    footer.innerHTML = `<button class="btn-danger" onclick="panelDelete()">Delete</button><button class="btn-secondary" onclick="closePanel()">Cancel</button><button class="btn-primary" onclick="panelSaveIncome()">Save</button>`;
+  } else if (type === 'expense') {
+    const item = expItems.find(i => i.id === id);
+    if (!item) return;
+    eCatId = item.category_id;
+    const cat = expCats.find(c => c.id === item.category_id);
+    const planned = parseFloat(item.planned || 0);
+    const spent = parseFloat(item.spent || 0);
+    const avail = planned - spent;
+    const sel = (item.scheduled_dates || []).map(String);
+    badge.className = 'panel-type-badge expense'; badge.textContent = cat ? cat.name : 'Expense';
+    title.textContent = item.name;
+    stats.innerHTML = `
+      <div class="panel-stat"><div class="panel-stat-label">Planned</div><div class="panel-stat-val neutral">${fmt(planned)}</div></div>
+      <div class="panel-stat"><div class="panel-stat-label">Spent</div><div class="panel-stat-val neutral">${fmt(spent)}</div></div>
+      <div class="panel-stat"><div class="panel-stat-label">Remaining</div><div class="panel-stat-val ${avail >= 0 ? 'pos' : 'neg'}">${fmt(avail)}</div></div>`;
+    body.innerHTML = `
+      <div class="panel-section-title">Item Name</div>
+      <input class="form-input" id="pName" value="${esc(item.name)}" placeholder="e.g. Rent">
+      <div class="panel-section-title">Amounts</div>
+      <div class="form-row">
+        <div><label class="form-label">Planned</label><input class="form-input" id="pPlan" type="number" value="${item.planned || ''}" placeholder="0.00" min="0" step="0.01"></div>
+        <div><label class="form-label">Spent</label><input class="form-input" id="pSpent" type="number" value="${item.spent || ''}" placeholder="0.00" min="0" step="0.01"></div>
+      </div>
+      <div class="panel-section-title">Account Tag</div>
+      <input class="form-input" id="pAcct" value="${esc(item.account_tag || '')}" placeholder="e.g. KOHO Visa">
+      <div class="panel-section-title">Notes</div>
+      <input class="form-input" id="pNotes" value="${esc(item.notes || '')}" placeholder="Optional">
+      <div class="panel-section-title">Scheduled Days This Month</div>
+      <div class="date-chips">${chips(dIM, sel)}</div>
+      <label class="checkbox-row" style="margin-top:16px;"><input type="checkbox" id="pRecur" ${item.is_recurring ? 'checked' : ''}> Recurring monthly</label>`;
+    footer.innerHTML = `<button class="btn-danger" onclick="panelDelete()">Delete</button><button class="btn-secondary" onclick="closePanel()">Cancel</button><button class="btn-primary" onclick="panelSaveExpense()">Save</button>`;
+  }
+  bd.classList.add('open'); sp.classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('panelBackdrop').classList.remove('open');
+  document.getElementById('sidePanel').classList.remove('open');
+}
+
+async function panelSaveIncome() {
+  const name = document.getElementById('pName')?.value?.trim(); if (!name) { toast('Name required', 'error'); return; }
+  const data = { budget_month_id: mid, name, planned: parseFloat(document.getElementById('pPlan')?.value) || 0, received: parseFloat(document.getElementById('pRec')?.value) || 0, account_tag: document.getElementById('pAcct')?.value || '', notes: document.getElementById('pNotes')?.value || '', scheduled_dates: selDates(), is_recurring: document.getElementById('pRecur')?.checked || false, sort_order: incItems.find(i => i.id === eId)?.sort_order || 0 };
+  load('Saving...'); try { await api('PATCH', 'income_sources', data, `?id=eq.${eId}`); await loadAll(); renderAll(); closePanel(); toast('Saved', 'success'); } catch (e) { toast('Save failed', 'error'); } hideLoad();
+}
+
+async function panelSaveExpense() {
+  const name = document.getElementById('pName')?.value?.trim(); if (!name) { toast('Name required', 'error'); return; }
+  const data = { budget_month_id: mid, category_id: eCatId, name, planned: parseFloat(document.getElementById('pPlan')?.value) || 0, spent: parseFloat(document.getElementById('pSpent')?.value) || 0, account_tag: document.getElementById('pAcct')?.value || '', notes: document.getElementById('pNotes')?.value || '', scheduled_dates: selDates(), is_recurring: document.getElementById('pRecur')?.checked || false, sort_order: expItems.find(i => i.id === eId)?.sort_order || 0 };
+  load('Saving...'); try { await api('PATCH', 'expense_items', data, `?id=eq.${eId}`); await loadAll(); renderAll(); closePanel(); toast('Saved', 'success'); } catch (e) { toast('Save failed', 'error'); } hideLoad();
+}
+
+async function panelDelete() {
+  if (!confirm('Delete this item?')) return;
+  load('Deleting...'); try { if (eType === 'income') await api('DELETE', 'income_sources', null, `?id=eq.${eId}`); else await api('DELETE', 'expense_items', null, `?id=eq.${eId}`); await loadAll(); renderAll(); closePanel(); toast('Deleted', 'success'); } catch (e) { toast('Delete failed', 'error'); } hideLoad();
+}
 
 async function saveIncome() {
   const name=document.getElementById('mName')?.value?.trim(); if(!name){toast('Name required','error');return;}
