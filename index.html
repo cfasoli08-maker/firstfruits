@@ -20,39 +20,36 @@
 html,body{height:100%;background:var(--bg);color:var(--body);font-family:'DM Sans',sans-serif;font-size:15px;-webkit-tap-highlight-color:transparent;}
 input,select,textarea,button{font-family:inherit;font-size:inherit;}
 #app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;}
-
-/* TOP BAR — warm, no harsh line */
-.top-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:10px 16px 0;position:sticky;top:0;z-index:100;flex-shrink:0;}
-.top-row{display:flex;align-items:center;gap:10px;padding-bottom:8px;}
-.top-bar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--sage-dark);flex:1;}
-.month-pick{border:1px solid var(--border);background:var(--surface);color:var(--body);border-radius:8px;padding:4px 8px;font-size:13px;}
+/* TOP BAR */
+.top-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px 10px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.top-bar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);flex:1;}
+.month-pick{border:1px solid var(--border);background:var(--surface2);color:var(--body);border-radius:8px;padding:4px 8px;font-size:13px;}
 .sync-btn{background:var(--sage);color:#fff;border:none;border-radius:8px;padding:5px 14px;font-size:13px;font-weight:500;cursor:pointer;}
-
-/* SUMMARY BAR — sticky, 3 across */
-.sum-bar{display:flex;gap:6px;padding:0 0 10px;background:var(--surface2);}
-.sb-item{flex:1;background:var(--surface);border-radius:10px;padding:7px 6px;text-align:center;border:1px solid var(--border);}
-.sb-lbl{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;}
-.sb-val{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--charcoal);}
-.sb-val.pos{color:var(--sage);}
-.sb-val.neg{color:var(--red);}
-
 /* PAGES */
 .pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .page{display:none;padding:12px 12px 80px;}
 .page.active{display:block;}
-
-/* BOTTOM NAV — always sticky */
+/* BOTTOM NAV */
 .bot-nav{background:var(--surface);border-top:1px solid var(--border);display:flex;position:sticky;bottom:0;z-index:100;flex-shrink:0;}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 10px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:10px;font-weight:500;}
 .nav-btn.active{color:var(--sage);}
 .nav-btn svg{width:20px;height:20px;}
-
 /* VERSE */
 .verse-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
 .verse-date{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
 .verse-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--charcoal);line-height:1.5;margin-bottom:4px;}
 .verse-ref{font-size:12px;color:var(--sage);font-weight:500;}
-
+/* SUMMARY BANNER */
+.summary-banner{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
+.sum-row{display:flex;gap:8px;margin-bottom:8px;}
+.sum-widget{flex:1;background:var(--surface2);border-radius:10px;padding:10px 8px;text-align:center;}
+.sum-widget .sw-lbl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px;}
+.sum-widget .sw-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);}
+.net-bar{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:var(--sage-bg);}
+.net-bar.neg{background:#FDF0EE;}
+.net-bar .nb-lbl{font-size:12px;color:var(--muted);font-weight:500;}
+.net-bar .nb-val{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--sage);}
+.net-bar.neg .nb-val{color:var(--red);}
 /* COH */
 .coh-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
 .coh-card h3{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
@@ -62,7 +59,6 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .coh-amt.pos{color:var(--sage);}
 .coh-amt.neg{color:var(--red);}
 .coh-divider{border:none;border-top:1px solid var(--border);margin:6px 0;}
-
 /* SECTION CARD */
 .sec-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);margin-bottom:12px;overflow:hidden;}
 .sec-hdr{display:flex;align-items:center;padding:12px 14px 10px;gap:8px;cursor:pointer;user-select:none;}
@@ -70,66 +66,54 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .sec-arrow{font-size:14px;color:var(--muted);transition:transform .2s;}
 .sec-card.collapsed .sec-arrow{transform:rotate(-90deg);}
 .sec-card.collapsed .sec-body{display:none;}
+/* INCOME ACCENT */
 .sec-income{border-left:3px solid var(--blue);}
 .sec-income .sec-hdr{background:var(--blue-bg);}
 .sec-income .sec-hdr h2{color:var(--blue);}
+/* TITHE ACCENT */
 .sec-tithe{border-left:3px solid var(--purple);}
 .sec-tithe .sec-hdr{background:var(--purple-bg);}
 .sec-tithe .sec-hdr h2{color:var(--purple);}
-
-/* TABLE */
+/* TABLE — 3 data columns: Label | Planned | Actual | Left */
 .bt{width:100%;border-collapse:collapse;}
-.bt th{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:5px 6px;background:var(--surface2);border-bottom:1px solid var(--border);text-align:right;}
+.bt th{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:5px 8px 5px;background:var(--surface2);border-bottom:1px solid var(--border);text-align:right;}
 .bt th:first-child{text-align:left;}
-.bt td{padding:6px 6px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.bt td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
 .bt tr:last-child td{border-bottom:none;}
 .bt .tot td{background:var(--surface2);font-weight:600;}
-
 /* LABEL CELL */
-.lc{display:flex;align-items:center;gap:3px;}
-.lbl-in{border:none;background:transparent;color:var(--body);font-size:13px;font-weight:500;width:100%;min-width:50px;padding:0;outline:none;}
+.lc{display:flex;align-items:center;gap:4px;}
+.lbl-in{border:none;background:transparent;color:var(--body);font-size:13px;font-weight:500;width:100%;min-width:55px;padding:0;outline:none;}
 .lbl-in:focus{background:var(--surface2);border-radius:4px;padding:0 3px;}
 .rm-btn{background:none;border:none;color:var(--muted);font-size:15px;line-height:1;cursor:pointer;padding:0;flex-shrink:0;}
 .ic-btn{background:none;border:none;font-size:12px;line-height:1;cursor:pointer;padding:0 1px;flex-shrink:0;color:var(--muted);}
-.move-btn{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:0 1px;flex-shrink:0;line-height:1;}
-
-/* NUMBER INPUTS */
+.recur-badge{font-size:10px;font-weight:600;color:var(--sage);background:var(--sage-bg);border-radius:4px;padding:1px 5px;white-space:nowrap;cursor:pointer;border:none;}
+/* NUMBER CELLS */
 .ni{border:1px solid transparent;background:transparent;color:var(--charcoal);font-size:13px;font-weight:500;text-align:right;width:64px;padding:2px 4px;border-radius:6px;outline:none;-webkit-appearance:none;appearance:none;display:block;margin-left:auto;}
 .ni:focus{border-color:var(--border);background:var(--surface2);}
 .ni.g{color:var(--sage);}
 .ni.r{color:var(--red);}
+.ni.ro{pointer-events:none;border-color:transparent;background:transparent;}
 .disp{font-size:13px;font-weight:500;text-align:right;display:block;}
 .disp.g{color:var(--sage);}
 .disp.r{color:var(--red);}
-
-/* RECUR BADGE */
-.recur-badge{font-size:10px;font-weight:600;color:var(--sage);background:var(--sage-bg);border-radius:4px;padding:1px 5px;white-space:nowrap;cursor:pointer;border:none;flex-shrink:0;}
-
-/* DATE PICKER */
-.date-picker-wrap{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-.dom-in{border:1px solid var(--border);background:var(--surface);color:var(--body);border-radius:6px;padding:3px 6px;font-size:12px;width:52px;text-align:center;-webkit-appearance:none;appearance:none;}
-.dow-label{font-size:11px;color:var(--sage);font-weight:600;background:var(--sage-bg);border-radius:4px;padding:2px 6px;}
-
 /* NOTE ROW */
 .note-row td{padding:2px 8px 8px;}
 .note-in{width:100%;border:1px solid var(--border);background:var(--surface2);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--body);resize:none;outline:none;}
-
-/* RECUR ROW */
+/* RECUR SHEET */
 .recur-row td{padding:4px 8px 10px;background:var(--surface2);}
 .recur-inner{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
 .recur-freq-sel{border:1px solid var(--border);background:var(--surface);color:var(--body);border-radius:6px;padding:4px 6px;font-size:12px;}
 .day-btns{display:flex;gap:3px;flex-wrap:wrap;}
 .day-btn{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:5px;padding:3px 5px;font-size:11px;font-weight:500;cursor:pointer;line-height:1.3;}
 .day-btn.on{background:var(--sage);color:#fff;border-color:var(--sage);}
-
-/* ADD BTN */
+.dom-in{border:1px solid var(--border);background:var(--surface);color:var(--body);border-radius:6px;padding:3px 6px;font-size:12px;width:50px;text-align:center;-webkit-appearance:none;appearance:none;}
+/* ADD ROW BTN */
 .add-btn{width:100%;padding:10px;background:none;border:none;color:var(--sage);font-size:13px;font-weight:500;cursor:pointer;text-align:center;}
-
 /* SUBS */
 .subs-row td{background:var(--sage-bg);padding:4px 8px 4px 20px;}
 .sub-lbl{font-size:12px;color:var(--muted);min-width:80px;}
-
-/* TITHE */
+/* TITHE BODY */
 .tithe-body{padding:14px 16px;}
 .tithe-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;}
 .tc{background:var(--purple-bg);border-radius:10px;padding:10px 8px;text-align:center;}
@@ -137,9 +121,11 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .tc .tc-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);}
 .tc .tc-val.warn{color:var(--warn);}
 .tithe-given{border:1px solid var(--purple);background:var(--surface);color:var(--charcoal);border-radius:8px;padding:5px 8px;font-size:15px;font-weight:600;text-align:center;width:100%;outline:none;margin-top:4px;-webkit-appearance:none;appearance:none;}
-.tithe-note{background:var(--purple-bg);border-radius:8px;padding:8px 12px;font-size:11px;color:var(--purple);text-align:center;margin-top:8px;}
-
-/* CASH FLOW */
+.tithe-note{background:var(--purple-bg);border-radius:8px;padding:8px 12px;font-size:11px;color:var(--purple);text-align:center;}
+/* DEBTS */
+.debt-item{padding:10px 14px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto auto auto auto;gap:6px;align-items:center;}
+.debt-item:last-child{border-bottom:none;}
+/* CASH FLOW PAGE */
 .cf-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
 .cf-w{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:12px 10px;text-align:center;}
 .cf-w .cw-lbl{font-size:10px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px;}
@@ -150,14 +136,13 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .chart-card h3{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:10px;}
 #cfCanvas{display:block;width:100%;}
 .wk-pills{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;}
-.wk-pill{border-radius:10px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+.wk-pill{border-radius:10px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;}
 .wk-pill.pos{background:var(--sage-bg);}
 .wk-pill.neg{background:#FDF0EE;}
 .wk-pill .wp-lbl{font-size:12px;color:var(--muted);font-weight:500;}
 .wk-pill .wp-val{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;}
 .wk-pill.pos .wp-val{color:var(--sage);}
 .wk-pill.neg .wp-val{color:var(--red);}
-
 /* BANKS */
 .bank-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 .bank-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px;}
@@ -175,12 +160,10 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .bill-badge{border-radius:4px;padding:2px 6px;font-size:10px;font-weight:600;}
 .badge-koho{background:var(--sage-bg);color:var(--sage);}
 .badge-square{background:var(--gold-bg);color:var(--gold);}
-
 /* NOTES */
 .notes-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
 .notes-card h3{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
 .notes-ta{width:100%;border:1px solid var(--border);background:var(--surface2);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--body);resize:none;outline:none;min-height:120px;line-height:1.5;}
-
 /* SETTINGS */
 .set-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
 .set-card h3{font-size:13px;font-weight:600;color:var(--charcoal);margin-bottom:8px;}
@@ -188,25 +171,19 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .code-pre{background:var(--charcoal);color:#A8D8A8;border-radius:10px;padding:12px;font-size:11px;font-family:monospace;overflow-x:auto;white-space:pre;max-height:180px;overflow-y:auto;}
 .btn-p{background:var(--sage);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;width:100%;margin-top:4px;}
 .btn-s{background:var(--surface2);color:var(--body);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;width:100%;margin-bottom:6px;}
-
-/* DRILL DOWN */
-.drill-card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-top:12px;}
-.drill-card h3{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--charcoal);}
 </style>
 </head>
 <body>
 <div id="app">
   <div class="top-bar">
-    <div class="top-row">
-      <h1>Firstfruit</h1>
-      <select class="month-pick" id="monthPick" onchange="onMonthChange(this.value)"></select>
-      <button class="sync-btn" onclick="doSync()">Sync</button>
-    </div>
-    <div class="sum-bar" id="sumBar"></div>
+    <h1>Firstfruit</h1>
+    <select class="month-pick" id="monthPick" onchange="onMonthChange(this.value)"></select>
+    <button class="sync-btn" onclick="doSync()">Sync</button>
   </div>
   <div class="pages">
     <div class="page active" id="page-budget">
       <div class="verse-card"><div class="verse-date" id="vDate"></div><div class="verse-text" id="vText"></div><div class="verse-ref" id="vRef"></div></div>
+      <div class="summary-banner" id="sumBanner"></div>
       <div class="coh-card" id="cohCard"></div>
       <div id="zIncome"></div>
       <div id="zTithe"></div>
@@ -221,18 +198,14 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
     </div>
     <div class="page" id="page-flow">
       <div class="cf-top" id="cfTop"></div>
-      <div class="chart-card">
-        <h3>Weekly Cash Flow</h3>
-        <canvas id="cfCanvas"></canvas>
-        <div class="wk-pills" id="wkPills"></div>
+      <div class="chart-card"><h3>Weekly Cash Flow</h3><canvas id="cfCanvas"></canvas><div class="wk-pills" id="wkPills"></div></div>
+    <div id="wkDrill" style="display:none;background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-top:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3 id="wkDrillTitle" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--charcoal);"></h3>
+        <button onclick="closeWkDrill()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;">&#10005;</button>
       </div>
-      <div id="wkDrill" style="display:none;" class="drill-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-          <h3 id="wkDrillTitle"></h3>
-          <button onclick="closeWkDrill()" style="background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;">&#10005;</button>
-        </div>
-        <div id="wkDrillBody"></div>
-      </div>
+      <div id="wkDrillBody"></div>
+    </div>
     </div>
     <div class="page" id="page-banks">
       <div class="bank-grid" id="bankGrid"></div>
@@ -266,15 +239,16 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
   </nav>
 </div>
 <script>
+// ── CONSTANTS ────────────────────────────────────────────────────────────────
 var LS = 'firstfruit_budget';
 var DAYS = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-var DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 var MONTHS_LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 var FREQS = {once:'Once',daily:'Daily',weekly:'Weekly',biweekly:'Every 2 Wks',monthly:'Monthly'};
+
 var VERSES = [
   {t:"Trust in the Lord with all your heart and lean not on your own understanding.",r:"Proverbs 3:5"},
   {t:"For I know the plans I have for you, declares the Lord, plans to prosper you.",r:"Jeremiah 29:11"},
-  {t:"The earth is the Lord\u2019s, and everything in it.",r:"Psalm 24:1"},
+  {t:"The earth is the Lord\u2019s, and everything in it, the world, and all who live in it.",r:"Psalm 24:1"},
   {t:"Give, and it will be given to you. A good measure, pressed down and running over.",r:"Luke 6:38"},
   {t:"No one can serve two masters. You cannot serve both God and money.",r:"Matthew 6:24"},
   {t:"The blessing of the Lord brings wealth, without painful toil for it.",r:"Proverbs 10:22"},
@@ -304,187 +278,208 @@ var VERSES = [
   {t:"The Lord is my shepherd, I lack nothing.",r:"Psalm 23:1"},
   {t:"Wealth obtained by fraud dwindles, but gathering by labor increases it.",r:"Proverbs 13:11"}
 ];
-var AS_CODE = 'function doPost(e){\n  try{\n    var d=JSON.parse(e.postData.contents);\n    var files=DriveApp.getFilesByName("Firstfruit Budget Tracker");\n    var ss=SpreadsheetApp.openById(files.next().getId());\n    if(d.action==="budget_save"){\n      var tab=ss.getSheetByName(d.month)||ss.insertSheet(d.month);\n      tab.clearContents();\n      tab.appendRow(["Category","Item","Planned","Actual","Left","Note","Bank","Date"]);\n      (d.rows||[]).forEach(function(r){tab.appendRow(r);});\n      return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);\n    }\n  }catch(err){\n    return ContentService.createTextOutput(JSON.stringify({ok:false,error:err.toString()})).setMimeType(ContentService.MimeType.JSON);\n  }\n}';
 
+var AS_CODE = 'function doPost(e){\n  try{\n    var d=JSON.parse(e.postData.contents);\n    var ss=SpreadsheetApp.openById(DriveApp.getFilesByName("Firstfruit Budget Tracker").next().getId());\n    if(d.action==="budget_save"){\n      var tab=ss.getSheetByName(d.month)||ss.insertSheet(d.month);\n      tab.clearContents();\n      tab.appendRow(["Category","Item","Planned","Actual","Left","Note","Bank","Date"]);\n      (d.rows||[]).forEach(function(r){tab.appendRow(r);});\n      return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);\n    }\n    if(d.action==="notes_save"){\n      var tab=ss.getSheetByName("_notes")||ss.insertSheet("_notes");\n      var vals=tab.getDataRange().getValues();\n      var found=false;\n      for(var i=0;i<vals.length;i++){if(vals[i][0]===d.month){tab.getRange(i+1,2).setValue(d.notes);found=true;break;}}\n      if(!found)tab.appendRow([d.month,d.notes]);\n      return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);\n    }\n  }catch(err){\n    return ContentService.createTextOutput(JSON.stringify({ok:false,error:err.toString()})).setMimeType(ContentService.MimeType.JSON);\n  }\n}';
+
+// ── STATE ────────────────────────────────────────────────────────────────────
 var state = { budgets: {}, settings: { url: '' } };
 var currentMonth = '';
 
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+// ── UTILS ────────────────────────────────────────────────────────────────────
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+
 function dollars(n) {
   var v = parseFloat(n) || 0;
-  var abs = Math.abs(v).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  var abs = Math.abs(v).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return (v < 0 ? '-' : '') + '$' + abs;
 }
-function num(n) { return (parseFloat(n)||0).toFixed(2); }
+
+function num(n) { return (parseFloat(n) || 0).toFixed(2); }
+
 function save() { localStorage.setItem(LS, JSON.stringify(state)); }
+
 function budget() { return state.budgets[currentMonth]; }
-function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function parseMonthStr(s) {
   var p = s.split(' ');
   return { y: parseInt(p[1]), m: MONTHS_LONG.indexOf(p[0]) };
 }
+
 function finalWed(y, m) {
-  var d = new Date(y, m+1, 0);
-  while (d.getDay() !== 3) d.setDate(d.getDate()-1);
+  var d = new Date(y, m + 1, 0);
+  while (d.getDay() !== 3) d.setDate(d.getDate() - 1);
   return d.getDate();
 }
-function dowName(y, m, day) {
-  return DAYS_FULL[new Date(y, m, day).getDay()];
+
+function tuesdays(y, m) {
+  var out = [], d = new Date(y, m, 1);
+  while (d.getMonth() === m) { if (d.getDay() === 2) out.push(d.getDate()); d.setDate(d.getDate() + 1); }
+  return out;
 }
 
 function occurrences(recur, y, m) {
-  var r = recur || { freq:'monthly', days:[], dom:1 };
+  var r = recur || { freq: 'monthly', days: [], dom: 1 };
   var f = r.freq || 'monthly';
-  var dim = new Date(y, m+1, 0).getDate();
+  var dim = new Date(y, m + 1, 0).getDate();
   var out = [];
   if (f === 'once' || f === 'monthly') {
     var d = parseInt(r.dom) || 1;
     if (d <= dim) out.push(d);
     return out;
   }
-  if (f === 'daily') { for (var i=1;i<=dim;i++) out.push(i); return out; }
+  if (f === 'daily') {
+    for (var i = 1; i <= dim; i++) out.push(i);
+    return out;
+  }
   if (f === 'weekly' || f === 'biweekly') {
     var tds = r.days && r.days.length ? r.days : [];
     var selWks = (f === 'biweekly' && r.weeks && r.weeks.length) ? r.weeks : null;
     tds.forEach(function(td) {
-      var diff = (td - new Date(y,m,1).getDay() + 7) % 7;
-      var day = 1+diff, wk = 0;
+      var first = new Date(y, m, 1);
+      var diff = (td - first.getDay() + 7) % 7;
+      var day = 1 + diff, wk = 0;
       while (day <= dim) {
-        var inc = f==='weekly' ? true : (selWks ? selWks.indexOf(wk)>=0 : wk%2===0);
-        if (inc) out.push(day);
-        day+=7; wk++;
+        var include = (f === 'weekly') ? true : (selWks ? selWks.indexOf(wk) >= 0 : wk % 2 === 0);
+        if (include) out.push(day);
+        day += 7; wk++;
       }
     });
-    out.sort(function(a,b){return a-b;});
+    out.sort(function(a, b) { return a - b; });
     return out;
   }
   return out;
 }
 
 function recurLabel(rec) {
-  var r = rec || { freq:'monthly', days:[], dom:1 };
+  var r = rec || { freq: 'monthly', days: [], dom: 1 };
   var f = r.freq || 'monthly';
   if (f === 'daily') return 'Daily';
   if (f === 'once') return 'Once';
-  if (f === 'monthly') return 'Mo/' + (r.dom||1);
-  var ds = (r.days||[]).map(function(i){return DAYS[i];}).join('');
-  return (f==='biweekly'?'Bi/':'Wk/') + (ds||'?');
+  if (f === 'monthly') return 'Mo/' + (r.dom || 1);
+  var ds = (r.days || []).map(function(i) { return DAYS[i]; }).join('');
+  return (f === 'biweekly' ? 'Bi/' : 'Wk/') + (ds || '?');
 }
 
-// ── DEFAULT BUDGET ────────────────────────────────────────────────────────────
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── DEFAULT BUDGET ───────────────────────────────────────────────────────────
 function makeBudget(ms) {
   var pm = parseMonthStr(ms);
   var y = pm.y, m = pm.m;
+  var tues = tuesdays(y, m);
   var fw = finalWed(y, m);
+  var incRows = [
+    { id: uid(), label: 'Ministry', planned: 1500, received: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+    { id: uid(), label: 'Disability Tax Credit', planned: 200, received: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } }
+  ];
+  tues.forEach(function(d, i) {
+    incRows.push({ id: uid(), label: 'Aquifer Springs Wk' + (i + 1), planned: 0, received: 0, note: '', recur: { freq: 'weekly', days: [2], dom: d } });
+  });
+  incRows.push({ id: uid(), label: 'Future Health', planned: 0, received: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } });
+  incRows.push({ id: uid(), label: 'Cash on Hand', planned: 0, received: 0, note: '', recur: { freq: 'once', days: [], dom: 1 } });
   return {
-    income: [
-      {id:uid(),label:'Ministry',planned:1500,received:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-      {id:uid(),label:'Disability Tax Credit',planned:200,received:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-      {id:uid(),label:'Aquifer Springs',planned:0,received:0,note:'',recur:{freq:'weekly',days:[2],dom:1}},
-      {id:uid(),label:'Future Health',planned:0,received:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-      {id:uid(),label:'Cash on Hand',planned:0,received:0,note:'',recur:{freq:'once',days:[],dom:1}}
-    ],
+    income: incRows,
     savings: [
-      {id:uid(),label:'Emergency Fund',planned:0,contributed:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-      {id:uid(),label:'7-Month Business Reserve',planned:0,contributed:0,note:'',recur:{freq:'monthly',days:[],dom:1}}
+      { id: uid(), label: 'Emergency Fund', planned: 0, contributed: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+      { id: uid(), label: '7-Month Business Reserve', planned: 0, contributed: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } }
     ],
-    tithe: {planned:0,given:0,note:''},
+    titheGiven: 0,
     expenses: {
-      housing:[{id:uid(),label:'Rent',planned:500,spent:0,note:'',recur:{freq:'monthly',days:[],dom:fw}}],
-      food:[{id:uid(),label:'Groceries',planned:250,spent:0,note:'',recur:{freq:'weekly',days:[1],dom:1}}],
-      personal:[
-        {id:uid(),label:'Phone',planned:145,spent:0,note:'',recur:{freq:'monthly',days:[],dom:24}},
-        {id:uid(),label:'Hair',planned:50,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Clothing',planned:75,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Internet',planned:0,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}}
+      housing: [{ id: uid(), label: 'Rent', planned: 500, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: fw } }],
+      food: [{ id: uid(), label: 'Groceries', planned: 250, spent: 0, note: '', recur: { freq: 'weekly', days: [1], dom: 1 } }],
+      personal: [
+        { id: uid(), label: 'Phone', planned: 145, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 24 } },
+        { id: uid(), label: 'Hair', planned: 50, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Clothing', planned: 75, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Internet', planned: 0, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } }
       ],
-      lifestyle:[
-        {id:uid(),label:'Pot',planned:360,spent:0,note:'',recur:{freq:'daily',days:[],dom:1}},
-        {id:uid(),label:'Happy Hour',planned:700,spent:0,note:'',recur:{freq:'weekly',days:[1,3,5],dom:1}},
-        {id:uid(),label:'Dining Out',planned:250,spent:0,note:'',recur:{freq:'weekly',days:[5,0],dom:1}},
-        {id:uid(),label:'Dating',planned:600,spent:0,note:'',recur:{freq:'weekly',days:[5,6],dom:1}},
-        {id:uid(),label:'Spotify',planned:0,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Claude AI',planned:31.36,spent:0,note:'',recur:{freq:'monthly',days:[],dom:4}}
+      lifestyle: [
+        { id: uid(), label: 'Pot', planned: 360, spent: 0, note: '', recur: { freq: 'daily', days: [], dom: 1 } },
+        { id: uid(), label: 'Happy Hour', planned: 700, spent: 0, note: '', recur: { freq: 'weekly', days: [1, 3, 5], dom: 1 } },
+        { id: uid(), label: 'Dining Out', planned: 250, spent: 0, note: '', recur: { freq: 'weekly', days: [5, 0], dom: 1 } },
+        { id: uid(), label: 'Dating', planned: 600, spent: 0, note: '', recur: { freq: 'weekly', days: [5, 6], dom: 1 } },
+        { id: uid(), label: 'Spotify', planned: 0, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Claude AI', planned: 31.36, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 4 } }
       ],
-      health:[
-        {id:uid(),label:'Supplements',planned:150,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1},hasSubs:true,subs:[
-          {id:uid(),label:'Magnesium',planned:0,spent:0},{id:uid(),label:'Omega-3s',planned:0,spent:0},
-          {id:uid(),label:'L-Theanine',planned:0,spent:0},{id:uid(),label:'Methylfolate',planned:0,spent:0},
-          {id:uid(),label:'Methylated Multivitamin',planned:0,spent:0},{id:uid(),label:'Vitamin D+K',planned:0,spent:0},
-          {id:uid(),label:'TMG',planned:0,spent:0},{id:uid(),label:'Probiotics',planned:0,spent:0},
-          {id:uid(),label:'Protein',planned:0,spent:0},{id:uid(),label:'Electrolytes',planned:0,spent:0},
-          {id:uid(),label:'Creatine',planned:0,spent:0}
-        ]},
-        {id:uid(),label:'Peptides',planned:300,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Gym',planned:0,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}}
+      health: [
+        {
+          id: uid(), label: 'Supplements', planned: 150, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 },
+          hasSubs: true,
+          subs: [
+            { id: uid(), label: 'Magnesium', planned: 0, spent: 0 },
+            { id: uid(), label: 'Omega-3s', planned: 0, spent: 0 },
+            { id: uid(), label: 'L-Theanine', planned: 0, spent: 0 },
+            { id: uid(), label: 'Methylfolate', planned: 0, spent: 0 },
+            { id: uid(), label: 'Methylated Multivitamin', planned: 0, spent: 0 },
+            { id: uid(), label: 'Vitamin D+K', planned: 0, spent: 0 },
+            { id: uid(), label: 'TMG', planned: 0, spent: 0 },
+            { id: uid(), label: 'Probiotics', planned: 0, spent: 0 },
+            { id: uid(), label: 'Protein', planned: 0, spent: 0 },
+            { id: uid(), label: 'Electrolytes', planned: 0, spent: 0 },
+            { id: uid(), label: 'Creatine', planned: 0, spent: 0 }
+          ]
+        },
+        { id: uid(), label: 'Peptides', planned: 300, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Gym', planned: 0, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } }
       ],
-      aquifer:[
-        {id:uid(),label:'Modo',planned:0,spent:0,note:'',recur:{freq:'weekly',days:[2],dom:1}},
-        {id:uid(),label:'Jugs 3gal',planned:325,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Jugs 5gal',planned:450,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Caps',planned:30,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Stickers',planned:75,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Advertising',planned:100,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'App Location',planned:0,spent:0,note:'',recur:{freq:'monthly',days:[],dom:1}},
-        {id:uid(),label:'Storage Fees',planned:290,spent:0,note:'',recur:{freq:'monthly',days:[],dom:29}}
+      aquifer: [
+        { id: uid(), label: 'Modo', planned: 0, spent: 0, note: '', recur: { freq: 'weekly', days: [2], dom: 1 } },
+        { id: uid(), label: 'Jugs 3gal', planned: 325, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Jugs 5gal', planned: 450, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Caps', planned: 30, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Stickers', planned: 75, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Advertising', planned: 100, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'App Location', planned: 0, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
+        { id: uid(), label: 'Storage Fees', planned: 290, spent: 0, note: '', recur: { freq: 'monthly', days: [], dom: 29 } }
       ]
     },
-    debts:[],
-    notes:'',
-    banks:{kohoSpending:0,kohoSavings:0,scotiabank:0,simply:0,square:0}
+    debts: [],
+    notes: '',
+    banks: { kohoSpending: 0, kohoSavings: 0, scotiabank: 0, simply: 0, square: 0 }
   };
 }
 
-// ── TOTALS ────────────────────────────────────────────────────────────────────
+// ── TOTALS ───────────────────────────────────────────────────────────────────
 function totalPlannedInc() {
   var b = budget(); if (!b) return 0;
-  return (b.income||[]).reduce(function(s,r){return s+(parseFloat(r.planned)||0);},0);
+  return (b.income || []).reduce(function(s, r) { return s + (parseFloat(r.planned) || 0); }, 0);
 }
 function totalReceivedInc() {
   var b = budget(); if (!b) return 0;
-  return (b.income||[]).reduce(function(s,r){return s+(parseFloat(r.received)||0);},0);
+  return (b.income || []).reduce(function(s, r) { return s + (parseFloat(r.received) || 0); }, 0);
 }
 function allExpRows() {
   var b = budget(); if (!b) return [];
   var out = [];
-  ['housing','food','personal','lifestyle','health','aquifer'].forEach(function(k){
-    (b.expenses[k]||[]).forEach(function(r){out.push(r);});
+  ['housing','food','personal','lifestyle','health','aquifer'].forEach(function(k) {
+    (b.expenses[k] || []).forEach(function(r) { out.push(r); });
   });
   return out;
 }
-function totalPlannedExp() {
-  var b = budget(); if (!b) return 0;
-  var t = allExpRows().reduce(function(s,r){return s+(parseFloat(r.planned)||0);},0);
-  t += parseFloat((b.tithe||{}).planned)||0;
-  return t;
-}
-function totalSpentExp() {
-  var b = budget(); if (!b) return 0;
-  var t = allExpRows().reduce(function(s,r){return s+(parseFloat(r.spent)||0);},0);
-  t += parseFloat((b.tithe||{}).given)||0;
-  return t;
-}
+function totalPlannedExp() { return allExpRows().reduce(function(s,r){return s+(parseFloat(r.planned)||0);},0); }
+function totalSpentExp() { return allExpRows().reduce(function(s,r){return s+(parseFloat(r.spent)||0);},0); }
 
-// ── NAV ───────────────────────────────────────────────────────────────────────
+// ── NAVIGATION ───────────────────────────────────────────────────────────────
 function showPage(name) {
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('page-'+name).classList.add('active');
-  document.getElementById('nav-'+name).classList.add('active');
-  if (name==='flow') renderFlow();
-  if (name==='banks') renderBanks();
-  if (name==='notes') renderNotes();
-  if (name==='settings') renderSettings();
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'flow') renderFlow();
+  if (name === 'banks') renderBanks();
+  if (name === 'notes') renderNotes();
+  if (name === 'settings') renderSettings();
 }
 
-// ── MONTH PICKER ──────────────────────────────────────────────────────────────
+// ── MONTH PICKER ─────────────────────────────────────────────────────────────
 function initMonthPicker() {
   var sel = document.getElementById('monthPick');
   var now = new Date();
   sel.innerHTML = '';
-  for (var i=-2;i<=4;i++) {
-    var d = new Date(now.getFullYear(), now.getMonth()+i, 1);
+  for (var i = -2; i <= 4; i++) {
+    var d = new Date(now.getFullYear(), now.getMonth() + i, 1);
     var label = MONTHS_LONG[d.getMonth()] + ' ' + d.getFullYear();
     var opt = document.createElement('option');
     opt.value = label; opt.textContent = label;
@@ -494,36 +489,41 @@ function initMonthPicker() {
   sel.value = cur;
   currentMonth = cur;
 }
+
 function onMonthChange(val) {
   currentMonth = val;
   if (!state.budgets[currentMonth]) state.budgets[currentMonth] = makeBudget(currentMonth);
-  renderAll(); save();
+  renderAll();
+  save();
 }
 
-// ── VERSE ─────────────────────────────────────────────────────────────────────
+// ── VERSE ────────────────────────────────────────────────────────────────────
 function renderVerse() {
   var now = new Date();
-  var doy = Math.floor((now - new Date(now.getFullYear(),0,0))/86400000);
+  var doy = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
   var v = VERSES[doy % VERSES.length];
-  document.getElementById('vDate').textContent = DAYS_FULL[now.getDay()] + ', ' + MONTHS_LONG[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  document.getElementById('vDate').textContent = dayNames[now.getDay()] + ', ' + MONTHS_LONG[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
   document.getElementById('vText').textContent = '\u201c' + v.t + '\u201d';
   document.getElementById('vRef').textContent = '\u2014 ' + v.r;
 }
 
-// ── SUMMARY BAR (sticky) ──────────────────────────────────────────────────────
-function renderSumBar() {
+// ── SUMMARY BANNER ────────────────────────────────────────────────────────────
+function renderSummary() {
   var pi = totalPlannedInc(), po = totalPlannedExp(), net = pi - po;
-  var nc = net>=0 ? 'pos' : 'neg';
-  document.getElementById('sumBar').innerHTML =
-    '<div class="sb-item"><div class="sb-lbl">Planned In</div><div class="sb-val">' + dollars(pi) + '</div></div>' +
-    '<div class="sb-item"><div class="sb-lbl">Planned Out</div><div class="sb-val">' + dollars(po) + '</div></div>' +
-    '<div class="sb-item"><div class="sb-lbl">Left</div><div class="sb-val ' + nc + '">' + (net>=0?'+':'') + dollars(net) + '</div></div>';
+  var nc = net >= 0 ? '' : ' neg';
+  document.getElementById('sumBanner').innerHTML =
+    '<div class="sum-row">' +
+    '<div class="sum-widget"><div class="sw-lbl">Budgeted In</div><div class="sw-val">' + dollars(pi) + '</div></div>' +
+    '<div class="sum-widget"><div class="sw-lbl">Budgeted Out</div><div class="sw-val">' + dollars(po) + '</div></div>' +
+    '</div>' +
+    '<div class="net-bar' + nc + '"><span class="nb-lbl">Net (Plan)</span><span class="nb-val">' + (net >= 0 ? '+' : '') + dollars(net) + '</span></div>';
 }
 
-// ── COH ───────────────────────────────────────────────────────────────────────
+// ── COH ──────────────────────────────────────────────────────────────────────
 function renderCOH() {
-  var rec = totalReceivedInc(), sp = totalSpentExp(), coh = rec-sp;
-  var cc = coh>=0?'pos':'neg';
+  var rec = totalReceivedInc(), sp = totalSpentExp(), coh = rec - sp;
+  var cc = coh >= 0 ? 'pos' : 'neg';
   document.getElementById('cohCard').innerHTML =
     '<h3>Cash on Hand</h3>' +
     '<div class="coh-row"><span class="coh-lbl">Total Received</span><span class="coh-amt">' + dollars(rec) + '</span></div>' +
@@ -534,39 +534,49 @@ function renderCOH() {
 
 // ── SECTION TOGGLE ────────────────────────────────────────────────────────────
 function toggleSec(id) { document.getElementById(id).classList.toggle('collapsed'); }
+
+// ── ROW HELPERS ───────────────────────────────────────────────────────────────
 function toggleNote(id) {
-  var el = document.getElementById('note-'+id);
-  if (el) el.style.display = el.style.display==='none'?'table-row':'none';
+  var el = document.getElementById('note-' + id);
+  if (el) el.style.display = el.style.display === 'none' ? 'table-row' : 'none';
 }
 function toggleSubs(id) {
-  var el = document.getElementById('subs-'+id);
-  if (el) el.style.display = el.style.display==='none'?'table-row':'none';
+  var el = document.getElementById('subs-' + id);
+  if (el) el.style.display = el.style.display === 'none' ? 'table-row' : 'none';
 }
 function toggleRecur(id) {
-  var el = document.getElementById('recur-'+id);
-  if (el) el.style.display = el.style.display==='none'?'table-row':'none';
+  var el = document.getElementById('recur-' + id);
+  if (el) el.style.display = el.style.display === 'none' ? 'table-row' : 'none';
 }
 function clearZero(el) {
-  if (parseFloat(el.value)===0||el.value==='0.00'||el.value==='0') el.value='';
+  if (parseFloat(el.value) === 0 || el.value === '0.00' || el.value === '0') el.value = '';
 }
 
 // ── FIND ROW ──────────────────────────────────────────────────────────────────
 function findRow(sec, id) {
   var b = budget();
-  if (sec==='income') return (b.income||[]).find(function(r){return r.id===id;});
-  if (sec==='savings') return (b.savings||[]).find(function(r){return r.id===id;});
-  return (b.expenses[sec]||[]).find(function(r){return r.id===id;});
+  if (sec === 'income') return (b.income || []).find(function(r) { return r.id === id; });
+  if (sec === 'savings') return (b.savings || []).find(function(r) { return r.id === id; });
+  return (b.expenses[sec] || []).find(function(r) { return r.id === id; });
 }
 
 // ── FIELD SETTERS ─────────────────────────────────────────────────────────────
 function setField(sec, id, field, val) {
-  var row = findRow(sec, id); if (!row) return;
-  row[field] = parseFloat(val)||0;
-  save(); renderSumBar(); renderCOH();
-  if (sec==='income') renderIncome();
-  else if (sec==='savings') renderSavings();
-  else { renderExpSec('housing','Housing','zHousing'); renderExpSec('food','Food','zFood'); renderExpSec('personal','Personal','zPersonal'); renderExpSec('lifestyle','Lifestyle','zLifestyle'); renderExpSec('health','Health','zHealth'); renderExpSec('aquifer','Aquifer Springs','zAquifer'); }
-  renderTithe();
+  var row = findRow(sec, id);
+  if (!row) return;
+  row[field] = parseFloat(val) || 0;
+  save();
+  renderSummary(); renderCOH(); renderTithe();
+  if (sec === 'income') renderIncome();
+  else if (sec === 'savings') renderSavings();
+  else if (document.getElementById('zHousing')) {
+    renderExpSec('housing','Housing','zHousing');
+    renderExpSec('food','Food','zFood');
+    renderExpSec('personal','Personal','zPersonal');
+    renderExpSec('lifestyle','Lifestyle','zLifestyle');
+    renderExpSec('health','Health','zHealth');
+    renderExpSec('aquifer','Aquifer Springs','zAquifer');
+  }
 }
 function setLabel(sec, id, val) {
   var row = findRow(sec, id); if (!row) return;
@@ -577,39 +587,40 @@ function setNote(sec, id, val) {
   row.note = val; save();
 }
 function setSubField(sec, pid, sid, field, val) {
-  var parent = findRow(sec, pid); if (!parent||!parent.subs) return;
-  var sub = parent.subs.find(function(s){return s.id===sid;});
-  if (sub) { sub[field]=parseFloat(val)||0; save(); }
+  var parent = findRow(sec, pid); if (!parent || !parent.subs) return;
+  var sub = parent.subs.find(function(s) { return s.id === sid; });
+  if (sub) { sub[field] = parseFloat(val) || 0; save(); }
 }
 function setDebtField(id, field, val) {
   var b = budget();
-  var row = (b.debts||[]).find(function(r){return r.id===id;});
+  var row = (b.debts || []).find(function(r) { return r.id === id; });
   if (!row) return;
-  row[field] = field==='label'?val:(parseFloat(val)||0); save();
+  row[field] = field === 'label' ? val : (parseFloat(val) || 0);
+  save();
 }
-function setTitheField(field, val) {
-  if (!budget().tithe) budget().tithe = {planned:0,given:0,note:''};
-  budget().tithe[field] = field==='note'?val:(parseFloat(val)||0);
-  save(); renderTithe(); renderSumBar(); renderCOH();
+function setTitheGiven(val) {
+  budget().titheGiven = parseFloat(val) || 0;
+  save(); renderTithe();
 }
-function setBankBal(key, val) { budget().banks[key]=parseFloat(val)||0; save(); }
+function setBankBal(key, val) {
+  budget().banks[key] = parseFloat(val) || 0; save();
+}
 
-// ── RECUR SETTERS (no full re-render on day/week toggle) ─────────────────────
+// ── RECUR SETTERS ─────────────────────────────────────────────────────────────
 function setRecurFreq(sec, id, val) {
   var row = findRow(sec, id); if (!row) return;
   if (!row.recur) row.recur = {};
   row.recur.freq = val;
-  save(); renderAll();
-  setTimeout(function(){ var el=document.getElementById('recur-'+id); if(el) el.style.display='table-row'; },10);
+  save();
+  renderAll();
+  // Re-open the recur panel after re-render
+  var el = document.getElementById('recur-' + id);
+  if (el) el.style.display = 'table-row';
 }
 function setRecurDom(sec, id, val) {
   var row = findRow(sec, id); if (!row) return;
   if (!row.recur) row.recur = {};
-  row.recur.dom = parseInt(val)||1;
-  var pm = parseMonthStr(currentMonth);
-  var dow = dowName(pm.y, pm.m, row.recur.dom);
-  var lbl = document.getElementById('dowlbl-'+id);
-  if (lbl) lbl.textContent = dow;
+  row.recur.dom = parseInt(val) || 1;
   save();
 }
 function toggleRecurDay(sec, id, dayIdx) {
@@ -617,424 +628,441 @@ function toggleRecurDay(sec, id, dayIdx) {
   if (!row.recur) row.recur = {};
   if (!row.recur.days) row.recur.days = [];
   var i = row.recur.days.indexOf(dayIdx);
-  if (i>=0) row.recur.days.splice(i,1); else row.recur.days.push(dayIdx);
+  if (i >= 0) row.recur.days.splice(i, 1); else row.recur.days.push(dayIdx);
   save();
-  var badge = document.getElementById('rbadge-'+id);
-  if (badge) badge.textContent = recurLabel(row.recur);
-  if (event && event.target) event.target.classList.toggle('on', row.recur.days.indexOf(dayIdx)>=0);
+  updateRecurBadge(id, row);
+  var btn = event.target;
+  btn.classList.toggle('on', row.recur.days.indexOf(dayIdx) >= 0);
 }
 function toggleRecurWk(sec, id, wkIdx) {
   var row = findRow(sec, id); if (!row) return;
   if (!row.recur) row.recur = {};
   if (!row.recur.weeks) row.recur.weeks = [];
   var i = row.recur.weeks.indexOf(wkIdx);
-  if (i>=0) row.recur.weeks.splice(i,1); else row.recur.weeks.push(wkIdx);
+  if (i >= 0) row.recur.weeks.splice(i, 1); else row.recur.weeks.push(wkIdx);
   save();
-  var badge = document.getElementById('rbadge-'+id);
+  updateRecurBadge(id, row);
+  var btn = event.target;
+  btn.classList.toggle('on', row.recur.weeks.indexOf(wkIdx) >= 0);
+}
+function updateRecurBadge(id, row) {
+  var badge = document.getElementById('rbadge-' + id);
   if (badge) badge.textContent = recurLabel(row.recur);
-  if (event && event.target) event.target.classList.toggle('on', row.recur.weeks.indexOf(wkIdx)>=0);
 }
 
-// ── ADD / REMOVE / MOVE ───────────────────────────────────────────────────────
+// ── ADD / REMOVE ROWS ────────────────────────────────────────────────────────
 function addRow(sec) {
   var b = budget();
-  var base = {id:uid(),label:'New Item',planned:0,note:'',recur:{freq:'monthly',days:[],dom:1}};
-  if (sec==='income') { base.received=0; b.income.push(base); }
-  else if (sec==='savings') { base.contributed=0; b.savings.push(base); }
-  else { base.spent=0; if (!b.expenses[sec]) b.expenses[sec]=[]; b.expenses[sec].push(base); }
+  var base = { id: uid(), label: 'New Item', planned: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } };
+  if (sec === 'income') { base.received = 0; b.income.push(base); }
+  else if (sec === 'savings') { base.contributed = 0; b.savings.push(base); }
+  else { base.spent = 0; if (!b.expenses[sec]) b.expenses[sec] = []; b.expenses[sec].push(base); }
   save(); renderAll();
 }
 function removeRow(sec, id) {
   var b = budget();
-  if (sec==='income') b.income=b.income.filter(function(r){return r.id!==id;});
-  else if (sec==='savings') b.savings=b.savings.filter(function(r){return r.id!==id;});
-  else if (b.expenses[sec]) b.expenses[sec]=b.expenses[sec].filter(function(r){return r.id!==id;});
-  save(); renderAll();
-}
-function moveRow(sec, id, dir) {
-  var b = budget();
-  var arr = sec==='income'?b.income:sec==='savings'?b.savings:(b.expenses[sec]||[]);
-  var idx = arr.findIndex(function(r){return r.id===id;});
-  if (idx<0) return;
-  var newIdx = idx+dir;
-  if (newIdx<0||newIdx>=arr.length) return;
-  var tmp = arr[idx]; arr[idx]=arr[newIdx]; arr[newIdx]=tmp;
+  if (sec === 'income') b.income = b.income.filter(function(r) { return r.id !== id; });
+  else if (sec === 'savings') b.savings = b.savings.filter(function(r) { return r.id !== id; });
+  else if (b.expenses[sec]) b.expenses[sec] = b.expenses[sec].filter(function(r) { return r.id !== id; });
   save(); renderAll();
 }
 function addDebt() {
-  budget().debts.push({id:uid(),label:'New Debt',balance:0,minimum:0,extra:0});
+  budget().debts.push({ id: uid(), label: 'New Debt', balance: 0, minimum: 0, extra: 0 });
   save(); renderDebts();
 }
 function removeDebt(id) {
-  var b=budget(); b.debts=b.debts.filter(function(r){return r.id!==id;});
+  var b = budget(); b.debts = b.debts.filter(function(r) { return r.id !== id; });
   save(); renderDebts();
 }
 
 // ── RECUR ROW HTML ────────────────────────────────────────────────────────────
 function recurRowHtml(row, sec, colspan) {
-  var r = row.recur || {freq:'monthly',days:[],dom:1};
-  var f = r.freq||'monthly';
-  var selDays = r.days||[];
-  var selWks = r.weeks||[];
-  var dom = r.dom||1;
-  var showDays = (f==='weekly'||f==='biweekly');
-  var showWks = (f==='biweekly');
-  var showDom = (f==='once'||f==='monthly');
-  var pm = parseMonthStr(currentMonth);
+  var r = row.recur || { freq: 'monthly', days: [], dom: 1 };
+  var f = r.freq || 'monthly';
+  var selDays = r.days || [];
+  var selWks = r.weeks || [];
+  var dom = r.dom || 1;
+  var showDays = (f === 'weekly' || f === 'biweekly');
+  var showWks = (f === 'biweekly');
+  var showDom = (f === 'once' || f === 'monthly');
 
   var freqSel = '<select class="recur-freq-sel" onchange="setRecurFreq(\'' + sec + '\',\'' + row.id + '\',this.value)">';
-  Object.keys(FREQS).forEach(function(k){
-    freqSel += '<option value="' + k + '"' + (f===k?' selected':'') + '>' + FREQS[k] + '</option>';
+  Object.keys(FREQS).forEach(function(k) {
+    freqSel += '<option value="' + k + '"' + (f === k ? ' selected' : '') + '>' + FREQS[k] + '</option>';
   });
   freqSel += '</select>';
 
   var dayHtml = '';
   if (showDays) {
     dayHtml = '<div class="day-btns">';
-    DAYS.forEach(function(d,i){
-      var on = selDays.indexOf(i)>=0?' on':'';
+    DAYS.forEach(function(d, i) {
+      var on = selDays.indexOf(i) >= 0 ? ' on' : '';
       dayHtml += '<button class="day-btn' + on + '" onclick="toggleRecurDay(\'' + sec + '\',\'' + row.id + '\',' + i + ')">' + d + '</button>';
     });
     dayHtml += '</div>';
   }
-
   var wkHtml = '';
   if (showWks) {
     wkHtml = '<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:2px;">';
-    wkHtml += '<span style="font-size:10px;color:var(--muted);align-self:center;">Weeks:</span>';
-    ['Wk1','Wk2','Wk3','Wk4','Wk5'].forEach(function(lbl,i){
-      var on = selWks.indexOf(i)>=0?' on':'';
+    wkHtml += '<span style="font-size:10px;color:var(--muted);align-self:center;margin-right:2px;">Weeks:</span>';
+    ['Wk1','Wk2','Wk3','Wk4','Wk5'].forEach(function(lbl, i) {
+      var on = selWks.indexOf(i) >= 0 ? ' on' : '';
       wkHtml += '<button class="day-btn' + on + '" onclick="toggleRecurWk(\'' + sec + '\',\'' + row.id + '\',' + i + ')">' + lbl + '</button>';
     });
     wkHtml += '</div>';
   }
 
-  var domHtml = '';
-  if (showDom) {
-    var dow = dowName(pm.y, pm.m, dom);
-    domHtml = '<div class="date-picker-wrap">' +
-      '<input class="dom-in" type="number" min="1" max="31" inputmode="numeric" value="' + dom + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setRecurDom(\'' + sec + '\',\'' + row.id + '\',this.value)">' +
-      '<span class="dow-label" id="dowlbl-' + row.id + '">' + dow + '</span>' +
-      '</div>';
-  }
+  var domHtml = showDom
+    ? '<input class="dom-in" type="number" min="1" max="31" inputmode="numeric" value="' + dom + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setRecurDom(\'' + sec + '\',\'' + row.id + '\',this.value)">'
+    : '';
 
   return '<tr id="recur-' + row.id + '" style="display:none;"><td colspan="' + colspan + '" class="recur-row"><div class="recur-inner">' + freqSel + dayHtml + wkHtml + domHtml + '</div></td></tr>';
 }
 
-// ── INCOME ────────────────────────────────────────────────────────────────────
+// ── INCOME SECTION ────────────────────────────────────────────────────────────
 function renderIncome() {
   var b = budget();
-  var rows = b.income||[];
-  var tp=0,tr=0;
-  rows.forEach(function(r){tp+=parseFloat(r.planned)||0;tr+=parseFloat(r.received)||0;});
-  var h='<div class="sec-card sec-income" id="sec-income">';
-  h+='<div class="sec-hdr" onclick="toggleSec(\'sec-income\')"><h2>Income</h2><span class="sec-arrow">&#9660;</span></div>';
-  h+='<div class="sec-body"><table class="bt"><thead><tr><th>Source</th><th>Planned</th><th>Received</th><th>Remaining</th></tr></thead><tbody>';
-  rows.forEach(function(r){
-    var stg=(parseFloat(r.planned)||0)-(parseFloat(r.received)||0);
-    h+='<tr><td><div class="lc">';
-    h+='<button class="move-btn" onclick="moveRow(\'income\',\''+r.id+'\',-1)">&#8679;</button>';
-    h+='<button class="move-btn" onclick="moveRow(\'income\',\''+r.id+'\',1)">&#8681;</button>';
-    h+='<button class="rm-btn" onclick="removeRow(\'income\',\''+r.id+'\')">&#8722;</button>';
-    h+='<input class="lbl-in" value="'+esc(r.label)+'" onchange="setLabel(\'income\',\''+r.id+'\',this.value)">';
-    h+='<button class="recur-badge" id="rbadge-'+r.id+'" onclick="toggleRecur(\''+r.id+'\')">'+recurLabel(r.recur)+'</button>';
-    h+='<button class="ic-btn" onclick="toggleNote(\''+r.id+'\')" title="Note">&#128221;</button>';
-    h+='</div></td>';
-    h+='<td><input class="ni" type="number" inputmode="decimal" value="'+num(r.planned)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'income\',\''+r.id+'\',\'planned\',this.value)"></td>';
-    h+='<td><input class="ni g" type="number" inputmode="decimal" value="'+num(r.received)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'income\',\''+r.id+'\',\'received\',this.value)"></td>';
-    h+='<td><span class="disp'+(stg<=0?' g':'')+'">'+dollars(stg)+'</span></td></tr>';
-    h+=recurRowHtml(r,'income',4);
-    h+='<tr id="note-'+r.id+'" style="display:none;"><td colspan="4" class="note-row"><textarea class="note-in" rows="2" placeholder="Note..." onchange="setNote(\'income\',\''+r.id+'\',this.value)">'+esc(r.note||'')+'</textarea></td></tr>';
+  var rows = b.income || [];
+  var tp = 0, tr = 0;
+  rows.forEach(function(r) { tp += parseFloat(r.planned) || 0; tr += parseFloat(r.received) || 0; });
+
+  var h = '<div class="sec-card sec-income" id="sec-income">';
+  h += '<div class="sec-hdr" onclick="toggleSec(\'sec-income\')"><h2>Income</h2><span class="sec-arrow">&#9660;</span></div>';
+  h += '<div class="sec-body"><table class="bt">';
+  h += '<thead><tr><th>Source</th><th>Planned</th><th>Received</th><th>Remaining</th></tr></thead><tbody>';
+
+  rows.forEach(function(r) {
+    var stg = (parseFloat(r.planned) || 0) - (parseFloat(r.received) || 0);
+    var stgC = stg <= 0 ? 'g' : '';
+    h += '<tr><td><div class="lc">';
+    h += '<button class="rm-btn" onclick="removeRow(\'income\',\'' + r.id + '\')">&#8722;</button>';
+    h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'income\',\'' + r.id + '\',this.value)">';
+    h += '<button class="recur-badge" id="rbadge-' + r.id + '" onclick="toggleRecur(\'' + r.id + '\')">' + recurLabel(r.recur) + '</button>';
+    h += '<button class="ic-btn" onclick="toggleNote(\'' + r.id + '\')" title="Note">&#128221;</button>';
+    h += '</div></td>';
+    h += '<td><input class="ni" type="number" inputmode="decimal" value="' + num(r.planned) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'income\',\'' + r.id + '\',\'planned\',this.value)"></td>';
+    h += '<td><input class="ni g" type="number" inputmode="decimal" value="' + num(r.received) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'income\',\'' + r.id + '\',\'received\',this.value)"></td>';
+    h += '<td><span class="disp ' + stgC + '">' + dollars(stg) + '</span></td></tr>';
+    h += recurRowHtml(r, 'income', 4);
+    h += '<tr id="note-' + r.id + '" style="display:none;"><td colspan="4" class="note-row"><textarea class="note-in" rows="2" placeholder="Note..." onchange="setNote(\'income\',\'' + r.id + '\',this.value)">' + esc(r.note || '') + '</textarea></td></tr>';
   });
-  h+='<tr class="tot"><td>Total</td><td><span class="disp">'+dollars(tp)+'</span></td><td><span class="disp g">'+dollars(tr)+'</span></td><td></td></tr>';
-  h+='</tbody></table><button class="add-btn" onclick="addRow(\'income\')">+ Add Income</button></div></div>';
-  document.getElementById('zIncome').innerHTML=h;
+
+  h += '<tr class="tot"><td>Total</td><td><span class="disp">' + dollars(tp) + '</span></td><td><span class="disp g">' + dollars(tr) + '</span></td><td></td></tr>';
+  h += '</tbody></table><button class="add-btn" onclick="addRow(\'income\')">+ Add Income</button></div></div>';
+  document.getElementById('zIncome').innerHTML = h;
 }
 
-// ── TITHE (manual) ────────────────────────────────────────────────────────────
+// ── TITHE SECTION ─────────────────────────────────────────────────────────────
 function renderTithe() {
   var b = budget();
-  var t = b.tithe||{planned:0,given:0,note:''};
-  var planned = parseFloat(t.planned)||0;
-  var given = parseFloat(t.given)||0;
-  var still = planned - given;
-  var autoOwed = totalReceivedInc()*0.10;
-  var h='<div class="sec-card sec-tithe" id="sec-tithe">';
-  h+='<div class="sec-hdr" onclick="toggleSec(\'sec-tithe\')"><h2>Tithe</h2><span class="sec-arrow">&#9660;</span></div>';
-  h+='<div class="sec-body"><div class="tithe-body">';
-  h+='<div class="tithe-grid">';
-  h+='<div class="tc"><div class="tc-lbl">Planned</div><input class="tithe-given" type="number" inputmode="decimal" value="'+num(planned)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setTitheField(\'planned\',this.value)"></div>';
-  h+='<div class="tc"><div class="tc-lbl">Given</div><input class="tithe-given" type="number" inputmode="decimal" value="'+num(given)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setTitheField(\'given\',this.value)"></div>';
-  h+='<div class="tc"><div class="tc-lbl">Still Owed</div><div class="tc-val'+(still>0?' warn':'')+'">'+dollars(still)+'</div></div>';
-  h+='</div>';
-  h+='<div class="tithe-note">Suggested: '+dollars(autoOwed)+' (10% of received income)</div>';
-  h+='<textarea class="note-in" rows="2" placeholder="Tithe notes..." style="margin-top:8px;" onchange="setTitheField(\'note\',this.value)">'+esc(t.note||'')+'</textarea>';
-  h+='</div></div></div>';
-  document.getElementById('zTithe').innerHTML=h;
+  var owed = totalReceivedInc() * 0.10;
+  var plan = totalPlannedInc() * 0.10;
+  var given = parseFloat(b.titheGiven) || 0;
+  var still = owed - given;
+
+  var h = '<div class="sec-card sec-tithe" id="sec-tithe">';
+  h += '<div class="sec-hdr" onclick="toggleSec(\'sec-tithe\')"><h2>Tithe</h2><span class="sec-arrow">&#9660;</span></div>';
+  h += '<div class="sec-body"><div class="tithe-body">';
+  h += '<div class="tithe-grid">';
+  h += '<div class="tc"><div class="tc-lbl">Owed</div><div class="tc-val">' + dollars(owed) + '</div><div style="font-size:10px;color:var(--purple);margin-top:2px;">10% received</div></div>';
+  h += '<div class="tc"><div class="tc-lbl">Given</div><input class="tithe-given" type="number" inputmode="decimal" value="' + num(given) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setTitheGiven(this.value)"></div>';
+  h += '<div class="tc"><div class="tc-lbl">Still Owed</div><div class="tc-val' + (still > 0 ? ' warn' : '') + '">' + dollars(still) + '</div></div>';
+  h += '</div>';
+  h += '<div class="tithe-note">Plan: ' + dollars(plan) + ' (10% of planned income)</div>';
+  h += '</div></div></div>';
+  document.getElementById('zTithe').innerHTML = h;
 }
 
-// ── SAVINGS ───────────────────────────────────────────────────────────────────
+// ── SAVINGS SECTION ───────────────────────────────────────────────────────────
 function renderSavings() {
-  var b=budget();
-  var rows=b.savings||[];
-  var tp=0,tc=0,tr2=0;
-  rows.forEach(function(r){tp+=parseFloat(r.planned)||0;tc+=parseFloat(r.contributed)||0;tr2+=((parseFloat(r.planned)||0)-(parseFloat(r.contributed)||0));});
-  var h='<div class="sec-card" id="sec-savings">';
-  h+='<div class="sec-hdr" onclick="toggleSec(\'sec-savings\')"><h2>Savings</h2><span class="sec-arrow">&#9660;</span></div>';
-  h+='<div class="sec-body"><table class="bt"><thead><tr><th>Goal</th><th>Planned</th><th>Contributed</th><th>Remaining</th></tr></thead><tbody>';
-  rows.forEach(function(r){
-    var rem=(parseFloat(r.planned)||0)-(parseFloat(r.contributed)||0);
-    h+='<tr><td><div class="lc">';
-    h+='<button class="move-btn" onclick="moveRow(\'savings\',\''+r.id+'\',-1)">&#8679;</button>';
-    h+='<button class="move-btn" onclick="moveRow(\'savings\',\''+r.id+'\',1)">&#8681;</button>';
-    h+='<button class="rm-btn" onclick="removeRow(\'savings\',\''+r.id+'\')">&#8722;</button>';
-    h+='<input class="lbl-in" value="'+esc(r.label)+'" onchange="setLabel(\'savings\',\''+r.id+'\',this.value)">';
-    h+='<button class="recur-badge" id="rbadge-'+r.id+'" onclick="toggleRecur(\''+r.id+'\')">'+recurLabel(r.recur)+'</button>';
-    h+='<button class="ic-btn" onclick="toggleNote(\''+r.id+'\')" title="Note">&#128221;</button>';
-    h+='</div></td>';
-    h+='<td><input class="ni" type="number" inputmode="decimal" value="'+num(r.planned)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'savings\',\''+r.id+'\',\'planned\',this.value)"></td>';
-    h+='<td><input class="ni g" type="number" inputmode="decimal" value="'+num(r.contributed)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'savings\',\''+r.id+'\',\'contributed\',this.value)"></td>';
-    h+='<td><span class="disp'+(rem<=0?' g':'')+'">'+dollars(rem)+'</span></td></tr>';
-    h+=recurRowHtml(r,'savings',4);
-    h+='<tr id="note-'+r.id+'" style="display:none;"><td colspan="4" class="note-row"><textarea class="note-in" rows="2" placeholder="Note..." onchange="setNote(\'savings\',\''+r.id+'\',this.value)">'+esc(r.note||'')+'</textarea></td></tr>';
+  var b = budget();
+  var rows = b.savings || [];
+  var tp = 0, tc = 0;
+  var totalRem = 0;
+  rows.forEach(function(r) { tp += parseFloat(r.planned) || 0; tc += parseFloat(r.contributed) || 0; totalRem += (parseFloat(r.planned)||0)-(parseFloat(r.contributed)||0); });
+
+  var h = '<div class="sec-card" id="sec-savings">';
+  h += '<div class="sec-hdr" onclick="toggleSec(\'sec-savings\')"><h2>Savings</h2><span class="sec-arrow">&#9660;</span></div>';
+  h += '<div class="sec-body"><table class="bt">';
+  h += '<thead><tr><th>Goal</th><th>Planned</th><th>Contributed</th><th>Remaining</th></tr></thead><tbody>';
+
+  rows.forEach(function(r) {
+    var rem = (parseFloat(r.planned) || 0) - (parseFloat(r.contributed) || 0);
+    h += '<tr><td><div class="lc">';
+    h += '<button class="rm-btn" onclick="removeRow(\'savings\',\'' + r.id + '\')">&#8722;</button>';
+    h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'savings\',\'' + r.id + '\',this.value)">';
+    h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'savings\',\'' + r.id + '\',this.value)">';
+    h += '<button class="recur-badge" id="rbadge-' + r.id + '" onclick="toggleRecur(\'' + r.id + '\')">' + recurLabel(r.recur) + '</button>';
+    h += '</div></td>';
+    h += '<td><input class="ni" type="number" inputmode="decimal" value="' + num(r.planned) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'savings\',\'' + r.id + '\',\'planned\',this.value)"></td>';
+    h += '<td><input class="ni g" type="number" inputmode="decimal" value="' + num(r.contributed) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'savings\',\'' + r.id + '\',\'contributed\',this.value)"></td>';
+    h += '<td><span class="disp' + (rem <= 0 ? ' g' : '') + '">' + dollars(rem) + '</span></td></tr>';
+    h += recurRowHtml(r, 'savings', 4);
+    h += '<tr id="note-' + r.id + '" style="display:none;"><td colspan="4" class="note-row"><textarea class="note-in" rows="2" placeholder="Note..." onchange="setNote(\'savings\',\'' + r.id + '\',this.value)">' + esc(r.note || '') + '</textarea></td></tr>';
   });
-  h+='<tr class="tot"><td>Total</td><td><span class="disp">'+dollars(tp)+'</span></td><td><span class="disp g">'+dollars(tc)+'</span></td><td><span class="disp'+(tr2<=0?' g':'')+'">'+dollars(tr2)+'</span></td></tr>';
-  h+='</tbody></table><button class="add-btn" onclick="addRow(\'savings\')">+ Add Goal</button></div></div>';
-  document.getElementById('zSavings').innerHTML=h;
+
+  h += '<tr class="tot"><td>Total</td><td><span class="disp">' + dollars(tp) + '</span></td><td><span class="disp g">' + dollars(tc) + '</span></td><td><span class="disp' + (totalRem <= 0 ? ' g' : '') + '">' + dollars(totalRem) + '</span></td></tr>';
+  h += '</tbody></table><button class="add-btn" onclick="addRow(\'savings\')">+ Add Goal</button></div></div>';
+  document.getElementById('zSavings').innerHTML = h;
 }
 
 // ── EXPENSE SECTION ───────────────────────────────────────────────────────────
 function renderExpSec(key, title, elId) {
-  var b=budget();
-  var rows=b.expenses[key]||[];
-  var tp=0,ts=0;
-  rows.forEach(function(r){tp+=parseFloat(r.planned)||0;ts+=parseFloat(r.spent)||0;});
-  var left=tp-ts;
-  var h='<div class="sec-card" id="sec-'+key+'">';
-  h+='<div class="sec-hdr" onclick="toggleSec(\'sec-'+key+'\')"><h2>'+title+'</h2><span class="sec-arrow">&#9660;</span></div>';
-  h+='<div class="sec-body"><table class="bt"><thead><tr><th>Item</th><th>Planned</th><th>Spent</th><th>Left</th></tr></thead><tbody>';
-  rows.forEach(function(r){
-    var lft=(parseFloat(r.planned)||0)-(parseFloat(r.spent)||0);
-    var spC=(parseFloat(r.spent)||0)>(parseFloat(r.planned)||0)?'r':'g';
-    var ltC=lft<0?'r':'g';
-    h+='<tr><td><div class="lc">';
-    h+='<button class="move-btn" onclick="moveRow(\''+key+'\',\''+r.id+'\',-1)">&#8679;</button>';
-    h+='<button class="move-btn" onclick="moveRow(\''+key+'\',\''+r.id+'\',1)">&#8681;</button>';
-    h+='<button class="rm-btn" onclick="removeRow(\''+key+'\',\''+r.id+'\')">&#8722;</button>';
-    h+='<input class="lbl-in" value="'+esc(r.label)+'" onchange="setLabel(\''+key+'\',\''+r.id+'\',this.value)">';
-    if (r.hasSubs) h+='<button class="ic-btn" onclick="toggleSubs(\''+r.id+'\')" title="Breakdown">&#9660;</button>';
-    h+='<button class="recur-badge" id="rbadge-'+r.id+'" onclick="toggleRecur(\''+r.id+'\')">'+recurLabel(r.recur)+'</button>';
-    h+='<button class="ic-btn" onclick="toggleNote(\''+r.id+'\')" title="Note">&#128221;</button>';
-    h+='</div></td>';
-    h+='<td><input class="ni" type="number" inputmode="decimal" value="'+num(r.planned)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\''+key+'\',\''+r.id+'\',\'planned\',this.value)"></td>';
-    h+='<td><input class="ni '+spC+'" type="number" inputmode="decimal" value="'+num(r.spent)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\''+key+'\',\''+r.id+'\',\'spent\',this.value)"></td>';
-    h+='<td><span class="disp '+ltC+'">'+dollars(lft)+'</span></td></tr>';
-    h+=recurRowHtml(r,key,4);
-    h+='<tr id="note-'+r.id+'" style="display:none;"><td colspan="4" class="note-row"><textarea class="note-in" rows="2" placeholder="Note..." onchange="setNote(\''+key+'\',\''+r.id+'\',this.value)">'+esc(r.note||'')+'</textarea></td></tr>';
-    if (r.hasSubs&&r.subs) {
-      h+='<tr id="subs-'+r.id+'" style="display:none;"><td colspan="4" style="padding:0;"><table class="bt">';
-      r.subs.forEach(function(s){
-        var sl=(parseFloat(s.planned)||0)-(parseFloat(s.spent)||0);
-        var ssC=(parseFloat(s.spent)||0)>(parseFloat(s.planned)||0)?'r':'g';
-        h+='<tr class="subs-row"><td class="sub-lbl">'+esc(s.label)+'</td>';
-        h+='<td><input class="ni" type="number" inputmode="decimal" value="'+num(s.planned)+'" style="width:56px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setSubField(\''+key+'\',\''+r.id+'\',\''+s.id+'\',\'planned\',this.value)"></td>';
-        h+='<td><input class="ni '+ssC+'" type="number" inputmode="decimal" value="'+num(s.spent)+'" style="width:56px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setSubField(\''+key+'\',\''+r.id+'\',\''+s.id+'\',\'spent\',this.value)"></td>';
-        h+='<td><span class="disp '+(sl<0?'r':'g')+'" style="font-size:12px;">'+dollars(sl)+'</span></td></tr>';
+  var b = budget();
+  var rows = b.expenses[key] || [];
+  var tp = 0, ts = 0;
+  rows.forEach(function(r) { tp += parseFloat(r.planned) || 0; ts += parseFloat(r.spent) || 0; });
+  var left = tp - ts;
+
+  var h = '<div class="sec-card" id="sec-' + key + '">';
+  h += '<div class="sec-hdr" onclick="toggleSec(\'sec-' + key + '\')"><h2>' + title + '</h2><span class="sec-arrow">&#9660;</span></div>';
+  h += '<div class="sec-body"><table class="bt">';
+  h += '<thead><tr><th>Item</th><th>Planned</th><th>Spent</th><th>Left</th></tr></thead><tbody>';
+
+  rows.forEach(function(r) {
+    var lft = (parseFloat(r.planned) || 0) - (parseFloat(r.spent) || 0);
+    var spC = (parseFloat(r.spent) || 0) > (parseFloat(r.planned) || 0) ? 'r' : 'g';
+    var ltC = lft < 0 ? 'r' : 'g';
+
+    h += '<tr><td><div class="lc">';
+    h += '<button class="rm-btn" onclick="removeRow(\'' + key + '\',\'' + r.id + '\')">&#8722;</button>';
+    h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'' + key + '\',\'' + r.id + '\',this.value)">';
+    if (r.hasSubs) h += '<button class="ic-btn" onclick="toggleSubs(\'' + r.id + '\')" title="Breakdown">&#9660;</button>';
+    h += '<button class="recur-badge" id="rbadge-' + r.id + '" onclick="toggleRecur(\'' + r.id + '\')">' + recurLabel(r.recur) + '</button>';
+    h += '<button class="ic-btn" onclick="toggleNote(\'' + r.id + '\')" title="Note">&#128221;</button>';
+    h += '</div></td>';
+    h += '<td><input class="ni" type="number" inputmode="decimal" value="' + num(r.planned) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'' + key + '\',\'' + r.id + '\',\'planned\',this.value)"></td>';
+    h += '<td><input class="ni ' + spC + '" type="number" inputmode="decimal" value="' + num(r.spent) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setField(\'' + key + '\',\'' + r.id + '\',\'spent\',this.value)"></td>';
+    h += '<td><span class="disp ' + ltC + '">' + dollars(lft) + '</span></td></tr>';
+    h += recurRowHtml(r, key, 4);
+    h += '<tr id="note-' + r.id + '" style="display:none;"><td colspan="4" class="note-row"><textarea class="note-in" rows="2" placeholder="Note..." onchange="setNote(\'' + key + '\',\'' + r.id + '\',this.value)">' + esc(r.note || '') + '</textarea></td></tr>';
+
+    if (r.hasSubs && r.subs) {
+      h += '<tr id="subs-' + r.id + '" style="display:none;"><td colspan="4" style="padding:0;">';
+      h += '<table class="bt">';
+      r.subs.forEach(function(s) {
+        var sl = (parseFloat(s.planned) || 0) - (parseFloat(s.spent) || 0);
+        var ssC = (parseFloat(s.spent) || 0) > (parseFloat(s.planned) || 0) ? 'r' : 'g';
+        h += '<tr class="subs-row">';
+        h += '<td class="sub-lbl">' + esc(s.label) + '</td>';
+        h += '<td><input class="ni" type="number" inputmode="decimal" value="' + num(s.planned) + '" style="width:56px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setSubField(\'' + key + '\',\'' + r.id + '\',\'' + s.id + '\',\'planned\',this.value)"></td>';
+        h += '<td><input class="ni ' + ssC + '" type="number" inputmode="decimal" value="' + num(s.spent) + '" style="width:56px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setSubField(\'' + key + '\',\'' + r.id + '\',\'' + s.id + '\',\'spent\',this.value)"></td>';
+        h += '<td><span class="disp ' + (sl < 0 ? 'r' : 'g') + '" style="font-size:12px;">' + dollars(sl) + '</span></td>';
+        h += '</tr>';
       });
-      h+='</table></td></tr>';
+      h += '</table></td></tr>';
     }
   });
-  var totSpC=ts>tp?'r':'g';
-  var totLtC=left<0?'r':'g';
-  h+='<tr class="tot"><td>Total</td><td><span class="disp">'+dollars(tp)+'</span></td><td><span class="disp '+totSpC+'">'+dollars(ts)+'</span></td><td><span class="disp '+totLtC+'">'+dollars(left)+'</span></td></tr>';
-  h+='</tbody></table><button class="add-btn" onclick="addRow(\''+key+'\')">+ Add Item</button></div></div>';
-  document.getElementById(elId).innerHTML=h;
+
+  var totSpC = ts > tp ? 'r' : 'g';
+  var totLtC = left < 0 ? 'r' : 'g';
+  h += '<tr class="tot"><td>Total</td><td><span class="disp">' + dollars(tp) + '</span></td><td><span class="disp ' + totSpC + '">' + dollars(ts) + '</span></td><td><span class="disp ' + totLtC + '">' + dollars(left) + '</span></td></tr>';
+  h += '</tbody></table><button class="add-btn" onclick="addRow(\'' + key + '\')">+ Add Item</button></div></div>';
+  document.getElementById(elId).innerHTML = h;
 }
 
 // ── DEBTS ─────────────────────────────────────────────────────────────────────
 function renderDebts() {
-  var b=budget();
-  var rows=b.debts||[];
-  var h='<div class="sec-card" id="sec-debts">';
-  h+='<div class="sec-hdr" onclick="toggleSec(\'sec-debts\')"><h2>Debts</h2><span class="sec-arrow">&#9660;</span></div>';
-  h+='<div class="sec-body">';
-  if (!rows.length) h+='<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px;">No debts \u2014 praise God!</div>';
-  else rows.forEach(function(r){
-    h+='<div style="padding:8px 12px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto auto auto auto;gap:6px;align-items:center;">';
-    h+='<input class="lbl-in" value="'+esc(r.label)+'" onchange="setDebtField(\''+r.id+'\',\'label\',this.value)" style="font-weight:500;">';
-    h+='<input class="ni" type="number" inputmode="decimal" placeholder="Balance" value="'+num(r.balance)+'" style="width:70px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setDebtField(\''+r.id+'\',\'balance\',this.value)">';
-    h+='<input class="ni" type="number" inputmode="decimal" placeholder="Min" value="'+num(r.minimum)+'" style="width:58px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setDebtField(\''+r.id+'\',\'minimum\',this.value)">';
-    h+='<input class="ni" type="number" inputmode="decimal" placeholder="Extra" value="'+num(r.extra)+'" style="width:58px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setDebtField(\''+r.id+'\',\'extra\',this.value)">';
-    h+='<button class="rm-btn" onclick="removeDebt(\''+r.id+'\')">&#8722;</button></div>';
-  });
-  h+='<button class="add-btn" onclick="addDebt()">+ Add Debt</button></div></div>';
-  document.getElementById('zDebts').innerHTML=h;
+  var b = budget();
+  var rows = b.debts || [];
+  var h = '<div class="sec-card" id="sec-debts">';
+  h += '<div class="sec-hdr" onclick="toggleSec(\'sec-debts\')"><h2>Debts</h2><span class="sec-arrow">&#9660;</span></div>';
+  h += '<div class="sec-body">';
+  if (!rows.length) {
+    h += '<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px;">No debts \u2014 praise God!</div>';
+  } else {
+    rows.forEach(function(r) {
+      h += '<div class="debt-item">';
+      h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setDebtField(\'' + r.id + '\',\'label\',this.value)" style="font-weight:500;">';
+      h += '<input class="ni" type="number" inputmode="decimal" placeholder="Balance" value="' + num(r.balance) + '" style="width:70px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setDebtField(\'' + r.id + '\',\'balance\',this.value)">';
+      h += '<input class="ni" type="number" inputmode="decimal" placeholder="Min" value="' + num(r.minimum) + '" style="width:58px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setDebtField(\'' + r.id + '\',\'minimum\',this.value)">';
+      h += '<input class="ni" type="number" inputmode="decimal" placeholder="Extra" value="' + num(r.extra) + '" style="width:58px;" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setDebtField(\'' + r.id + '\',\'extra\',this.value)">';
+      h += '<button class="rm-btn" onclick="removeDebt(\'' + r.id + '\')">&#8722;</button>';
+      h += '</div>';
+    });
+  }
+  h += '<button class="add-btn" onclick="addDebt()">+ Add Debt</button></div></div>';
+  document.getElementById('zDebts').innerHTML = h;
 }
 
-// ── CASH FLOW ─────────────────────────────────────────────────────────────────
+// ── CASH FLOW PAGE ────────────────────────────────────────────────────────────
 function renderFlow() {
-  var b=budget(); if (!b) return;
-  var pm=parseMonthStr(currentMonth);
-  var y=pm.y,m=pm.m;
-  var dim=new Date(y,m+1,0).getDate();
-  var dIn=new Array(dim+1).fill(0);
-  var dOut=new Array(dim+1).fill(0);
-  (b.income||[]).forEach(function(r){
-    var occ=occurrences(r.recur,y,m);
-    var cnt=occ.length||1;
-    var amt=(parseFloat(r.planned)||0)/cnt;
-    occ.forEach(function(d){dIn[d]+=amt;});
+  var b = budget(); if (!b) return;
+  var pm = parseMonthStr(currentMonth);
+  var y = pm.y, m = pm.m;
+  var dim = new Date(y, m + 1, 0).getDate();
+  var dIn = new Array(dim + 1).fill(0);
+  var dOut = new Array(dim + 1).fill(0);
+
+  (b.income || []).forEach(function(r) {
+    var occ = occurrences(r.recur, y, m);
+    var cnt = occ.length || 1;
+    var amt = (parseFloat(r.planned) || 0) / cnt;
+    occ.forEach(function(d) { dIn[d] += amt; });
   });
-  var titheAmt = parseFloat((b.tithe||{}).planned)||0;
-  if (titheAmt>0) dOut[1]+=titheAmt;
-  ['housing','food','personal','lifestyle','health','aquifer'].forEach(function(k){
-    (b.expenses[k]||[]).forEach(function(r){
-      var occ=occurrences(r.recur,y,m);
-      var cnt=occ.length||1;
-      var amt=(parseFloat(r.planned)||0)/cnt;
-      occ.forEach(function(d){dOut[d]+=amt;});
+  ['housing','food','personal','lifestyle','health','aquifer'].forEach(function(k) {
+    (b.expenses[k] || []).forEach(function(r) {
+      var occ = occurrences(r.recur, y, m);
+      var cnt = occ.length || 1;
+      var amt = (parseFloat(r.planned) || 0) / cnt;
+      occ.forEach(function(d) { dOut[d] += amt; });
     });
   });
-  var wkIn=[0],wkOut=[0],wkLbl=['Wk 1'],cur=0;
-  for (var d=1;d<=dim;d++) {
-    if (new Date(y,m,d).getDay()===1&&d>1){cur++;wkIn[cur]=0;wkOut[cur]=0;wkLbl[cur]='Wk '+(cur+1);}
-    wkIn[cur]+=dIn[d];wkOut[cur]+=dOut[d];
+
+  // Group Mon-Sun weeks
+  var wkIn = [0], wkOut = [0], wkLbl = ['Wk 1'], cur = 0;
+  for (var d = 1; d <= dim; d++) {
+    if (new Date(y, m, d).getDay() === 1 && d > 1) {
+      cur++; wkIn[cur] = 0; wkOut[cur] = 0; wkLbl[cur] = 'Wk ' + (cur + 1);
+    }
+    wkIn[cur] += dIn[d]; wkOut[cur] += dOut[d];
   }
-  var nw=cur+1;
-  var ti=totalPlannedInc(),to=totalPlannedExp(),net=ti-to;
-  document.getElementById('cfTop').innerHTML=
-    '<div class="cf-w"><div class="cw-lbl">In</div><div class="cw-val pos">'+dollars(ti)+'</div></div>'+
-    '<div class="cf-w"><div class="cw-lbl">Out</div><div class="cw-val neg">'+dollars(to)+'</div></div>'+
-    '<div class="cf-w"><div class="cw-lbl">Net</div><div class="cw-val '+(net>=0?'pos':'neg')+'">'+dollars(net)+'</div></div>';
-  var canvas=document.getElementById('cfCanvas');
-  var W=canvas.parentElement.clientWidth-28;
-  var H=280;
-  canvas.width=W*(window.devicePixelRatio||1);
-  canvas.height=H*(window.devicePixelRatio||1);
-  canvas.style.width=W+'px';
-  canvas.style.height=H+'px';
-  var ctx=canvas.getContext('2d');
-  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
-  ctx.clearRect(0,0,W,H);
-  var maxV=0;
-  for (var i=0;i<nw;i++) maxV=Math.max(maxV,wkIn[i],wkOut[i]);
-  maxV=maxV*1.2||100;
-  var pL=10,pR=10,pT=30,pB=32;
-  var cW=W-pL-pR,cH=H-pT-pB;
-  var gW=cW/nw;
-  var bW=Math.min(gW*0.42,36);
-  for (var i=0;i<nw;i++) {
-    var x=pL+i*gW;
-    var iH=(wkIn[i]/maxV)*cH;
-    var oH=(wkOut[i]/maxV)*cH;
-    var iX=x+gW/2-bW-2;
-    var oX=x+gW/2+2;
-    ctx.fillStyle='#5A9A4A';
+  var nw = cur + 1;
+
+  var ti = totalPlannedInc(), to = totalPlannedExp(), net = ti - to;
+  document.getElementById('cfTop').innerHTML =
+    '<div class="cf-w"><div class="cw-lbl">In</div><div class="cw-val pos">' + dollars(ti) + '</div></div>' +
+    '<div class="cf-w"><div class="cw-lbl">Out</div><div class="cw-val neg">' + dollars(to) + '</div></div>' +
+    '<div class="cf-w"><div class="cw-lbl">Net</div><div class="cw-val ' + (net >= 0 ? 'pos' : 'neg') + '">' + dollars(net) + '</div></div>';
+
+  var canvas = document.getElementById('cfCanvas');
+  var W = canvas.parentElement.clientWidth - 28;
+  var H = 280;
+  canvas.width = W * (window.devicePixelRatio || 1);
+  canvas.height = H * (window.devicePixelRatio || 1);
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+  ctx.clearRect(0, 0, W, H);
+
+  var maxV = 0;
+  for (var i = 0; i < nw; i++) maxV = Math.max(maxV, wkIn[i], wkOut[i]);
+  maxV = maxV * 1.2 || 100;
+
+  var pL = 10, pR = 10, pT = 30, pB = 32;
+  var cW = W - pL - pR, cH = H - pT - pB;
+  var gW = cW / nw;
+  var bW = Math.min(gW * 0.42, 36);
+
+  for (var i = 0; i < nw; i++) {
+    var x = pL + i * gW;
+    var iH = (wkIn[i] / maxV) * cH;
+    var oH = (wkOut[i] / maxV) * cH;
+    var iX = x + gW / 2 - bW - 2;
+    var oX = x + gW / 2 + 2;
+
+    // green bar
+    ctx.fillStyle = '#5A9A4A';
     ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(iX,pT+cH-iH,bW,iH,[4,4,0,0]); else ctx.rect(iX,pT+cH-iH,bW,iH);
+    if (ctx.roundRect) ctx.roundRect(iX, pT + cH - iH, bW, iH, [4, 4, 0, 0]);
+    else ctx.rect(iX, pT + cH - iH, bW, iH);
     ctx.fill();
-    ctx.fillStyle='#C87830';
+
+    // orange bar
+    ctx.fillStyle = '#C87830';
     ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(oX,pT+cH-oH,bW,oH,[4,4,0,0]); else ctx.rect(oX,pT+cH-oH,bW,oH);
+    if (ctx.roundRect) ctx.roundRect(oX, pT + cH - oH, bW, oH, [4, 4, 0, 0]);
+    else ctx.rect(oX, pT + cH - oH, bW, oH);
     ctx.fill();
-    ctx.textAlign='center';
-    if (wkIn[i]>0){ctx.fillStyle='#5A9A4A';ctx.font='bold 11px DM Sans,sans-serif';ctx.fillText('$'+Math.round(wkIn[i]),iX+bW/2,pT+cH-iH-5);}
-    if (wkOut[i]>0){ctx.fillStyle='#C87830';ctx.font='bold 11px DM Sans,sans-serif';ctx.fillText('$'+Math.round(wkOut[i]),oX+bW/2,pT+cH-oH-5);}
-    ctx.fillStyle='#7A7060';ctx.font='12px DM Sans,sans-serif';
-    ctx.fillText(wkLbl[i],x+gW/2,H-8);
+
+    // labels above bars always
+    ctx.textAlign = 'center';
+    if (wkIn[i] > 0) {
+      ctx.fillStyle = '#5A9A4A';
+      ctx.font = 'bold 11px DM Sans,sans-serif';
+      ctx.fillText('$' + Math.round(wkIn[i]), iX + bW / 2, pT + cH - iH - 5);
+    }
+    if (wkOut[i] > 0) {
+      ctx.fillStyle = '#C87830';
+      ctx.font = 'bold 11px DM Sans,sans-serif';
+      ctx.fillText('$' + Math.round(wkOut[i]), oX + bW / 2, pT + cH - oH - 5);
+    }
+    // week label
+    ctx.fillStyle = '#7A7060'; ctx.font = '12px DM Sans,sans-serif';
+    ctx.fillText(wkLbl[i], x + gW / 2, H - 8);
   }
-  ctx.strokeStyle='#DDD5C0';ctx.lineWidth=1;ctx.setLineDash([3,3]);
-  ctx.beginPath();ctx.moveTo(pL,pT+cH);ctx.lineTo(pL+cW,pT+cH);ctx.stroke();
+
+  // baseline
+  ctx.strokeStyle = '#DDD5C0'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+  ctx.beginPath(); ctx.moveTo(pL, pT + cH); ctx.lineTo(pL + cW, pT + cH); ctx.stroke();
   ctx.setLineDash([]);
-  var pills='';
-  for (var i=0;i<nw;i++){
-    var wn=wkIn[i]-wkOut[i];
-    pills+='<div class="wk-pill '+(wn>=0?'pos':'neg')+'" onclick="openWkDrill('+i+')"><span class="wp-lbl">'+wkLbl[i]+' &#9654;</span><span class="wp-val">'+(wn>=0?'+':'')+'$'+Math.abs(Math.round(wn))+'</span></div>';
+
+  var pills = '';
+  for (var i = 0; i < nw; i++) {
+    var wn = wkIn[i] - wkOut[i];
+    pills += '<div class="wk-pill ' + (wn >= 0 ? 'pos' : 'neg') + '" style="cursor:pointer;" onclick="openWkDrill(' + i + ')">' +
+      '<span class="wp-lbl">' + wkLbl[i] + ' &#9654;</span>' +
+      '<span class="wp-val">' + (wn >= 0 ? '+' : '') + '$' + Math.abs(Math.round(wn)) + '</span></div>';
   }
-  document.getElementById('wkPills').innerHTML=pills;
-  window._cfWkData={wkIn:wkIn,wkOut:wkOut,wkLbl:wkLbl,nw:nw,dIn:dIn,dOut:dOut,y:y,m:m};
+  document.getElementById('wkPills').innerHTML = pills;
+  window._cfWkData = { wkIn: wkIn, wkOut: wkOut, wkLbl: wkLbl, nw: nw, dIn: dIn, dOut: dOut, y: y, m: m };
 }
 
-function openWkDrill(wkIdx) {
-  var cd=window._cfWkData; if (!cd) return;
-  document.getElementById('wkDrillTitle').textContent=cd.wkLbl[wkIdx]+' Detail';
-  var days=[],dim=new Date(cd.y,cd.m+1,0).getDate(),cur=0;
-  for (var dd=1;dd<=dim;dd++){
-    if (new Date(cd.y,cd.m,dd).getDay()===1&&dd>1) cur++;
-    if (cur===wkIdx) days.push(dd);
-    if (cur>wkIdx) break;
-  }
-  var h='<table style="width:100%;border-collapse:collapse;">';
-  h+='<thead><tr><th style="text-align:left;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">Day</th>';
-  h+='<th style="text-align:right;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">In</th>';
-  h+='<th style="text-align:right;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">Out</th>';
-  h+='<th style="text-align:right;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">Net</th></tr></thead><tbody>';
-  var totIn=0,totOut=0;
-  days.forEach(function(day){
-    var din=cd.dIn[day]||0,dout=cd.dOut[day]||0,net=din-dout;
-    var nc=net>=0?'var(--sage)':'var(--red)';
-    var dow=new Date(cd.y,cd.m,day).getDay();
-    totIn+=din;totOut+=dout;
-    h+='<tr style="border-bottom:1px solid var(--border);">';
-    h+='<td style="padding:7px 6px;font-size:13px;font-weight:500;">'+DAYS_FULL[dow]+' '+day+'</td>';
-    h+='<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--sage);font-weight:500;">'+(din>0?dollars(din):'\u2014')+'</td>';
-    h+='<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--warn);font-weight:500;">'+(dout>0?dollars(dout):'\u2014')+'</td>';
-    h+='<td style="padding:7px 6px;text-align:right;font-size:13px;font-weight:600;color:'+nc+';">'+(net>=0?'+':'')+dollars(net)+'</td></tr>';
-  });
-  var tn=totIn-totOut;
-  h+='<tr style="background:var(--surface2);font-weight:600;"><td style="padding:7px 6px;font-size:13px;">Total</td>';
-  h+='<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--sage);">'+dollars(totIn)+'</td>';
-  h+='<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--warn);">'+dollars(totOut)+'</td>';
-  h+='<td style="padding:7px 6px;text-align:right;font-size:13px;color:'+(tn>=0?'var(--sage)':'var(--red)')+';">'+(tn>=0?'+':'')+dollars(tn)+'</td></tr>';
-  h+='</tbody></table>';
-  document.getElementById('wkDrillBody').innerHTML=h;
-  document.getElementById('wkDrill').style.display='block';
-  setTimeout(function(){document.getElementById('wkDrill').scrollIntoView({behavior:'smooth',block:'start'});},50);
-}
-function closeWkDrill(){document.getElementById('wkDrill').style.display='none';}
-
-// ── BANKS ─────────────────────────────────────────────────────────────────────
+// ── BANKS PAGE ────────────────────────────────────────────────────────────────
 function renderBanks() {
-  var b=budget(); if (!b) return;
-  var bk=b.banks||{};
-  var defs=[{k:'kohoSpending',n:'Koho Spending'},{k:'kohoSavings',n:'Koho Savings'},{k:'scotiabank',n:'Scotiabank RDSP'},{k:'simply',n:'Simply Financial'},{k:'square',n:'Square'}];
-  var gh='';
-  defs.forEach(function(def){
-    gh+='<div class="bank-card"><div class="bk-name">'+def.n+'</div><div class="bk-wrap"><span class="bk-sym">$</span>';
-    gh+='<input class="bk-in" type="number" inputmode="decimal" value="'+num(bk[def.k]||0)+'" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setBankBal(\''+def.k+'\',this.value)">';
-    gh+='</div></div>';
+  var b = budget(); if (!b) return;
+  var bk = b.banks || {};
+  var defs = [
+    { k: 'kohoSpending', n: 'Koho Spending' },
+    { k: 'kohoSavings', n: 'Koho Savings' },
+    { k: 'scotiabank', n: 'Scotiabank RDSP' },
+    { k: 'simply', n: 'Simply Financial' },
+    { k: 'square', n: 'Square' }
+  ];
+  var gh = '';
+  defs.forEach(function(def) {
+    gh += '<div class="bank-card"><div class="bk-name">' + def.n + '</div><div class="bk-wrap"><span class="bk-sym">$</span>';
+    gh += '<input class="bk-in" type="number" inputmode="decimal" value="' + num(bk[def.k] || 0) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setBankBal(\'' + def.k + '\',this.value)">';
+    gh += '</div></div>';
   });
-  document.getElementById('bankGrid').innerHTML=gh;
-  var pm=parseMonthStr(currentMonth);
-  var fw=finalWed(pm.y,pm.m);
-  document.getElementById('billsCard').innerHTML=
-    '<h3>Fixed Bills</h3>'+
-    '<div class="bill-row"><span class="bill-name">Rent</span><div class="bill-right"><span class="bill-date">Final Wed ('+fw+'th)</span><span class="bill-badge badge-koho">Koho</span></div></div>'+
-    '<div class="bill-row"><span class="bill-name">Phone</span><div class="bill-right"><span class="bill-date">24th &mdash; '+dowName(pm.y,pm.m,24)+'</span><span class="bill-badge badge-koho">Koho</span></div></div>'+
-    '<div class="bill-row"><span class="bill-name">Claude AI</span><div class="bill-right"><span class="bill-date">4th &mdash; '+dowName(pm.y,pm.m,4)+'</span><span class="bill-badge badge-koho">Koho</span></div></div>'+
-    '<div class="bill-row"><span class="bill-name">Storage Fees</span><div class="bill-right"><span class="bill-date">29th &mdash; '+dowName(pm.y,pm.m,29)+'</span><span class="bill-badge badge-koho">Koho</span></div></div>'+
+  document.getElementById('bankGrid').innerHTML = gh;
+
+  var pm = parseMonthStr(currentMonth);
+  var fw = finalWed(pm.y, pm.m);
+  document.getElementById('billsCard').innerHTML =
+    '<h3>Fixed Bills</h3>' +
+    '<div class="bill-row"><span class="bill-name">Rent</span><div class="bill-right"><span class="bill-date">Final Wed (' + fw + 'th)</span><span class="bill-badge badge-koho">Koho</span></div></div>' +
+    '<div class="bill-row"><span class="bill-name">Phone</span><div class="bill-right"><span class="bill-date">24th</span><span class="bill-badge badge-koho">Koho</span></div></div>' +
+    '<div class="bill-row"><span class="bill-name">Claude AI</span><div class="bill-right"><span class="bill-date">4th</span><span class="bill-badge badge-koho">Koho</span></div></div>' +
+    '<div class="bill-row"><span class="bill-name">Storage Fees</span><div class="bill-right"><span class="bill-date">29th</span><span class="bill-badge badge-koho">Koho</span></div></div>' +
     '<div class="bill-row"><span class="bill-name">Modo</span><div class="bill-right"><span class="bill-date">Every Tuesday</span><span class="bill-badge badge-square">Square</span></div></div>';
 }
 
-// ── NOTES ─────────────────────────────────────────────────────────────────────
-function renderNotes(){var b=budget();if(!b)return;document.getElementById('globalNotes').value=b.notes||'';}
-function onNotesInput(){budget().notes=document.getElementById('globalNotes').value;save();}
-
-// ── SETTINGS ──────────────────────────────────────────────────────────────────
-function renderSettings(){document.getElementById('asUrl').value=state.settings.url||'';document.getElementById('codePre').textContent=AS_CODE;}
-function onUrlInput(){state.settings.url=document.getElementById('asUrl').value;save();}
-function doCopyCode(){navigator.clipboard.writeText(AS_CODE).then(function(){alert('Code copied!');});}
-function doExport(){
-  var blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='firstfruit-backup.json';a.click();
+// ── NOTES PAGE ────────────────────────────────────────────────────────────────
+function renderNotes() {
+  var b = budget(); if (!b) return;
+  document.getElementById('globalNotes').value = b.notes || '';
 }
-function doImport(){
-  var inp=document.createElement('input');inp.type='file';inp.accept='.json';
-  inp.onchange=function(e){
-    var fr=new FileReader();
-    fr.onload=function(ev){
-      try{var p=JSON.parse(ev.target.result);if(p.budgets)state.budgets=p.budgets;if(p.settings)state.settings=p.settings;save();renderAll();alert('Imported.');}
-      catch(err){alert('Invalid file.');}
+function onNotesInput() {
+  budget().notes = document.getElementById('globalNotes').value; save();
+}
+
+// ── SETTINGS PAGE ─────────────────────────────────────────────────────────────
+function renderSettings() {
+  document.getElementById('asUrl').value = state.settings.url || '';
+  document.getElementById('codePre').textContent = AS_CODE;
+}
+function onUrlInput() { state.settings.url = document.getElementById('asUrl').value; save(); }
+function doCopyCode() {
+  navigator.clipboard.writeText(AS_CODE).then(function() { alert('Code copied!'); });
+}
+function doExport() {
+  var blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'firstfruit-backup.json'; a.click();
+}
+function doImport() {
+  var inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json';
+  inp.onchange = function(e) {
+    var fr = new FileReader();
+    fr.onload = function(ev) {
+      try {
+        var p = JSON.parse(ev.target.result);
+        if (p.budgets) state.budgets = p.budgets;
+        if (p.settings) state.settings = p.settings;
+        save(); renderAll(); alert('Imported.');
+      } catch (err) { alert('Invalid file.'); }
     };
     fr.readAsText(e.target.files[0]);
   };
@@ -1042,40 +1070,101 @@ function doImport(){
 }
 
 // ── SYNC ──────────────────────────────────────────────────────────────────────
-function doSync(){
-  if(!state.settings.url){alert('Set your Apps Script URL in Settings first.');return;}
-  var rows=[];
-  var b=budget();
-  (b.income||[]).forEach(function(r){rows.push(['Income',r.label,r.planned,r.received,'',r.note,'','']);});
-  allExpRows().forEach(function(r){rows.push(['Expense',r.label,r.planned,r.spent,'',r.note,'','']);});
-  fetch(state.settings.url,{method:'POST',body:JSON.stringify({action:'budget_save',month:currentMonth,rows:rows})})
-    .then(function(res){return res.json();})
-    .then(function(d){alert(d.ok?'Synced!':'Error: '+d.error);})
-    .catch(function(e){alert('Sync failed: '+e);});
+function doSync() {
+  if (!state.settings.url) { alert('Set your Apps Script URL in Settings first.'); return; }
+  var rows = [];
+  var b = budget();
+  (b.income || []).forEach(function(r) { rows.push(['Income', r.label, r.planned, r.received, '', r.note, '', '']); });
+  allExpRows().forEach(function(r) { rows.push(['Expense', r.label, r.planned, r.spent, '', r.note, '', '']); });
+  fetch(state.settings.url, { method: 'POST', body: JSON.stringify({ action: 'budget_save', month: currentMonth, rows: rows }) })
+    .then(function(res) { return res.json(); })
+    .then(function(d) { alert(d.ok ? 'Synced!' : 'Error: ' + d.error); })
+    .catch(function(e) { alert('Sync failed: ' + e); });
+}
+
+// ── WEEK DRILL-DOWN ───────────────────────────────────────────────────────────────────────────────
+function openWkDrill(wkIdx) {
+  var cd = window._cfWkData;
+  if (!cd) return;
+  var el = document.getElementById('wkDrill');
+  document.getElementById('wkDrillTitle').textContent = cd.wkLbl[wkIdx] + ' Detail';
+  var days = [];
+  var dim = new Date(cd.y, cd.m + 1, 0).getDate();
+  var cur = 0;
+  for (var dd = 1; dd <= dim; dd++) {
+    if (new Date(cd.y, cd.m, dd).getDay() === 1 && dd > 1) cur++;
+    if (cur === wkIdx) days.push(dd);
+    if (cur > wkIdx) break;
+  }
+  var dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var h = '<table style="width:100%;border-collapse:collapse;">';
+  h += '<thead><tr>';
+  h += '<th style="text-align:left;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">Day</th>';
+  h += '<th style="text-align:right;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">In</th>';
+  h += '<th style="text-align:right;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">Out</th>';
+  h += '<th style="text-align:right;font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;padding:4px 6px;background:var(--surface2);">Net</th>';
+  h += '</tr></thead><tbody>';
+  var totIn = 0, totOut = 0;
+  days.forEach(function(day) {
+    var din = cd.dIn[day] || 0;
+    var dout = cd.dOut[day] || 0;
+    var net = din - dout;
+    var nc = net >= 0 ? 'var(--sage)' : 'var(--red)';
+    var dow = new Date(cd.y, cd.m, day).getDay();
+    totIn += din; totOut += dout;
+    h += '<tr style="border-bottom:1px solid var(--border);">';
+    h += '<td style="padding:7px 6px;font-size:13px;font-weight:500;">' + dayNames[dow] + ' ' + day + '</td>';
+    h += '<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--sage);font-weight:500;">' + (din > 0 ? dollars(din) : '—') + '</td>';
+    h += '<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--warn);font-weight:500;">' + (dout > 0 ? dollars(dout) : '—') + '</td>';
+    h += '<td style="padding:7px 6px;text-align:right;font-size:13px;font-weight:600;color:' + nc + ';">' + (net >= 0 ? '+' : '') + dollars(net) + '</td>';
+    h += '</tr>';
+  });
+  var tn = totIn - totOut;
+  h += '<tr style="background:var(--surface2);font-weight:600;">';
+  h += '<td style="padding:7px 6px;font-size:13px;">Total</td>';
+  h += '<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--sage);">' + dollars(totIn) + '</td>';
+  h += '<td style="padding:7px 6px;text-align:right;font-size:13px;color:var(--warn);">' + dollars(totOut) + '</td>';
+  h += '<td style="padding:7px 6px;text-align:right;font-size:13px;color:' + (tn >= 0 ? 'var(--sage)' : 'var(--red)') + ';">' + (tn >= 0 ? '+' : '') + dollars(tn) + '</td>';
+  h += '</tr></tbody></table>';
+  document.getElementById('wkDrillBody').innerHTML = h;
+  el.style.display = 'block';
+  setTimeout(function(){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+}
+function closeWkDrill() {
+  document.getElementById('wkDrill').style.display = 'none';
 }
 
 // ── RENDER ALL ────────────────────────────────────────────────────────────────
-function renderAll(){
-  renderSumBar();renderCOH();renderIncome();renderTithe();renderSavings();
-  renderExpSec('housing','Housing','zHousing');
-  renderExpSec('food','Food','zFood');
-  renderExpSec('personal','Personal','zPersonal');
-  renderExpSec('lifestyle','Lifestyle','zLifestyle');
-  renderExpSec('health','Health','zHealth');
-  renderExpSec('aquifer','Aquifer Springs','zAquifer');
+function renderAll() {
+  renderSummary();
+  renderCOH();
+  renderIncome();
+  renderTithe();
+  renderSavings();
+  renderExpSec('housing', 'Housing', 'zHousing');
+  renderExpSec('food', 'Food', 'zFood');
+  renderExpSec('personal', 'Personal', 'zPersonal');
+  renderExpSec('lifestyle', 'Lifestyle', 'zLifestyle');
+  renderExpSec('health', 'Health', 'zHealth');
+  renderExpSec('aquifer', 'Aquifer Springs', 'zAquifer');
   renderDebts();
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-(function init(){
-  try{
-    var raw=localStorage.getItem('firstfruit_budget');
-    if(raw){var p=JSON.parse(raw);if(p.budgets)state.budgets=p.budgets;if(p.settings)state.settings=p.settings;}
-  }catch(e){}
+(function init() {
+  try {
+    var raw = localStorage.getItem('firstfruit_budget');
+    if (raw) {
+      var p = JSON.parse(raw);
+      if (p.budgets) state.budgets = p.budgets;
+      if (p.settings) state.settings = p.settings;
+    }
+  } catch (e) {}
   initMonthPicker();
-  if(!state.budgets[currentMonth])state.budgets[currentMonth]=makeBudget(currentMonth);
-  renderVerse();renderAll();
-  document.getElementById('codePre').textContent=AS_CODE;
+  if (!state.budgets[currentMonth]) state.budgets[currentMonth] = makeBudget(currentMonth);
+  renderVerse();
+  renderAll();
+  document.getElementById('codePre').textContent = AS_CODE;
 })();
 </script>
 </body>
