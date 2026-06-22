@@ -21,8 +21,8 @@ html,body{height:100%;background:var(--bg);color:var(--body);font-family:'DM San
 input,select,textarea,button{font-family:inherit;font-size:inherit;}
 #app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;}
 /* TOP BAR */
-.top-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:12px 16px 10px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.top-bar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--sage-dark);flex:1;}
+.top-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px 10px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.top-bar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--charcoal);flex:1;}
 .month-pick{border:1px solid var(--border);background:var(--surface2);color:var(--body);border-radius:8px;padding:4px 8px;font-size:13px;}
 .sync-btn{background:var(--sage);color:#fff;border:none;border-radius:8px;padding:5px 14px;font-size:13px;font-weight:500;cursor:pointer;}
 /* PAGES */
@@ -40,12 +40,12 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .verse-text{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--charcoal);line-height:1.5;margin-bottom:4px;}
 .verse-ref{font-size:12px;color:var(--sage);font-weight:500;}
 /* SUMMARY BANNER */
-.summary-banner{background:var(--surface2);border-radius:0;border:none;border-bottom:1px solid var(--border);padding:6px 12px 8px;margin-bottom:0;position:sticky;top:57px;z-index:99;}
-.sum-row{display:flex;gap:6px;margin-bottom:0;}
-.sum-widget{flex:1;background:var(--surface);border-radius:8px;padding:6px 4px;text-align:center;border:1px solid var(--border);}
+.summary-banner{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);padding:14px 16px;margin-bottom:12px;}
+.sum-row{display:flex;gap:8px;margin-bottom:8px;}
+.sum-widget{flex:1;background:var(--surface2);border-radius:10px;padding:10px 8px;text-align:center;}
 .sum-widget .sw-lbl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px;}
-.sum-widget .sw-val{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--charcoal);}
-.net-bar{display:none;}
+.sum-widget .sw-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--charcoal);}
+.net-bar{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:var(--sage-bg);}
 .net-bar.neg{background:#FDF0EE;}
 .net-bar .nb-lbl{font-size:12px;color:var(--muted);font-weight:500;}
 .net-bar .nb-val{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--sage);}
@@ -86,7 +86,6 @@ input,select,textarea,button{font-family:inherit;font-size:inherit;}
 .lbl-in{border:none;background:transparent;color:var(--body);font-size:13px;font-weight:500;width:100%;min-width:55px;padding:0;outline:none;}
 .lbl-in:focus{background:var(--surface2);border-radius:4px;padding:0 3px;}
 .rm-btn{background:none;border:none;color:var(--muted);font-size:15px;line-height:1;cursor:pointer;padding:0;flex-shrink:0;}
-.move-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:0 1px;flex-shrink:0;line-height:1;}
 .ic-btn{background:none;border:none;font-size:12px;line-height:1;cursor:pointer;padding:0 1px;flex-shrink:0;color:var(--muted);}
 .recur-badge{font-size:10px;font-weight:600;color:var(--sage);background:var(--sage-bg);border-radius:4px;padding:1px 5px;white-space:nowrap;cursor:pointer;border:none;}
 /* NUMBER CELLS */
@@ -369,12 +368,15 @@ function esc(s) {
 function makeBudget(ms) {
   var pm = parseMonthStr(ms);
   var y = pm.y, m = pm.m;
+  var tues = tuesdays(y, m);
   var fw = finalWed(y, m);
   var incRows = [
     { id: uid(), label: 'Ministry', planned: 1500, received: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } },
     { id: uid(), label: 'Disability Tax Credit', planned: 200, received: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } }
   ];
-  incRows.push({ id: uid(), label: 'Aquifer Springs', planned: 0, received: 0, note: '', recur: { freq: 'weekly', days: [2], dom: 1 } });
+  tues.forEach(function(d, i) {
+    incRows.push({ id: uid(), label: 'Aquifer Springs Wk' + (i + 1), planned: 0, received: 0, note: '', recur: { freq: 'weekly', days: [2], dom: d } });
+  });
   incRows.push({ id: uid(), label: 'Future Health', planned: 0, received: 0, note: '', recur: { freq: 'monthly', days: [], dom: 1 } });
   incRows.push({ id: uid(), label: 'Cash on Hand', planned: 0, received: 0, note: '', recur: { freq: 'once', days: [], dom: 1 } });
   return {
@@ -456,8 +458,8 @@ function allExpRows() {
   });
   return out;
 }
-function totalPlannedExp() { var b=budget(); var t=allExpRows().reduce(function(s,r){return s+(parseFloat(r.planned)||0);},0); t+=parseFloat(b.tithePlanned)||0; return t; }
-function totalSpentExp() { var b=budget(); var t=allExpRows().reduce(function(s,r){return s+(parseFloat(r.spent)||0);},0); t+=parseFloat(b.titheGiven)||0; return t; }
+function totalPlannedExp() { return allExpRows().reduce(function(s,r){return s+(parseFloat(r.planned)||0);},0); }
+function totalSpentExp() { return allExpRows().reduce(function(s,r){return s+(parseFloat(r.spent)||0);},0); }
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function showPage(name) {
@@ -664,17 +666,6 @@ function removeRow(sec, id) {
   else if (b.expenses[sec]) b.expenses[sec] = b.expenses[sec].filter(function(r) { return r.id !== id; });
   save(); renderAll();
 }
-function moveRow(sec, id, dir) {
-  var b = budget();
-  var arr = sec==='income' ? b.income : sec==='savings' ? b.savings : (b.expenses[sec]||[]);
-  var idx = -1;
-  for (var i=0;i<arr.length;i++) { if(arr[i].id===id){idx=i;break;} }
-  if (idx<0) return;
-  var newIdx = idx+dir;
-  if (newIdx<0||newIdx>=arr.length) return;
-  var tmp=arr[idx]; arr[idx]=arr[newIdx]; arr[newIdx]=tmp;
-  save(); renderAll();
-}
 function addDebt() {
   budget().debts.push({ id: uid(), label: 'New Debt', balance: 0, minimum: 0, extra: 0 });
   save(); renderDebts();
@@ -721,14 +712,9 @@ function recurRowHtml(row, sec, colspan) {
     wkHtml += '</div>';
   }
 
-
-  var domHtml = '';
-  if (showDom) {
-    var pm2 = parseMonthStr(currentMonth);
-    var dow2 = dowName(pm2.y, pm2.m, parseInt(dom));
-    domHtml = "<input class=\"dom-in\" type=\"number\" min=\"1\" max=\"31\" inputmode=\"numeric\" value=\"" + dom + "\" onclick=\"clearZero(this)\" onfocus=\"clearZero(this)\" onchange=\"setRecurDom('" + sec + "','" + row.id + "',this.value)\">"
-      + "<span style=\"font-size:11px;font-weight:600;color:var(--sage);background:var(--sage-bg);border-radius:4px;padding:2px 6px;\">" + dow2 + "</span>";
-  }
+  var domHtml = showDom
+    ? '<input class="dom-in" type="number" min="1" max="31" inputmode="numeric" value="' + dom + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setRecurDom(\'' + sec + '\',\'' + row.id + '\',this.value)">'
+    : '';
 
   return '<tr id="recur-' + row.id + '" style="display:none;"><td colspan="' + colspan + '" class="recur-row"><div class="recur-inner">' + freqSel + dayHtml + wkHtml + domHtml + '</div></td></tr>';
 }
@@ -749,8 +735,6 @@ function renderIncome() {
     var stg = (parseFloat(r.planned) || 0) - (parseFloat(r.received) || 0);
     var stgC = stg <= 0 ? 'g' : '';
     h += '<tr><td><div class="lc">';
-    h += '<button class="move-btn" onclick="moveRow(\'income\',\'' + r.id + '\',-1)">&#8679;</button>';
-    h += '<button class="move-btn" onclick="moveRow(\'income\',\'' + r.id + '\',1)">&#8681;</button>';
     h += '<button class="rm-btn" onclick="removeRow(\'income\',\'' + r.id + '\')">&#8722;</button>';
     h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'income\',\'' + r.id + '\',this.value)">';
     h += '<button class="recur-badge" id="rbadge-' + r.id + '" onclick="toggleRecur(\'' + r.id + '\')">' + recurLabel(r.recur) + '</button>';
@@ -771,20 +755,20 @@ function renderIncome() {
 // ── TITHE SECTION ─────────────────────────────────────────────────────────────
 function renderTithe() {
   var b = budget();
-  var planned = parseFloat(b.tithePlanned) || 0;
+  var owed = totalReceivedInc() * 0.10;
+  var plan = totalPlannedInc() * 0.10;
   var given = parseFloat(b.titheGiven) || 0;
-  var still = planned - given;
-  var suggestion = totalReceivedInc() * 0.10;
+  var still = owed - given;
+
   var h = '<div class="sec-card sec-tithe" id="sec-tithe">';
   h += '<div class="sec-hdr" onclick="toggleSec(\'sec-tithe\')"><h2>Tithe</h2><span class="sec-arrow">&#9660;</span></div>';
   h += '<div class="sec-body"><div class="tithe-body">';
   h += '<div class="tithe-grid">';
-  h += '<div class="tc"><div class="tc-lbl">Planned</div><input class="tithe-given" type="number" inputmode="decimal" value="' + num(planned) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setTithePlanned(this.value)"></div>';
+  h += '<div class="tc"><div class="tc-lbl">Owed</div><div class="tc-val">' + dollars(owed) + '</div><div style="font-size:10px;color:var(--purple);margin-top:2px;">10% received</div></div>';
   h += '<div class="tc"><div class="tc-lbl">Given</div><input class="tithe-given" type="number" inputmode="decimal" value="' + num(given) + '" onclick="clearZero(this)" onfocus="clearZero(this)" onchange="setTitheGiven(this.value)"></div>';
   h += '<div class="tc"><div class="tc-lbl">Still Owed</div><div class="tc-val' + (still > 0 ? ' warn' : '') + '">' + dollars(still) + '</div></div>';
   h += '</div>';
-  h += '<div class="tithe-note">Suggestion: ' + dollars(suggestion) + ' (10% of received income)</div>';
-  h += '<textarea class="note-in" rows="2" placeholder="Tithe notes..." style="margin-top:8px;width:100%;" onchange="setTitheNote(this.value)">' + esc(b.titheNote||'') + '</textarea>';
+  h += '<div class="tithe-note">Plan: ' + dollars(plan) + ' (10% of planned income)</div>';
   h += '</div></div></div>';
   document.getElementById('zTithe').innerHTML = h;
 }
@@ -805,8 +789,6 @@ function renderSavings() {
   rows.forEach(function(r) {
     var rem = (parseFloat(r.planned) || 0) - (parseFloat(r.contributed) || 0);
     h += '<tr><td><div class="lc">';
-    h += '<button class="move-btn" onclick="moveRow(\'savings\',\'' + r.id + '\',-1)">&#8679;</button>';
-    h += '<button class="move-btn" onclick="moveRow(\'savings\',\'' + r.id + '\',1)">&#8681;</button>';
     h += '<button class="rm-btn" onclick="removeRow(\'savings\',\'' + r.id + '\')">&#8722;</button>';
     h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'savings\',\'' + r.id + '\',this.value)">';
     h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'savings\',\'' + r.id + '\',this.value)">';
@@ -843,8 +825,6 @@ function renderExpSec(key, title, elId) {
     var ltC = lft < 0 ? 'r' : 'g';
 
     h += '<tr><td><div class="lc">';
-    h += '<button class="move-btn" onclick="moveRow(\'' + key + '\',\'' + r.id + '\',-1)">&#8679;</button>';
-    h += '<button class="move-btn" onclick="moveRow(\'' + key + '\',\'' + r.id + '\',1)">&#8681;</button>';
     h += '<button class="rm-btn" onclick="removeRow(\'' + key + '\',\'' + r.id + '\')">&#8722;</button>';
     h += '<input class="lbl-in" value="' + esc(r.label) + '" onchange="setLabel(\'' + key + '\',\'' + r.id + '\',this.value)">';
     if (r.hasSubs) h += '<button class="ic-btn" onclick="toggleSubs(\'' + r.id + '\')" title="Breakdown">&#9660;</button>';
