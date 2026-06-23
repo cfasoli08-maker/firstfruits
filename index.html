@@ -910,7 +910,7 @@ function renderIncome() {
       '<div class="amt-cell"><input class="amt-input green" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.received||0) + '" oninput="updateIncome(' + i + ','received',this.value)" placeholder="0.00"></div>' +
       '<div class="amt-cell"><div class="amt-display" id="inc-still-' + i + '">' + fmt(still) + '</div></div>' +
       '<div class="amt-cell"><select class="acct-select" onchange="updateIncome(' + i + ','account',this.value)">' + acctOpts + '</select></div>' +
-      '<div><button class="note-btn' + (row.note ? ' has-note' : '') + '" onclick="toggleNote('inc-note-' + i + '')" id="inc-note-btn-' + i + '">&#128221;</button></div>';
+      '<div><button class="note-btn' + (row.note ? ' has-note' : '') + '" onclick="toggleNote(\'inc-note-' + i + '\')" id="inc-note-btn-' + i + '">&#128221;</button></div>';
     container.appendChild(div);
     var np = document.createElement('div');
     np.className = 'note-panel' + (row.note ? ' open' : '');
