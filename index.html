@@ -39,7 +39,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* HEADER */
 .app-header{
-  background:var(--sage);
+  background:#EBF3FB;
   padding:0 20px;
   height:56px;
   display:flex;
@@ -48,20 +48,20 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   position:sticky;
   top:0;
   z-index:200;
-  box-shadow:0 2px 12px rgba(0,0,0,0.18);
+  box-shadow:0 1px 4px rgba(0,0,0,0.08);
 }
 .app-logo{display:flex;align-items:center;gap:10px}
 .app-logo svg{width:32px;height:32px;flex-shrink:0}
-.app-title{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:#F2EDE3;letter-spacing:0.01em}
-.app-title span{color:var(--gold)}
+.app-title{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:#1C1C1A;letter-spacing:0.01em}
+.app-title span{color:var(--sage)}
 .month-nav{display:flex;align-items:center;gap:8px}
-.month-nav button{background:rgba(255,255,255,0.15);border:none;color:#F2EDE3;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
-.month-nav button:hover{background:rgba(255,255,255,0.28)}
-.month-label{font-family:var(--font-body);font-size:0.95rem;font-weight:500;color:#F2EDE3;min-width:90px;text-align:center}
+.month-nav button{background:rgba(0,0,0,0.07);border:none;color:#1C1C1A;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.month-nav button:hover{background:rgba(0,0,0,0.13)}
+.month-label{font-family:var(--font-body);font-size:0.95rem;font-weight:500;color:#1C1C1A;min-width:90px;text-align:center}
 
 /* SUMMARY BAR */
 .summary-bar{
-  background:var(--sage-dark);
+  background:#2D5A2D;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   padding:10px 16px;
@@ -444,6 +444,37 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   .budget-row{grid-template-columns:1fr 110px 110px 110px 90px 40px}
   .section-total{grid-template-columns:1fr 110px 110px 110px 90px 40px}
 }
+
+/* EDITABLE ROW NAMES */
+.row-name-input{
+  width:100%;border:none;background:transparent;
+  font-family:var(--font-body);font-size:0.9rem;font-weight:500;color:var(--body);
+  padding:2px 4px;border-radius:4px;
+}
+.row-name-input:focus{outline:none;background:var(--sage-bg);border:1px solid var(--sage)}
+.row-sub-input{
+  width:100%;border:none;background:transparent;
+  font-family:var(--font-body);font-size:0.72rem;color:var(--muted);
+  padding:1px 4px;margin-top:1px;border-radius:4px;
+}
+.row-sub-input:focus{outline:none;background:var(--gold-bg);border:1px solid var(--gold)}
+
+/* ACCOUNT SELECT */
+.acct-select{
+  width:100%;border:1px solid var(--border);border-radius:6px;
+  padding:4px 4px;font-family:var(--font-body);font-size:0.78rem;
+  color:var(--body);background:var(--surface);cursor:pointer;
+}
+.acct-select:focus{outline:none;border-color:var(--sage)}
+
+/* DATE INPUT */
+.date-input{
+  width:100%;border:1px solid var(--border);border-radius:6px;
+  padding:4px 4px;font-family:var(--font-body);font-size:0.78rem;
+  color:var(--body);background:var(--surface);cursor:pointer;
+}
+.date-input:focus{outline:none;border-color:var(--sage)}
+
 </style>
 </head>
 <body>
@@ -516,8 +547,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
       <span class="section-chevron">&#9660;</span>
     </div>
     <div class="section-body">
-      <div class="col-headers">
+      <div class="col-headers" style="grid-template-columns:1fr 90px 100px 100px 90px 90px 36px">
         <div class="col-head">Source</div>
+        <div class="col-head">Date</div>
         <div class="col-head">Planned</div>
         <div class="col-head">Received</div>
         <div class="col-head">Still to Get</div>
@@ -537,8 +569,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   </div>
 
   <!-- TITHE -->
-  <div class="section-card tithe-row" id="sec-tithe">
-    <div class="section-header" onclick="toggleSection('tithe')" style="background:var(--gold-bg)">
+  <div class="section-card" id="sec-tithe">
+    <div class="section-header" onclick="toggleSection('tithe')">
       <div class="section-title-wrap">
         <span class="section-icon">&#10024;</span>
         <span class="section-title">Tithing</span>
@@ -546,8 +578,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
       </div>
       <span class="section-chevron">&#9660;</span>
     </div>
-    <div class="section-body" style="background:var(--gold-bg)">
-      <div class="col-headers" style="background:transparent">
+    <div class="section-body">
+      <div class="col-headers">
         <div class="col-head">Item</div>
         <div class="col-head">Planned</div>
         <div class="col-head">Given</div>
@@ -555,13 +587,13 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         <div class="col-head">Account</div>
         <div class="col-head"></div>
       </div>
-      <div class="budget-row" style="background:transparent">
+      <div class="budget-row">
         <div class="row-name-wrap">
           <div class="row-name">Tithe</div>
           <div class="row-sub tithe-label">Auto: 10% of total received</div>
         </div>
         <div class="amt-cell"><div class="amt-display gold" id="tithe-planned">$0.00</div></div>
-        <div class="amt-cell"><input class="amt-input" type="number" id="tithe-given" value="0" min="0" step="0.01" oninput="onTitheGiven()" placeholder="0.00"></div>
+        <div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" id="tithe-given" value="0" min="0" step="0.01" oninput="onTitheGiven()" placeholder="0.00"></div>
         <div class="amt-cell"><div class="amt-display" id="tithe-remaining">$0.00</div></div>
         <div class="amt-cell"><input class="amt-input" type="text" id="tithe-account" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>
         <div><button class="note-btn" onclick="toggleNote('tithe-note')" id="tithe-note-btn">&#128221;</button></div>
@@ -866,13 +898,14 @@ function renderIncome() {
     div.className = 'budget-row';
     div.innerHTML =
       '<div class="row-name-wrap">' +
-        '<div class="row-name">' + esc(row.name) + '</div>' +
-        (row.sub ? '<div class="row-sub">' + esc(row.sub) + '</div>' : '') +
+        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateExpense(' + si + ',' + ii + ',\'name\',this.value)" placeholder="Item name">' +
+        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'sub\',this.value)" placeholder="Date/frequency...">' +
       '</div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateIncome(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><input class="amt-input green" type="number" min="0" step="0.01" value="' + (row.received||0) + '" oninput="updateIncome(' + i + ',\'received\',this.value)" placeholder="0.00"></div>' +
+      '<div class="amt-cell"><input class="date-input" type="date" value="' + (row.date||'') + '" oninput="updateIncome(' + i + ',\'date\',this.value)" style="font-size:0.78rem;padding:3px 4px"></div>' +
+      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateIncome(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
+      '<div class="amt-cell"><input class="amt-input green" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.received||0) + '" oninput="updateIncome(' + i + ',\'received\',this.value)" placeholder="0.00"></div>' +
       '<div class="amt-cell"><div class="amt-display" id="inc-still-' + i + '">' + fmt(Math.max(0,(row.planned||0)-(row.received||0))) + '</div></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="text" value="' + esc(row.account||'') + '" oninput="updateIncome(' + i + ',\'account\',this.value)" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>' +
+      '<div class="amt-cell"><select class="acct-select" onchange="updateIncome(' + i + ',\'account\',this.value)">' + ['','Koho','Scotiabank RDSP','Simply Financial','Square'].map(function(a){return '<option value="'+a+'"'+(a===(row.account||'')?'selected':'')+'>'+( a||'Account')+'</option>';}).join('') + '</select></div>' +
       '<div><button class="note-btn' + (row.note?'  has-note':'') + '" onclick="toggleNote(\'inc-note-' + i + '\')" id="inc-note-btn-' + i + '">&#128221;</button></div>';
     container.appendChild(div);
     var np = document.createElement('div');
@@ -917,33 +950,41 @@ function addIncomeRow() {
 // ============================================================
 function renderTithe() {
   var st = getState();
+  if (!st.tithe) st.tithe = {planned:0, given:0, note:''};
   var totalReceived = 0;
   st.income.forEach(function(r){ totalReceived += r.received||0; });
-  var tithe = totalReceived * 0.10;
-  document.getElementById('tithe-planned').textContent = fmt(tithe);
-  var given = parseFloat(document.getElementById('tithe-given').value)||0;
-  var remaining = tithe - given;
+  var shouldBe = totalReceived * 0.10;
+  // Should Be: reference only, does not affect budget
+  var sbEl = document.getElementById('tithe-should-be');
+  if (sbEl) sbEl.textContent = fmt(shouldBe);
+  // Planned and Given are fully manual
+  var plannedEl = document.getElementById('tithe-planned-input');
+  if (plannedEl) plannedEl.value = st.tithe.planned||0;
+  var givenEl = document.getElementById('tithe-given');
+  if (givenEl) givenEl.value = st.tithe.given||0;
+  var planned = parseFloat((plannedEl&&plannedEl.value)||0)||0;
+  var given = parseFloat((givenEl&&givenEl.value)||0)||0;
+  var remaining = planned - given;
   var remEl = document.getElementById('tithe-remaining');
-  remEl.textContent = fmt(Math.abs(remaining));
-  remEl.className = 'amt-display ' + (remaining < 0 ? 'red' : 'green');
-  if (st.tithe) {
-    document.getElementById('tithe-given').value = st.tithe.given||0;
-    document.getElementById('tithe-account').value = st.tithe.account||'';
-    document.getElementById('tithe-note-text') && (document.getElementById('tithe-note-text').value = st.tithe.note||'');
+  if (remEl) {
+    remEl.textContent = fmt(Math.abs(remaining));
+    remEl.className = 'amt-display ' + (remaining <= 0 ? 'green' : 'red');
   }
+}
+
+function onTithePlanned() {
+  var st = getState();
+  if (!st.tithe) st.tithe = {planned:0, given:0, note:''};
+  st.tithe.planned = parseFloat(document.getElementById('tithe-planned-input').value)||0;
+  renderTithe();
+  saveStorage();
 }
 
 function onTitheGiven() {
   var st = getState();
-  var given = parseFloat(document.getElementById('tithe-given').value)||0;
-  st.tithe.given = given;
-  var totalReceived = 0;
-  st.income.forEach(function(r){ totalReceived += r.received||0; });
-  var tithe = totalReceived * 0.10;
-  var remaining = tithe - given;
-  var remEl = document.getElementById('tithe-remaining');
-  remEl.textContent = fmt(Math.abs(remaining));
-  remEl.className = 'amt-display ' + (remaining < 0 ? 'red' : 'green');
+  if (!st.tithe) st.tithe = {planned:0, given:0, note:''};
+  st.tithe.given = parseFloat(document.getElementById('tithe-given').value)||0;
+  renderTithe();
   saveStorage();
 }
 
@@ -959,11 +1000,13 @@ function renderSavings() {
     var div = document.createElement('div');
     div.className = 'budget-row';
     div.innerHTML =
-      '<div class="row-name-wrap"><div class="row-name">' + esc(row.name) + '</div></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateSavings(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><input class="amt-input green" type="number" min="0" step="0.01" value="' + (row.spent||0) + '" oninput="updateSavings(' + i + ',\'spent\',this.value)" placeholder="0.00"></div>' +
+      '<div class="row-name-wrap">' +
+      '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateSavings(' + i + ',\'name\',this.value)" placeholder="Goal name">' +
+      '</div>' +
+      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateSavings(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
+      '<div class="amt-cell"><input class="amt-input green" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.spent||0) + '" oninput="updateSavings(' + i + ',\'spent\',this.value)" placeholder="0.00"></div>' +
       '<div class="amt-cell"><div class="amt-display ' + (avail<0?'red':'green') + '" id="sav-avail-'+i+'">' + fmt(avail) + '</div></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="text" value="' + esc(row.account||'') + '" oninput="updateSavings(' + i + ',\'account\',this.value)" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>' +
+      '<div class="amt-cell"><select class="acct-select" onchange="updateSavings(' + i + ',\'account\',this.value)">' + ['','Koho','Scotiabank RDSP','Simply Financial','Square'].map(function(a){return '<option value="'+a+'"'+(a===(row.account||'')?'selected':'')+'>'+( a||'Account')+'</option>';}).join('') + '</select></div>' +
       '<div><button class="note-btn' + (row.note?' has-note':'') + '" onclick="toggleNote(\'sav-note-' + i + '\')">&#128221;</button></div>';
     container.appendChild(div);
     var np = document.createElement('div');
@@ -1022,6 +1065,7 @@ function renderExpenseSections() {
       '<div class="section-body">' +
         '<div class="col-headers">' +
           '<div class="col-head">Item</div>' +
+          '<div class="col-head">Date</div>' +
           '<div class="col-head">Planned</div>' +
           '<div class="col-head">Spent</div>' +
           '<div class="col-head">Available</div>' +
@@ -1055,13 +1099,14 @@ function renderExpenseItems(si) {
     div.className = 'budget-row';
     div.innerHTML =
       '<div class="row-name-wrap">' +
-        '<div class="row-name">' + esc(row.name) + '</div>' +
-        (row.sub ? '<div class="row-sub">' + esc(row.sub) + '</div>' : '') +
+        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateExpense(' + si + ',' + ii + ',\'name\',this.value)" placeholder="Item name">' +
+        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'sub\',this.value)" placeholder="Date/frequency...">' +
       '</div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'planned\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" min="0" step="0.01" value="' + (row.spent||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'spent\',this.value)" placeholder="0.00"></div>' +
+      '<div class="amt-cell"><input class="date-input" type="date" value="' + (row.date||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'date\',this.value)" style="font-size:0.78rem;padding:3px 4px"></div>' +
+      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'planned\',this.value)" placeholder="0.00"></div>' +
+      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.spent||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'spent\',this.value)" placeholder="0.00"></div>' +
       '<div class="amt-cell"><div class="amt-display ' + (avail<0?'red':'green') + '" id="exp-avail-' + si + '-' + ii + '">' + fmt(avail) + '</div></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="text" value="' + esc(row.account||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'account\',this.value)" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>' +
+      '<div class="amt-cell"><select class="acct-select" onchange="updateExpense(' + si + ',' + ii + ',\'account\',this.value)">' + ['','Koho','Scotiabank RDSP','Simply Financial','Square'].map(function(a){return '<option value="'+a+'"'+(a===(row.account||'')?'selected':'')+'>'+( a||'Account')+'</option>';}).join('') + '</select></div>' +
       '<div><button class="note-btn' + (row.note?' has-note':'') + '" onclick="toggleNote(\'exp-note-' + si + '-' + ii + '\')">&#128221;</button></div>';
     container.appendChild(div);
     var np = document.createElement('div');
@@ -1116,8 +1161,7 @@ function updateSummary() {
   var totalPlannedOut=0;
   st.savings.forEach(function(r){ totalPlannedOut+=r.planned||0; });
   st.sections.forEach(function(sec){ sec.items.forEach(function(it){ totalPlannedOut+=it.planned||0; }); });
-  var tithe = totalReceived * 0.10;
-  totalPlannedOut += tithe;
+  // Tithe is informational only -- does not affect budget math
   var left = totalPlannedIn - totalPlannedOut;
   document.getElementById('summaryIn').textContent = fmt(totalPlannedIn);
   document.getElementById('summaryOut').textContent = fmt(totalPlannedOut);
@@ -1157,101 +1201,164 @@ function getWeeksInMonth(year, month) {
   return weeks;
 }
 
+function getWeekLabel(dateStr, year, month) {
+  // Returns "Week of Jun 2" style label based on the Monday of that week
+  if (!dateStr) return null;
+  var d = new Date(dateStr + 'T12:00:00');
+  if (isNaN(d)) return null;
+  var dow = d.getDay(); // 0=Sun
+  var mondayOffset = dow === 0 ? -6 : 1 - dow;
+  var monday = new Date(d);
+  monday.setDate(d.getDate() + mondayOffset);
+  var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][monday.getMonth()];
+  return 'Wk of ' + mo + ' ' + monday.getDate();
+}
+
 function renderCashFlow() {
   var st = getState();
-  var weeks = getWeeksInMonth(currentYear, currentMonth);
+  // Build ordered week labels from all dates in this month
+  var weekSet = {};
+  var allRows = [];
+  st.income.forEach(function(r){ if(r.date) allRows.push(r.date); });
+  st.sections.forEach(function(sec){ sec.items.forEach(function(it){ if(it.date) allRows.push(it.date); }); });
+  allRows.forEach(function(dateStr){
+    var lbl = getWeekLabel(dateStr, currentYear, currentMonth);
+    if (lbl && !weekSet[lbl]) {
+      var d = new Date(dateStr + 'T12:00:00');
+      weekSet[lbl] = d.getTime();
+    }
+  });
+  // Sort weeks chronologically
+  var weeks = Object.keys(weekSet).sort(function(a,b){ return weekSet[a]-weekSet[b]; });
+  // Always show at least 4 weeks for the current month
+  if (weeks.length === 0) {
+    var d = new Date(currentYear, currentMonth, 1);
+    for (var w=0; w<4; w++) {
+      var monday = new Date(currentYear, currentMonth, 1 + w*7);
+      var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][monday.getMonth()];
+      var lbl = 'Wk of ' + mo + ' ' + monday.getDate();
+      if (!weeks.includes(lbl)) weeks.push(lbl);
+    }
+  }
+
   var head = document.getElementById('cf-head-row');
   head.innerHTML = '<th style="text-align:left">Category</th>';
   weeks.forEach(function(w){
-    var th = document.createElement('th');
-    th.textContent = w.label;
-    head.appendChild(th);
+    var th = document.createElement('th'); th.textContent = w; head.appendChild(th);
   });
-  var thTotal = document.createElement('th');
-  thTotal.textContent = 'Total';
-  head.appendChild(thTotal);
+  var thT = document.createElement('th'); thT.textContent = 'Total'; head.appendChild(thT);
 
   var body = document.getElementById('cf-body');
   body.innerHTML = '';
 
-  // Income row
-  var incTr = document.createElement('tr');
+  // --- INCOME ---
+  var incByWeek = {};
+  weeks.forEach(function(w){ incByWeek[w]=0; });
   var totalIncome = 0;
-  st.income.forEach(function(r){ totalIncome += r.received||0; });
-  incTr.innerHTML = '<td style="color:var(--sage);font-weight:600">&#127808; Income (Received)</td>';
-  // Distribute evenly across weeks for display (actual per-week tracking requires transactions)
-  weeks.forEach(function(){
-    var td = document.createElement('td');
-    td.textContent = '';
+  st.income.forEach(function(r){
+    var amt = r.received||0;
+    totalIncome += amt;
+    if (amt && r.date) {
+      var lbl = getWeekLabel(r.date, currentYear, currentMonth);
+      if (lbl && incByWeek.hasOwnProperty(lbl)) incByWeek[lbl] += amt;
+    }
+  });
+  var incTr = document.createElement('tr');
+  incTr.innerHTML = '<td style="color:var(--sage);font-weight:600">&#127808; Income</td>';
+  weeks.forEach(function(w){
+    var td=document.createElement('td');
+    td.textContent = incByWeek[w] ? fmt(incByWeek[w]) : '';
+    td.className = incByWeek[w] ? 'cf-positive' : '';
     incTr.appendChild(td);
   });
-  var tdTotal = document.createElement('td');
-  tdTotal.textContent = fmt(totalIncome);
-  tdTotal.className = 'cf-positive';
-  incTr.appendChild(tdTotal);
+  var itd=document.createElement('td'); itd.textContent=fmt(totalIncome); itd.className='cf-positive'; incTr.appendChild(itd);
   body.appendChild(incTr);
 
-  // Expense rows
+  // --- EXPENSES by section ---
   var grandTotalSpent = 0;
+  var outByWeek = {};
+  weeks.forEach(function(w){ outByWeek[w]=0; });
+
   st.sections.forEach(function(sec){
-    if (!sec.items.length) return;
+    var secByWeek = {};
+    weeks.forEach(function(w){ secByWeek[w]=0; });
     var secTotal = 0;
-    sec.items.forEach(function(it){ secTotal += it.spent||0; });
+    sec.items.forEach(function(it){
+      var amt = it.spent||0;
+      secTotal += amt;
+      if (amt && it.date) {
+        var lbl = getWeekLabel(it.date, currentYear, currentMonth);
+        if (lbl && secByWeek.hasOwnProperty(lbl)) {
+          secByWeek[lbl] += amt;
+          outByWeek[lbl] += amt;
+        }
+      } else if (amt) {
+        // No date -- add to last week bucket for visibility
+        var lastWk = weeks[weeks.length-1];
+        if (lastWk) { secByWeek[lastWk] += amt; outByWeek[lastWk] += amt; }
+      }
+    });
     if (!secTotal) return;
+    grandTotalSpent += secTotal;
     var tr = document.createElement('tr');
     tr.innerHTML = '<td>' + sec.icon + ' ' + sec.label + '</td>';
-    weeks.forEach(function(){
-      var td = document.createElement('td');
-      td.textContent = '';
+    weeks.forEach(function(w){
+      var td=document.createElement('td');
+      td.textContent = secByWeek[w] ? fmt(secByWeek[w]) : '';
+      td.className = secByWeek[w] ? 'cf-negative' : '';
       tr.appendChild(td);
     });
-    var td = document.createElement('td');
-    td.textContent = fmt(secTotal);
-    td.className = secTotal>0 ? 'cf-negative' : '';
-    tr.appendChild(td);
+    var td=document.createElement('td'); td.textContent=fmt(secTotal); td.className='cf-negative'; tr.appendChild(td);
     body.appendChild(tr);
-    grandTotalSpent += secTotal;
   });
 
   // Tithe
-  var totalReceived=0;
-  st.income.forEach(function(r){totalReceived+=r.received||0;});
-  var titheGiven = (st.tithe&&st.tithe.given)||0;
+  var titheGiven=(st.tithe&&st.tithe.given)||0;
   if (titheGiven) {
-    var ttr = document.createElement('tr');
-    ttr.innerHTML = '<td>&#10024; Tithe</td>';
-    weeks.forEach(function(){
-      var td=document.createElement('td'); td.textContent=''; ttr.appendChild(td);
-    });
+    grandTotalSpent += titheGiven;
+    var ttr=document.createElement('tr');
+    ttr.innerHTML='<td>&#10024; Tithe Given</td>';
+    weeks.forEach(function(){ var td=document.createElement('td'); td.textContent=''; ttr.appendChild(td); });
     var ttd=document.createElement('td'); ttd.textContent=fmt(titheGiven); ttd.className='cf-negative'; ttr.appendChild(ttd);
     body.appendChild(ttr);
-    grandTotalSpent += titheGiven;
   }
 
-  // Total rows
-  var outTr = document.createElement('tr');
-  outTr.className = 'cf-total-row';
-  outTr.innerHTML = '<td>Total Out</td>';
-  weeks.forEach(function(){ var td=document.createElement('td'); td.textContent=''; outTr.appendChild(td); });
+  // --- IN row ---
+  var inTr=document.createElement('tr'); inTr.className='cf-total-row';
+  inTr.innerHTML='<td>Total In</td>';
+  weeks.forEach(function(w){
+    var td=document.createElement('td'); td.textContent=incByWeek[w]?fmt(incByWeek[w]):''; td.className=incByWeek[w]?'cf-positive':''; inTr.appendChild(td);
+  });
+  var intd=document.createElement('td'); intd.textContent=fmt(totalIncome); intd.className='cf-positive'; inTr.appendChild(intd);
+  body.appendChild(inTr);
+
+  // --- OUT row ---
+  var outTr=document.createElement('tr'); outTr.className='cf-total-row';
+  outTr.innerHTML='<td>Total Out</td>';
+  weeks.forEach(function(w){
+    var td=document.createElement('td'); td.textContent=outByWeek[w]?fmt(outByWeek[w]):''; td.className=outByWeek[w]?'cf-negative':''; outTr.appendChild(td);
+  });
   var otd=document.createElement('td'); otd.textContent=fmt(grandTotalSpent); otd.className='cf-negative'; outTr.appendChild(otd);
   body.appendChild(outTr);
 
-  var netTr = document.createElement('tr');
-  netTr.className = 'cf-net-row';
-  netTr.innerHTML = '<td>Net Cash Flow</td>';
-  weeks.forEach(function(){ var td=document.createElement('td'); td.textContent=''; netTr.appendChild(td); });
-  var net = totalIncome - grandTotalSpent;
+  // --- NET row ---
+  var netTr=document.createElement('tr'); netTr.className='cf-net-row';
+  netTr.innerHTML='<td>Net</td>';
+  weeks.forEach(function(w){
+    var net=incByWeek[w]-outByWeek[w];
+    var td=document.createElement('td'); td.textContent=fmt(net); td.className=(net>=0?'cf-positive':'cf-negative'); netTr.appendChild(td);
+  });
+  var net=totalIncome-grandTotalSpent;
   var ntd=document.createElement('td'); ntd.textContent=fmt(net); ntd.className=(net>=0?'cf-positive':'cf-negative'); netTr.appendChild(ntd);
   body.appendChild(netTr);
 
   document.getElementById('cf-total-in').textContent = fmt(totalIncome);
   document.getElementById('cf-total-out').textContent = fmt(grandTotalSpent);
-  var netEl = document.getElementById('cf-net');
-  netEl.textContent = fmt(net);
-  netEl.className = 'sc-value '+(net>=0?'green':'red');
+  var netEl=document.getElementById('cf-net');
+  netEl.textContent=fmt(net); netEl.className='sc-value '+(net>=0?'green':'red');
   var planned=0;
   st.income.forEach(function(r){planned+=r.planned||0;});
-  document.getElementById('cf-unassigned').textContent = fmt(planned - grandTotalSpent - (totalReceived*0.10));
+  document.getElementById('cf-unassigned').textContent = fmt(planned - grandTotalSpent);
 }
 
 // ============================================================
@@ -1313,7 +1420,7 @@ function renderAccounts() {
     card.className = 'account-card';
     card.innerHTML =
       '<div class="account-name">' + esc(name) + '</div>' +
-      '<input class="account-balance" type="number" min="0" step="0.01" value="' + val + '" oninput="updateAccount(\'' + name + '\',this.value)" placeholder="0.00">';
+      '<input class="account-balance" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + val + '" oninput="updateAccount(\'' + name + '\',this.value)" placeholder="0.00">';
     grid.appendChild(card);
   });
 }
