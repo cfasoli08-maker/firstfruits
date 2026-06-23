@@ -898,8 +898,8 @@ function renderIncome() {
     div.className = 'budget-row';
     div.innerHTML =
       '<div class="row-name-wrap">' +
-        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateExpense(' + si + ',' + ii + ',\'name\',this.value)" placeholder="Item name">' +
-        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'sub\',this.value)" placeholder="Date/frequency...">' +
+        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateIncome(' + i + ',\'name\',this.value)" placeholder="Source name">' +
+        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateIncome(' + i + ',\'sub\',this.value)" placeholder="e.g. Monthly, Weekly...">' +
       '</div>' +
       '<div class="amt-cell"><input class="date-input" type="date" value="' + (row.date||'') + '" oninput="updateIncome(' + i + ',\'date\',this.value)" style="font-size:0.78rem;padding:3px 4px"></div>' +
       '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateIncome(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
@@ -1106,8 +1106,8 @@ function renderExpenseItems(si) {
     div.className = 'budget-row';
     div.innerHTML =
       '<div class="row-name-wrap">' +
-        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateExpense(' + si + ',' + ii + ',\'name\',this.value)" placeholder="Item name">' +
-        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'sub\',this.value)" placeholder="Date/frequency...">' +
+        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateIncome(' + i + ',\'name\',this.value)" placeholder="Source name">' +
+        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateIncome(' + i + ',\'sub\',this.value)" placeholder="e.g. Monthly, Weekly...">' +
       '</div>' +
       '<div class="amt-cell"><input class="date-input" type="date" value="' + (row.date||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'date\',this.value)" style="font-size:0.78rem;padding:3px 4px"></div>' +
       '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'planned\',this.value)" placeholder="0.00"></div>' +
