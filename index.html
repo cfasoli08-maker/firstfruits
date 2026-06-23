@@ -136,7 +136,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* COLUMN HEADERS */
 .col-headers{
   display:grid;
-  grid-template-columns:1fr 100px 100px 100px 90px 90px 90px;
+  grid-template-columns:1fr 100px 100px 100px 120px 60px 60px;
   gap:4px;
   padding:8px 16px 6px;
   border-bottom:1px solid var(--border);
@@ -147,7 +147,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* ROW */
 .budget-row{
   display:grid;
-  grid-template-columns:1fr 100px 100px 100px 90px 90px 90px;
+  grid-template-columns:1fr 100px 100px 100px 120px 60px 60px;
   gap:4px;
   padding:10px 16px;
   border-bottom:1px solid rgba(221,213,192,0.4);
@@ -235,7 +235,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* SECTION TOTALS */
 .section-total{
   display:grid;
-  grid-template-columns:1fr 100px 100px 100px 90px 90px 90px;
+  grid-template-columns:1fr 100px 100px 100px 120px 60px 60px;
   gap:4px;
   padding:10px 16px;
   background:var(--surface2);
@@ -441,9 +441,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* MOBILE */
 @media(max-width:640px){
-  .col-headers{grid-template-columns:1fr 80px 80px 80px 70px 70px 80px}
-  .budget-row{grid-template-columns:1fr 80px 80px 80px 70px 70px 80px}
-  .section-total{grid-template-columns:1fr 80px 80px 80px 70px 70px 80px}
+  .col-headers{grid-template-columns:1fr 80px 80px 80px 100px 50px 50px}
+  .budget-row{grid-template-columns:1fr 80px 80px 80px 100px 50px 50px}
+  .section-total{grid-template-columns:1fr 80px 80px 80px 100px 50px 50px}
   .amt-input{font-size:0.82rem;padding:3px 4px}
   .summary-amount{font-size:1.05rem}
   .accounts-grid{grid-template-columns:1fr}
@@ -454,9 +454,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 @media(min-width:900px){
   body{max-width:1100px;margin:0 auto}
   .tab-content{padding:20px}
-  .col-headers{grid-template-columns:1fr 110px 110px 110px 90px 90px 90px}
-  .budget-row{grid-template-columns:1fr 110px 110px 110px 90px 90px 90px}
-  .section-total{grid-template-columns:1fr 110px 110px 110px 90px 90px 90px}
+  .col-headers{grid-template-columns:1fr 110px 110px 110px 120px 60px 60px}
+  .budget-row{grid-template-columns:1fr 110px 110px 110px 120px 60px 60px}
+  .section-total{grid-template-columns:1fr 110px 110px 110px 120px 60px 60px}
 }
 
 /* EDITABLE ROW NAMES */
