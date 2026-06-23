@@ -623,7 +623,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         <div class="col-head"></div>
       </div>
       <div id="savings-rows"></div>
-      <button class="add-row-btn" onclick="addExpenseRow('savings')">&#43; Add savings goal</button>
+      <button class="add-row-btn" onclick="addSavingsRow()">&#43; Add savings goal</button>
       <div class="section-total">
         <div class="total-label">Savings Total</div>
         <div class="total-amt" id="sav-total-planned">$0.00</div>
@@ -940,9 +940,16 @@ function updateIncomeTotals() {
 function addIncomeRow() {
   var st = getState();
   var id = 'inc_custom_' + Date.now();
-  st.income.push({id:id, name:'New Source', planned:0, received:0, account:'', note:'', fixed:false, sub:''});
+  st.income.push({id:id, name:'New Source', planned:0, received:0, account:'', note:'', fixed:false, sub:'', date:''});
   saveStorage();
   renderIncome();
+}
+
+function addSavingsRow() {
+  var st = getState();
+  st.savings.push({id:'sav_'+Date.now(), name:'New Goal', planned:0, spent:0, account:'', note:''});
+  saveStorage();
+  renderSavings();
 }
 
 // ============================================================
