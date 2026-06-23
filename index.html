@@ -61,20 +61,21 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* SUMMARY BAR */
 .summary-bar{
-  background:#2D5A2D;
+  background:#4A7C59;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   padding:10px 16px;
   position:sticky;
   top:56px;
   z-index:190;
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.12);
 }
 .summary-item{text-align:center}
 .summary-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(242,237,227,0.6);margin-bottom:2px}
-.summary-amount{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:#F2EDE3}
-.summary-amount.positive{color:#7EC87A}
-.summary-amount.negative{color:#E07070}
+.summary-amount{font-family:var(--font-body);font-size:1.2rem;font-weight:700;color:#F2EDE3}
+.summary-amount.positive{color:#A8E6A3}
+.summary-amount.negative{color:#F09090}
+.summary-amount.income{color:#A8E6A3}
 
 /* TABS */
 .tab-bar{
@@ -528,7 +529,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 <div class="summary-bar">
   <div class="summary-item">
     <div class="summary-label">Planned In</div>
-    <div class="summary-amount" id="summaryIn">$0.00</div>
+    <div class="summary-amount income" id="summaryIn">$0.00</div>
   </div>
   <div class="summary-item">
     <div class="summary-label">Planned Out</div>
@@ -1529,8 +1530,8 @@ function updateSummary() {
   st.sections.forEach(function(sec){ sec.items.forEach(function(it){ totalPlannedOut+=it.planned||0; }); });
   // Tithe is informational only -- does not affect budget math
   var left = totalPlannedIn - totalPlannedOut;
-  document.getElementById('summaryIn').textContent = fmt(totalPlannedIn);
-  document.getElementById('summaryOut').textContent = fmt(totalPlannedOut);
+  var inEl = document.getElementById('summaryIn'); inEl.textContent = fmt(totalPlannedIn); inEl.className = 'summary-amount income';
+  var outEl = document.getElementById('summaryOut'); outEl.textContent = fmt(totalPlannedOut); outEl.className = 'summary-amount';
   var leftEl = document.getElementById('summaryLeft');
   leftEl.textContent = fmt(left);
   leftEl.className = 'summary-amount ' + (left>=0?'positive':'negative');
