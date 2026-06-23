@@ -1572,41 +1572,47 @@ function renderReports() {
     if(total>0){labels.push(sec.label);chartData.push(total);colors.push(palette[i%palette.length]);}
   });
 
-  var canvas1 = document.getElementById('categoryChart');
-  if (labels.length > 0) {
-    charts.category = new Chart(canvas1.getContext('2d'),{
-      type:'doughnut',
-      data:{labels:labels,datasets:[{data:chartData,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
-      options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11}}}}}
-    });
-  } else {
-    var ctx1 = canvas1.getContext('2d');
-    ctx1.clearRect(0,0,canvas1.width,canvas1.height);
-    ctx1.fillStyle='#7A7060';ctx1.font='14px DM Sans';ctx1.textAlign='center';
-    ctx1.fillText('No budget data yet', canvas1.width/2, canvas1.height/2);
-  }
-
   var totalIn=0, totalOut=0;
   st.income.forEach(function(r){totalIn+=r.planned||0;});
   st.sections.forEach(function(sec){sec.items.forEach(function(it){totalOut+=it.planned||0;});});
   st.savings.forEach(function(r){totalOut+=r.planned||0;});
 
-  var canvas2 = document.getElementById('incomeExpenseChart');
-  charts.income = new Chart(canvas2.getContext('2d'),{
-    type:'bar',
-    data:{
-      labels:['Planned In','Planned Out','Left to Budget'],
-      datasets:[{
-        data:[totalIn,totalOut,Math.max(0,totalIn-totalOut)],
-        backgroundColor:['#2D5A2D','#B85C3A','#4A8040'],
-        borderRadius:8,borderSkipped:false
-      }]
-    },
-    options:{
-      animation:false,responsive:false,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}}}}
+  var lblsCopy=labels.slice(), dataCopy=chartData.slice(), colsCopy=colors.slice();
+  var tIn=totalIn, tOut=totalOut;
+
+  requestAnimationFrame(function(){
+    var canvas1 = document.getElementById('categoryChart');
+    if (lblsCopy.length > 0) {
+      charts.category = new Chart(canvas1.getContext('2d'),{
+        type:'doughnut',
+        data:{labels:lblsCopy,datasets:[{data:dataCopy,backgroundColor:colsCopy,borderWidth:2,borderColor:'#fff'}]},
+        options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11}}}}}
+      });
+    } else {
+      var ctx1 = canvas1.getContext('2d');
+      ctx1.clearRect(0,0,canvas1.width,canvas1.height);
+      ctx1.fillStyle='#7A7060';ctx1.font='14px DM Sans';ctx1.textAlign='center';
+      ctx1.fillText('No budget data yet', canvas1.width/2, canvas1.height/2);
     }
+    requestAnimationFrame(function(){
+      var canvas2 = document.getElementById('incomeExpenseChart');
+      charts.income = new Chart(canvas2.getContext('2d'),{
+        type:'bar',
+        data:{
+          labels:['Planned In','Planned Out','Left to Budget'],
+          datasets:[{
+            data:[tIn,tOut,Math.max(0,tIn-tOut)],
+            backgroundColor:['#2D5A2D','#B85C3A','#4A8040'],
+            borderRadius:8,borderSkipped:false
+          }]
+        },
+        options:{
+          animation:false,responsive:false,maintainAspectRatio:false,
+          plugins:{legend:{display:false}},
+          scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}}}}
+        }
+      });
+    });
   });
 }
 
