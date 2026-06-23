@@ -1562,30 +1562,37 @@ function renderCashFlow() {
 // ============================================================
 function renderReports() {
   var st = getState();
-  if (charts.category) { charts.category.destroy(); }
-  if (charts.income) { charts.income.destroy(); }
+  if (charts.category) { charts.category.destroy(); charts.category = null; }
+  if (charts.income) { charts.income.destroy(); charts.income = null; }
 
-  var labels=[], data=[], colors=[];
+  var labels=[], chartData=[], colors=[];
   var palette=['#2D5A2D','#C87830','#4A8040','#B85C3A','#1E3A1E','#8B2020','#7A7060','#302E28'];
   st.sections.forEach(function(sec,i){
     var total=0; sec.items.forEach(function(it){total+=it.planned||0;});
-    if(total>0){labels.push(sec.label);data.push(total);colors.push(palette[i%palette.length]);}
+    if(total>0){labels.push(sec.label);chartData.push(total);colors.push(palette[i%palette.length]);}
   });
 
-  var ctx1 = document.getElementById('categoryChart').getContext('2d');
-  charts.category = new Chart(ctx1,{
-    type:'doughnut',
-    data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11}}}}}
-  });
+  var canvas1 = document.getElementById('categoryChart');
+  if (labels.length > 0) {
+    charts.category = new Chart(canvas1.getContext('2d'),{
+      type:'doughnut',
+      data:{labels:labels,datasets:[{data:chartData,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+      options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11}}}}}
+    });
+  } else {
+    var ctx1 = canvas1.getContext('2d');
+    ctx1.clearRect(0,0,canvas1.width,canvas1.height);
+    ctx1.fillStyle='#7A7060';ctx1.font='14px DM Sans';ctx1.textAlign='center';
+    ctx1.fillText('No budget data yet', canvas1.width/2, canvas1.height/2);
+  }
 
   var totalIn=0, totalOut=0;
   st.income.forEach(function(r){totalIn+=r.planned||0;});
   st.sections.forEach(function(sec){sec.items.forEach(function(it){totalOut+=it.planned||0;});});
   st.savings.forEach(function(r){totalOut+=r.planned||0;});
 
-  var ctx2 = document.getElementById('incomeExpenseChart').getContext('2d');
-  charts.income = new Chart(ctx2,{
+  var canvas2 = document.getElementById('incomeExpenseChart');
+  charts.income = new Chart(canvas2.getContext('2d'),{
     type:'bar',
     data:{
       labels:['Planned In','Planned Out','Left to Budget'],
@@ -1596,7 +1603,7 @@ function renderReports() {
       }]
     },
     options:{
-      responsive:false,maintainAspectRatio:false,
+      animation:false,responsive:false,maintainAspectRatio:false,
       plugins:{legend:{display:false}},
       scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}}}}
     }
