@@ -62,7 +62,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* SUMMARY BAR */
 .summary-bar{
-  background:#1B4332;
+  background:#EBF3FB;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   padding:10px 16px;
@@ -70,13 +70,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   top:56px;
   z-index:190;
   border-bottom:1px solid rgba(0,0,0,0.08);
+  border-top:1px solid rgba(0,0,0,0.06);
 }
 .summary-item{text-align:center}
-.summary-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:2px}
-.summary-amount{font-family:var(--font-body);font-size:1.2rem;font-weight:700;color:#ffffff}
-.summary-amount.positive{color:#6EE7A0}
-.summary-amount.negative{color:#FF8080}
-.summary-amount.income{color:#6EE7A0}
+.summary-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A8FA6;margin-bottom:2px}
+.summary-amount{font-family:var(--font-body);font-size:1.2rem;font-weight:700;color:#1C1C1A}
+.summary-amount.positive{color:#1A7A1A}
+.summary-amount.negative{color:#CC2200}
+.summary-amount.income{color:#1A7A1A}
 
 /* TABS */
 .tab-bar{
@@ -139,7 +140,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* COLUMN HEADERS */
 .col-headers{
   display:grid;
-  grid-template-columns:1fr 100px 100px 100px 120px 60px 60px;
+  grid-template-columns:1fr 130px 100px 100px 120px 60px 60px;
   gap:4px;
   padding:8px 16px 6px;
   border-bottom:1px solid var(--border);
@@ -150,7 +151,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* ROW */
 .budget-row{
   display:grid;
-  grid-template-columns:1fr 100px 100px 100px 120px 60px 60px;
+  grid-template-columns:1fr 130px 100px 100px 120px 60px 60px;
   gap:4px;
   padding:10px 16px;
   border-bottom:1px solid rgba(221,213,192,0.4);
@@ -241,7 +242,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* SECTION TOTALS */
 .section-total{
   display:grid;
-  grid-template-columns:1fr 100px 100px 100px 120px 60px 60px;
+  grid-template-columns:1fr 130px 100px 100px 120px 60px 60px;
   gap:4px;
   padding:10px 16px;
   background:var(--surface2);
@@ -297,6 +298,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 .cf-chart-wrap canvas{
   width:100% !important;
   height:100% !important;
+}
+.chart-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 .cf-net-row-display{
   display:flex;
@@ -474,9 +480,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* MOBILE */
 @media(max-width:640px){
-  .col-headers{grid-template-columns:1fr 80px 80px 80px 100px 50px 50px}
-  .budget-row{grid-template-columns:1fr 80px 80px 80px 100px 50px 50px}
-  .section-total{grid-template-columns:1fr 80px 80px 80px 100px 50px 50px}
+  .col-headers{grid-template-columns:1fr 90px 80px 80px 100px 50px 50px}
+  .budget-row{grid-template-columns:1fr 90px 80px 80px 100px 50px 50px}
+  .section-total{grid-template-columns:1fr 90px 80px 80px 100px 50px 50px}
   .amt-input{font-size:0.82rem;padding:3px 4px}
   .summary-amount{font-size:1.05rem}
   .accounts-grid{grid-template-columns:1fr}
@@ -487,9 +493,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 @media(min-width:900px){
   body{max-width:1100px;margin:0 auto}
   .tab-content{padding:20px}
-  .col-headers{grid-template-columns:1fr 110px 110px 110px 120px 60px 60px}
-  .budget-row{grid-template-columns:1fr 110px 110px 110px 120px 60px 60px}
-  .section-total{grid-template-columns:1fr 110px 110px 110px 120px 60px 60px}
+  .col-headers{grid-template-columns:1fr 130px 110px 110px 120px 60px 60px}
+  .budget-row{grid-template-columns:1fr 130px 110px 110px 120px 60px 60px}
+  .section-total{grid-template-columns:1fr 130px 110px 110px 120px 60px 60px}
 }
 
 /* EDITABLE ROW NAMES */
@@ -798,7 +804,7 @@ var currentMonth = new Date().getMonth();
 var state = {};
 var charts = {};
 
-var ACCOUNTS = ['Koho','Scotiabank RDSP','Simply Financial','Square'];
+var ACCOUNTS = ['Koho Spending','Koho Savings','Scotiabank RDSP','Simply Financial','Square'];
 
 var DEFAULT_INCOME = [
   {id:'inc_ministry', name:'Ministry', planned:1500, received:0, account:'', note:'', fixed:true, sub:'Monthly'},
@@ -1054,7 +1060,7 @@ function renderIncome() {
     var acctSel = document.createElement('select');
     acctSel.className = 'acct-select';
     acctSel.setAttribute('data-field', 'account');
-    ['', 'Koho', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
+    ['', 'Koho Spending', 'Koho Savings', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
       var opt = document.createElement('option');
       opt.value = a;
       opt.textContent = a || 'Account';
@@ -1276,7 +1282,7 @@ function renderSavings() {
     var acctSel = document.createElement('select');
     acctSel.className = 'acct-select';
     acctSel.setAttribute('data-field', 'account');
-    ['', 'Koho', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
+    ['', 'Koho Spending', 'Koho Savings', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
       var opt = document.createElement('option');
       opt.value = a;
       opt.textContent = a || 'Account';
@@ -1492,7 +1498,7 @@ function renderExpenseItems(si) {
     var acctSel = document.createElement('select');
     acctSel.className = 'acct-select';
     acctSel.setAttribute('data-field', 'account');
-    ['', 'Koho', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
+    ['', 'Koho Spending', 'Koho Savings', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
       var opt = document.createElement('option');
       opt.value = a;
       opt.textContent = a || 'Account';
@@ -1773,14 +1779,14 @@ function renderCashFlow() {
           {
             label: 'Income In',
             data: incomeData,
-            backgroundColor: 'rgba(46,125,50,0.82)',
+            backgroundColor: 'rgba(26,122,26,0.85)',
             borderRadius: 6,
             borderSkipped: false
           },
           {
             label: 'Expenses Out',
             data: expData,
-            backgroundColor: 'rgba(185,92,58,0.82)',
+            backgroundColor: 'rgba(204,34,0,0.85)',
             borderRadius: 6,
             borderSkipped: false
           }
