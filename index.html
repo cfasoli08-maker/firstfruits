@@ -50,6 +50,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   z-index:200;
   box-shadow:0 1px 4px rgba(0,0,0,0.08);
 }
+.app-header-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;}
 .app-logo{display:flex;align-items:center;gap:10px}
 .app-logo svg{width:32px;height:32px;flex-shrink:0}
 .app-title{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:#1C1C1A;letter-spacing:0.01em}
@@ -61,27 +62,28 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* SUMMARY BAR */
 .summary-bar{
-  background:#4A7C59;
+  background:#1B4332;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   padding:10px 16px;
   position:sticky;
   top:56px;
   z-index:190;
-  border-bottom:1px solid rgba(255,255,255,0.12);
+  border-bottom:1px solid rgba(0,0,0,0.08);
 }
 .summary-item{text-align:center}
-.summary-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(242,237,227,0.6);margin-bottom:2px}
-.summary-amount{font-family:var(--font-body);font-size:1.2rem;font-weight:700;color:#F2EDE3}
-.summary-amount.positive{color:#A8E6A3}
-.summary-amount.negative{color:#F09090}
-.summary-amount.income{color:#A8E6A3}
+.summary-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:2px}
+.summary-amount{font-family:var(--font-body);font-size:1.2rem;font-weight:700;color:#ffffff}
+.summary-amount.positive{color:#6EE7A0}
+.summary-amount.negative{color:#FF8080}
+.summary-amount.income{color:#6EE7A0}
 
 /* TABS */
 .tab-bar{
   background:var(--surface);
   border-bottom:2px solid var(--border);
   display:flex;
+  justify-content:center;
   padding:0 16px;
   position:sticky;
   top:116px;
@@ -160,7 +162,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 .row-name{font-size:0.9rem;font-weight:500;color:var(--body)}
 .row-sub{font-size:0.72rem;color:var(--muted);margin-top:2px}
 .row-name-wrap{min-width:0}
-.amt-cell{text-align:right}
+.amt-cell{text-align:right;position:relative}
+.amt-cell-wrap{position:relative;display:flex;align-items:center}
+.amt-cell-wrap .dollar-sign{position:absolute;left:6px;font-size:0.82rem;color:var(--muted);pointer-events:none;line-height:1}
+.amt-cell-wrap .amt-input{padding-left:14px;text-align:left}
 .amt-input{
   width:100%;
   text-align:right;
@@ -284,6 +289,33 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   overflow-x:auto;
   margin-bottom:16px;
 }
+.cf-chart-wrap{
+  position:relative;
+  width:100%;
+  height:280px;
+}
+.cf-chart-wrap canvas{
+  width:100% !important;
+  height:100% !important;
+}
+.cf-net-row-display{
+  display:flex;
+  justify-content:space-around;
+  padding:10px 16px 6px;
+  border-top:1px solid var(--border);
+  flex-wrap:wrap;
+  gap:8px;
+}
+.cf-net-week{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  font-family:var(--font-body);
+}
+.cf-net-week-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+.cf-net-week-val{font-size:0.9rem;font-weight:700;}
+.cf-net-week-val.pos{color:#2E7D32}
+.cf-net-week-val.neg{color:var(--red)}
 .cf-table{width:100%;border-collapse:collapse;min-width:500px}
 .cf-table th{
   background:var(--surface2);
@@ -489,9 +521,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   color:var(--body);background:var(--surface);cursor:pointer;
 }
 .date-input::-webkit-calendar-picker-indicator{
-  opacity:0.4;
-  transform:scale(0.75);
+  opacity:0.35;
+  font-size:0.7em;
   cursor:pointer;
+  padding:0;
+  margin:0;
 }
 .date-input:focus{outline:none;border-color:var(--sage)}
 
@@ -513,17 +547,19 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 <div class="toast" id="toast"></div>
 
 <header class="app-header">
-  <div class="app-logo">
-    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="32" height="32" rx="8" fill="#1E3A1E"/>
-      <circle cx="16" cy="16" r="8" fill="#C87830"/>
-      <circle cx="16" cy="16" r="8" fill="none" stroke="#E8943A" stroke-width="1.5"/>
-      <ellipse cx="16" cy="9" rx="2.5" ry="5" fill="#4A8040"/>
-      <ellipse cx="11.5" cy="8.5" rx="2" ry="4" fill="#2D5A2D" transform="rotate(-28 11.5 8.5)"/>
-      <ellipse cx="20.5" cy="8.5" rx="2" ry="4" fill="#2D5A2D" transform="rotate(28 20.5 8.5)"/>
-      <line x1="16" y1="8" x2="16" y2="12" stroke="#8B5E1A" stroke-width="1.2"/>
-    </svg>
-    <span class="app-title">First<span>fruits</span></span>
+  <div class="app-header-center">
+    <div class="app-logo">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="#1E3A1E"/>
+        <circle cx="16" cy="16" r="8" fill="#C87830"/>
+        <circle cx="16" cy="16" r="8" fill="none" stroke="#E8943A" stroke-width="1.5"/>
+        <ellipse cx="16" cy="9" rx="2.5" ry="5" fill="#4A8040"/>
+        <ellipse cx="11.5" cy="8.5" rx="2" ry="4" fill="#2D5A2D" transform="rotate(-28 11.5 8.5)"/>
+        <ellipse cx="20.5" cy="8.5" rx="2" ry="4" fill="#2D5A2D" transform="rotate(28 20.5 8.5)"/>
+        <line x1="16" y1="8" x2="16" y2="12" stroke="#8B5E1A" stroke-width="1.2"/>
+      </svg>
+      <span class="app-title">First<span>fruits</span></span>
+    </div>
   </div>
   <div class="month-nav">
     <button onclick="changeMonth(-1)">&#8249;</button>
@@ -568,7 +604,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
       <span class="section-chevron">&#9660;</span>
     </div>
     <div class="section-body">
-      <div class="col-headers" style="grid-template-columns:1fr 90px 100px 100px 90px 90px 90px">
+      <div class="col-headers">
         <div class="col-head">Source</div>
         <div class="col-head">Date</div>
         <div class="col-head">Planned</div>
@@ -687,15 +723,10 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
       <div class="sc-value" id="cf-unassigned">$0.00</div>
     </div>
   </div>
-  <div class="cf-week-grid">
-    <table class="cf-table" id="cf-table">
-      <thead>
-        <tr id="cf-head-row">
-          <th style="text-align:left">Category</th>
-        </tr>
-      </thead>
-      <tbody id="cf-body"></tbody>
-    </table>
+  <div class="chart-card">
+    <div class="chart-title">Weekly Cash Flow</div>
+    <div class="cf-chart-wrap"><canvas id="cfWeekChart"></canvas></div>
+    <div class="cf-net-row-display" id="cf-net-weeks"></div>
   </div>
 </div>
 
@@ -969,6 +1000,11 @@ function renderIncome() {
     // Planned
     var plannedCell = document.createElement('div');
     plannedCell.className = 'amt-cell';
+    var plannedWrap = document.createElement('div');
+    plannedWrap.className = 'amt-cell-wrap';
+    var plannedDollar = document.createElement('span');
+    plannedDollar.className = 'dollar-sign';
+    plannedDollar.textContent = '$';
     var plannedIn = document.createElement('input');
     plannedIn.className = 'amt-input';
     plannedIn.type = 'number';
@@ -978,11 +1014,18 @@ function renderIncome() {
     plannedIn.value = row.planned || 0;
     plannedIn.placeholder = '0.00';
     plannedIn.setAttribute('data-field', 'planned');
-    plannedCell.appendChild(plannedIn);
+    plannedWrap.appendChild(plannedDollar);
+    plannedWrap.appendChild(plannedIn);
+    plannedCell.appendChild(plannedWrap);
 
     // Received
     var recCell = document.createElement('div');
     recCell.className = 'amt-cell';
+    var recWrap = document.createElement('div');
+    recWrap.className = 'amt-cell-wrap';
+    var recDollar = document.createElement('span');
+    recDollar.className = 'dollar-sign';
+    recDollar.textContent = '$';
     var recIn = document.createElement('input');
     recIn.className = 'amt-input green';
     recIn.type = 'number';
@@ -992,7 +1035,9 @@ function renderIncome() {
     recIn.value = row.received || 0;
     recIn.placeholder = '0.00';
     recIn.setAttribute('data-field', 'received');
-    recCell.appendChild(recIn);
+    recWrap.appendChild(recDollar);
+    recWrap.appendChild(recIn);
+    recCell.appendChild(recWrap);
 
     // Still to get
     var stillCell = document.createElement('div');
@@ -1180,6 +1225,11 @@ function renderSavings() {
 
     var plannedCell = document.createElement('div');
     plannedCell.className = 'amt-cell';
+    var plannedWrap = document.createElement('div');
+    plannedWrap.className = 'amt-cell-wrap';
+    var plannedDollar = document.createElement('span');
+    plannedDollar.className = 'dollar-sign';
+    plannedDollar.textContent = '$';
     var plannedIn = document.createElement('input');
     plannedIn.className = 'amt-input';
     plannedIn.type = 'number';
@@ -1189,10 +1239,17 @@ function renderSavings() {
     plannedIn.value = row.planned || 0;
     plannedIn.placeholder = '0.00';
     plannedIn.setAttribute('data-field', 'planned');
-    plannedCell.appendChild(plannedIn);
+    plannedWrap.appendChild(plannedDollar);
+    plannedWrap.appendChild(plannedIn);
+    plannedCell.appendChild(plannedWrap);
 
     var spentCell = document.createElement('div');
     spentCell.className = 'amt-cell';
+    var spentWrap = document.createElement('div');
+    spentWrap.className = 'amt-cell-wrap';
+    var spentDollar = document.createElement('span');
+    spentDollar.className = 'dollar-sign';
+    spentDollar.textContent = '$';
     var spentIn = document.createElement('input');
     spentIn.className = 'amt-input green';
     spentIn.type = 'number';
@@ -1202,7 +1259,9 @@ function renderSavings() {
     spentIn.value = row.spent || 0;
     spentIn.placeholder = '0.00';
     spentIn.setAttribute('data-field', 'spent');
-    spentCell.appendChild(spentIn);
+    spentWrap.appendChild(spentDollar);
+    spentWrap.appendChild(spentIn);
+    spentCell.appendChild(spentWrap);
 
     var availCell = document.createElement('div');
     availCell.className = 'amt-cell';
@@ -1379,6 +1438,11 @@ function renderExpenseItems(si) {
     // Planned
     var plannedCell = document.createElement('div');
     plannedCell.className = 'amt-cell';
+    var plannedWrap = document.createElement('div');
+    plannedWrap.className = 'amt-cell-wrap';
+    var plannedDollar = document.createElement('span');
+    plannedDollar.className = 'dollar-sign';
+    plannedDollar.textContent = '$';
     var plannedIn = document.createElement('input');
     plannedIn.className = 'amt-input';
     plannedIn.type = 'number';
@@ -1388,11 +1452,18 @@ function renderExpenseItems(si) {
     plannedIn.value = row.planned || 0;
     plannedIn.placeholder = '0.00';
     plannedIn.setAttribute('data-field', 'planned');
-    plannedCell.appendChild(plannedIn);
+    plannedWrap.appendChild(plannedDollar);
+    plannedWrap.appendChild(plannedIn);
+    plannedCell.appendChild(plannedWrap);
 
     // Spent
     var spentCell = document.createElement('div');
     spentCell.className = 'amt-cell';
+    var spentWrap = document.createElement('div');
+    spentWrap.className = 'amt-cell-wrap';
+    var spentDollar = document.createElement('span');
+    spentDollar.className = 'dollar-sign';
+    spentDollar.textContent = '$';
     var spentIn = document.createElement('input');
     spentIn.className = 'amt-input';
     spentIn.type = 'number';
@@ -1402,7 +1473,9 @@ function renderExpenseItems(si) {
     spentIn.value = row.spent || 0;
     spentIn.placeholder = '0.00';
     spentIn.setAttribute('data-field', 'spent');
-    spentCell.appendChild(spentIn);
+    spentWrap.appendChild(spentDollar);
+    spentWrap.appendChild(spentIn);
+    spentCell.appendChild(spentWrap);
 
     // Available
     var availCell = document.createElement('div');
@@ -1593,156 +1666,161 @@ function getWeekLabel(dateStr, year, month) {
 
 function renderCashFlow() {
   var st = getState();
-  // Build ordered week labels from all dates in this month
-  var weekSet = {};
-  var allRows = [];
-  st.income.forEach(function(r){ if(r.date) allRows.push(r.date); });
-  st.sections.forEach(function(sec){ sec.items.forEach(function(it){ if(it.date) allRows.push(it.date); }); });
-  allRows.forEach(function(dateStr){
-    var lbl = getWeekLabel(dateStr, currentYear, currentMonth);
-    if (lbl && !weekSet[lbl]) {
-      var d = new Date(dateStr + 'T12:00:00');
-      weekSet[lbl] = d.getTime();
-    }
-  });
-  // Sort weeks chronologically
-  var weeks = Object.keys(weekSet).sort(function(a,b){ return weekSet[a]-weekSet[b]; });
-  // Always show at least 4 weeks for the current month
-  if (weeks.length === 0) {
-    var d = new Date(currentYear, currentMonth, 1);
-    for (var w=0; w<4; w++) {
-      var monday = new Date(currentYear, currentMonth, 1 + w*7);
-      var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][monday.getMonth()];
-      var lbl = 'Wk of ' + mo + ' ' + monday.getDate();
-      if (!weeks.includes(lbl)) weeks.push(lbl);
-    }
+  if (window._cfChart) { window._cfChart.destroy(); window._cfChart = null; }
+
+  // Always show 4 weeks from the first Monday of the month
+  var weeks = [];
+  var weekLabels = [];
+  var d = new Date(currentYear, currentMonth, 1);
+  // Find first Monday
+  var dayOfWeek = d.getDay();
+  var firstMonday = new Date(currentYear, currentMonth, 1 + (dayOfWeek === 0 ? 1 : dayOfWeek === 1 ? 0 : 8 - dayOfWeek));
+  var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for (var w = 0; w < 5; w++) {
+    var wkStart = new Date(firstMonday);
+    wkStart.setDate(firstMonday.getDate() + w * 7);
+    if (wkStart.getMonth() > currentMonth) break;
+    var lbl = 'Wk of ' + mo[wkStart.getMonth()] + ' ' + wkStart.getDate();
+    weekLabels.push(lbl);
+    weeks.push({ label: lbl, start: wkStart, income: 0, expenses: 0 });
+  }
+  // Always at least 4 weeks
+  while (weeks.length < 4) {
+    var last = weeks[weeks.length - 1];
+    var next = new Date(last.start);
+    next.setDate(last.start.getDate() + 7);
+    var lbl2 = 'Wk of ' + mo[next.getMonth()] + ' ' + next.getDate();
+    weeks.push({ label: lbl2, start: next, income: 0, expenses: 0 });
+    weekLabels.push(lbl2);
   }
 
-  var head = document.getElementById('cf-head-row');
-  head.innerHTML = '<th style="text-align:left">Category</th>';
-  weeks.forEach(function(w){
-    var th = document.createElement('th'); th.textContent = w; head.appendChild(th);
-  });
-  var thT = document.createElement('th'); thT.textContent = 'Total'; head.appendChild(thT);
-
-  var body = document.getElementById('cf-body');
-  body.innerHTML = '';
-
-  // --- INCOME ---
-  var incByWeek = {};
-  weeks.forEach(function(w){ incByWeek[w]=0; });
-  var totalIncome = 0;
-  st.income.forEach(function(r){
-    var amt = r.planned||0;
-    totalIncome += amt;
-    if (r.date) {
-      var lbl = getWeekLabel(r.date, currentYear, currentMonth);
-      if (lbl && incByWeek.hasOwnProperty(lbl)) incByWeek[lbl] += amt;
-      else if (lbl === null && weeks.length) incByWeek[weeks[0]] += amt;
-    } else if (amt && weeks.length) {
-      incByWeek[weeks[0]] += amt;
+  function getWeekIdx(dateStr) {
+    if (!dateStr) return weeks.length - 1;
+    var d2 = new Date(dateStr + 'T12:00:00');
+    if (isNaN(d2)) return weeks.length - 1;
+    for (var i = weeks.length - 1; i >= 0; i--) {
+      if (d2 >= weeks[i].start) return i;
     }
-  });
-  var incTr = document.createElement('tr');
-  incTr.innerHTML = '<td style="color:var(--sage);font-weight:600">&#127808; Income</td>';
-  weeks.forEach(function(w){
-    var td=document.createElement('td');
-    td.textContent = incByWeek[w] ? fmt(incByWeek[w]) : '';
-    td.className = incByWeek[w] ? 'cf-positive' : '';
-    incTr.appendChild(td);
-  });
-  var itd=document.createElement('td'); itd.textContent=fmt(totalIncome); itd.className='cf-positive'; incTr.appendChild(itd);
-  body.appendChild(incTr);
+    return 0;
+  }
 
-  // --- EXPENSES by section ---
-  var grandTotalSpent = 0;
-  var outByWeek = {};
-  weeks.forEach(function(w){ outByWeek[w]=0; });
+  // Assign income
+  var totalIncome = 0;
+  st.income.forEach(function(r) {
+    var amt = r.planned || 0;
+    totalIncome += amt;
+    var wi = getWeekIdx(r.date);
+    weeks[wi].income += amt;
+  });
 
-  st.sections.forEach(function(sec){
-    var secByWeek = {};
-    weeks.forEach(function(w){ secByWeek[w]=0; });
-    var secTotal = 0;
-    sec.items.forEach(function(it){
-      var amt = it.planned||0;
-      secTotal += amt;
-      if (it.date) {
-        var lbl = getWeekLabel(it.date, currentYear, currentMonth);
-        if (lbl && secByWeek.hasOwnProperty(lbl)) {
-          secByWeek[lbl] += amt;
-          outByWeek[lbl] += amt;
-        } else if (amt) {
-          var lastWk = weeks[weeks.length-1];
-          if (lastWk) { secByWeek[lastWk] += amt; outByWeek[lastWk] += amt; }
+  // Assign expenses
+  var totalExpenses = 0;
+  st.sections.forEach(function(sec) {
+    sec.items.forEach(function(it) {
+      var amt = it.planned || 0;
+      totalExpenses += amt;
+      var wi = getWeekIdx(it.date);
+      weeks[wi].expenses += amt;
+    });
+  });
+  st.savings.forEach(function(r) {
+    var amt = r.planned || 0;
+    totalExpenses += amt;
+    weeks[weeks.length - 1].expenses += amt;
+  });
+
+  // Update summary cards
+  var net = totalIncome - totalExpenses;
+  document.getElementById('cf-total-in').textContent = fmt(totalIncome);
+  document.getElementById('cf-total-out').textContent = fmt(totalExpenses);
+  var netEl = document.getElementById('cf-net');
+  netEl.textContent = fmt(net);
+  netEl.className = 'sc-value ' + (net >= 0 ? 'green' : 'red');
+  var planned = 0;
+  st.income.forEach(function(r) { planned += r.planned || 0; });
+  document.getElementById('cf-unassigned').textContent = fmt(planned - totalExpenses);
+  document.getElementById('cf-month-title').textContent = ['January','February','March','April','May','June','July','August','September','October','November','December'][currentMonth] + ' ' + currentYear + ' Cash Flow';
+
+  // Build net labels below chart
+  var netDisplay = document.getElementById('cf-net-weeks');
+  netDisplay.innerHTML = '';
+  weeks.forEach(function(wk) {
+    var wkNet = wk.income - wk.expenses;
+    var div = document.createElement('div');
+    div.className = 'cf-net-week';
+    var lbl = document.createElement('div');
+    lbl.className = 'cf-net-week-label';
+    lbl.textContent = wk.label;
+    var val = document.createElement('div');
+    val.className = 'cf-net-week-val ' + (wkNet >= 0 ? 'pos' : 'neg');
+    val.textContent = fmt(wkNet);
+    div.appendChild(lbl);
+    div.appendChild(val);
+    netDisplay.appendChild(div);
+  });
+
+  // Draw bar chart
+  var canvas = document.getElementById('cfWeekChart');
+  var incomeData = weeks.map(function(w) { return w.income; });
+  var expData = weeks.map(function(w) { return w.expenses; });
+
+  requestAnimationFrame(function() {
+    window._cfChart = new Chart(canvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: weekLabels,
+        datasets: [
+          {
+            label: 'Income In',
+            data: incomeData,
+            backgroundColor: 'rgba(46,125,50,0.82)',
+            borderRadius: 6,
+            borderSkipped: false
+          },
+          {
+            label: 'Expenses Out',
+            data: expData,
+            backgroundColor: 'rgba(185,92,58,0.82)',
+            borderRadius: 6,
+            borderSkipped: false
+          }
+        ]
+      },
+      options: {
+        animation: false,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { family: 'DM Sans', size: 12 }, color: '#302E28', boxWidth: 14, padding: 16 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) { return ctx.dataset.label + ': ' + fmt(ctx.parsed.y); }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { family: 'DM Sans', size: 11 }, color: '#7A7060' }
+          },
+          y: {
+            beginAtZero: true,
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            ticks: {
+              font: { family: 'DM Sans', size: 11 },
+              color: '#7A7060',
+              callback: function(v) { return '$' + v.toLocaleString(); }
+            }
+          }
         }
-      } else if (amt) {
-        var lastWk = weeks[weeks.length-1];
-        if (lastWk) { secByWeek[lastWk] += amt; outByWeek[lastWk] += amt; }
       }
     });
-    if (!secTotal) return;
-    grandTotalSpent += secTotal;
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td>' + sec.icon + ' ' + sec.label + '</td>';
-    weeks.forEach(function(w){
-      var td=document.createElement('td');
-      td.textContent = secByWeek[w] ? fmt(secByWeek[w]) : '';
-      td.className = secByWeek[w] ? 'cf-negative' : '';
-      tr.appendChild(td);
-    });
-    var td=document.createElement('td'); td.textContent=fmt(secTotal); td.className='cf-negative'; tr.appendChild(td);
-    body.appendChild(tr);
   });
-
-  // Tithe
-  var titheGiven=(st.tithe&&st.tithe.given)||0;
-  if (titheGiven) {
-    grandTotalSpent += titheGiven;
-    var ttr=document.createElement('tr');
-    ttr.innerHTML='<td>&#10024; Tithe Given</td>';
-    weeks.forEach(function(){ var td=document.createElement('td'); td.textContent=''; ttr.appendChild(td); });
-    var ttd=document.createElement('td'); ttd.textContent=fmt(titheGiven); ttd.className='cf-negative'; ttr.appendChild(ttd);
-    body.appendChild(ttr);
-  }
-
-  // --- IN row ---
-  var inTr=document.createElement('tr'); inTr.className='cf-total-row';
-  inTr.innerHTML='<td>Total In</td>';
-  weeks.forEach(function(w){
-    var td=document.createElement('td'); td.textContent=incByWeek[w]?fmt(incByWeek[w]):''; td.className=incByWeek[w]?'cf-positive':''; inTr.appendChild(td);
-  });
-  var intd=document.createElement('td'); intd.textContent=fmt(totalIncome); intd.className='cf-positive'; inTr.appendChild(intd);
-  body.appendChild(inTr);
-
-  // --- OUT row ---
-  var outTr=document.createElement('tr'); outTr.className='cf-total-row';
-  outTr.innerHTML='<td>Total Out</td>';
-  weeks.forEach(function(w){
-    var td=document.createElement('td'); td.textContent=outByWeek[w]?fmt(outByWeek[w]):''; td.className=outByWeek[w]?'cf-negative':''; outTr.appendChild(td);
-  });
-  var otd=document.createElement('td'); otd.textContent=fmt(grandTotalSpent); otd.className='cf-negative'; outTr.appendChild(otd);
-  body.appendChild(outTr);
-
-  // --- NET row ---
-  var netTr=document.createElement('tr'); netTr.className='cf-net-row';
-  netTr.innerHTML='<td>Net</td>';
-  weeks.forEach(function(w){
-    var net=incByWeek[w]-outByWeek[w];
-    var td=document.createElement('td'); td.textContent=fmt(net); td.className=(net>=0?'cf-positive':'cf-negative'); netTr.appendChild(td);
-  });
-  var net=totalIncome-grandTotalSpent;
-  var ntd=document.createElement('td'); ntd.textContent=fmt(net); ntd.className=(net>=0?'cf-positive':'cf-negative'); netTr.appendChild(ntd);
-  body.appendChild(netTr);
-
-  document.getElementById('cf-total-in').textContent = fmt(totalIncome);
-  document.getElementById('cf-total-out').textContent = fmt(grandTotalSpent);
-  document.getElementById('cf-month-title').textContent = ['January','February','March','April','May','June','July','August','September','October','November','December'][currentMonth] + ' ' + currentYear + ' Cash Flow';
-  var netEl=document.getElementById('cf-net');
-  netEl.textContent=fmt(net); netEl.className='sc-value '+(net>=0?'green':'red');
-  var planned=0;
-  st.income.forEach(function(r){planned+=r.planned||0;});
-  document.getElementById('cf-unassigned').textContent = fmt(planned - grandTotalSpent);
 }
+
 
 // ============================================================
 // REPORTS
