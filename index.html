@@ -839,6 +839,7 @@ function init() {
   currentYear = d.getFullYear();
   currentMonth = d.getMonth();
   renderAll();
+  initDelegatedHandlers();
   document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
@@ -894,28 +895,120 @@ function renderIncome() {
   var container = document.getElementById('income-rows');
   container.innerHTML = '';
   st.income.forEach(function(row, i) {
-    var div = document.createElement('div');
-    div.className = 'budget-row';
     var still = Math.max(0, (row.planned||0) - (row.received||0));
-    var acctOpts = ['','Koho','Scotiabank RDSP','Simply Financial','Square'].map(function(a) {
-      return '<option value="' + a + '"' + (a === (row.account||'') ? ' selected' : '') + '>' + (a||'Account') + '</option>';
-    }).join('');
-    div.innerHTML =
-      '<div class="row-name-wrap">' +
-        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateIncome(' + i + ',\'name\',this.value)" placeholder="Source name">' +
-        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateIncome(' + i + ',\'sub\',this.value)" placeholder="e.g. Monthly, Weekly...">' +
-      '</div>' +
-      '<div class="amt-cell"><input class="date-input" type="date" value="' + (row.date||'') + '" oninput="updateIncome(' + i + ',\'date\',this.value)"></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateIncome(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><input class="amt-input green" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.received||0) + '" oninput="updateIncome(' + i + ',\'received\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><div class="amt-display" id="inc-still-' + i + '">' + fmt(still) + '</div></div>' +
-      '<div class="amt-cell"><select class="acct-select" onchange="updateIncome(' + i + ',\'account\',this.value)">' + acctOpts + '</select></div>' +
-      '<div><button class="note-btn' + (row.note ? ' has-note' : '') + '" onclick="toggleNote(\'inc-note-' + i + '\')" id="inc-note-btn-' + i + '">&#128221;</button></div>';
-    container.appendChild(div);
+    var rowEl = document.createElement('div');
+    rowEl.className = 'budget-row';
+    rowEl.setAttribute('data-inc-idx', i);
+
+    // Name wrap
+    var nameWrap = document.createElement('div');
+    nameWrap.className = 'row-name-wrap';
+    var nameIn = document.createElement('input');
+    nameIn.className = 'row-name-input';
+    nameIn.type = 'text';
+    nameIn.value = row.name || '';
+    nameIn.placeholder = 'Source name';
+    nameIn.setAttribute('data-field', 'name');
+    var subIn = document.createElement('input');
+    subIn.className = 'row-sub-input';
+    subIn.type = 'text';
+    subIn.value = row.sub || '';
+    subIn.placeholder = 'e.g. Monthly, Weekly...';
+    subIn.setAttribute('data-field', 'sub');
+    nameWrap.appendChild(nameIn);
+    nameWrap.appendChild(subIn);
+
+    // Date
+    var dateCell = document.createElement('div');
+    dateCell.className = 'amt-cell';
+    var dateIn = document.createElement('input');
+    dateIn.className = 'date-input';
+    dateIn.type = 'date';
+    dateIn.value = row.date || '';
+    dateIn.setAttribute('data-field', 'date');
+    dateCell.appendChild(dateIn);
+
+    // Planned
+    var plannedCell = document.createElement('div');
+    plannedCell.className = 'amt-cell';
+    var plannedIn = document.createElement('input');
+    plannedIn.className = 'amt-input';
+    plannedIn.type = 'number';
+    plannedIn.setAttribute('inputmode', 'decimal');
+    plannedIn.setAttribute('min', '0');
+    plannedIn.setAttribute('step', '0.01');
+    plannedIn.value = row.planned || 0;
+    plannedIn.placeholder = '0.00';
+    plannedIn.setAttribute('data-field', 'planned');
+    plannedCell.appendChild(plannedIn);
+
+    // Received
+    var recCell = document.createElement('div');
+    recCell.className = 'amt-cell';
+    var recIn = document.createElement('input');
+    recIn.className = 'amt-input green';
+    recIn.type = 'number';
+    recIn.setAttribute('inputmode', 'decimal');
+    recIn.setAttribute('min', '0');
+    recIn.setAttribute('step', '0.01');
+    recIn.value = row.received || 0;
+    recIn.placeholder = '0.00';
+    recIn.setAttribute('data-field', 'received');
+    recCell.appendChild(recIn);
+
+    // Still to get
+    var stillCell = document.createElement('div');
+    stillCell.className = 'amt-cell';
+    var stillDiv = document.createElement('div');
+    stillDiv.className = 'amt-display';
+    stillDiv.id = 'inc-still-' + i;
+    stillDiv.textContent = fmt(still);
+    stillCell.appendChild(stillDiv);
+
+    // Account select
+    var acctCell = document.createElement('div');
+    acctCell.className = 'amt-cell';
+    var acctSel = document.createElement('select');
+    acctSel.className = 'acct-select';
+    acctSel.setAttribute('data-field', 'account');
+    ['', 'Koho', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
+      var opt = document.createElement('option');
+      opt.value = a;
+      opt.textContent = a || 'Account';
+      if (a === (row.account || '')) opt.selected = true;
+      acctSel.appendChild(opt);
+    });
+    acctCell.appendChild(acctSel);
+
+    // Note button
+    var noteCell = document.createElement('div');
+    var noteBtn = document.createElement('button');
+    noteBtn.className = 'note-btn' + (row.note ? ' has-note' : '');
+    noteBtn.id = 'inc-note-btn-' + i;
+    noteBtn.setAttribute('data-note-target', 'inc-note-' + i);
+    noteBtn.innerHTML = '&#128221;';
+    noteCell.appendChild(noteBtn);
+
+    rowEl.appendChild(nameWrap);
+    rowEl.appendChild(dateCell);
+    rowEl.appendChild(plannedCell);
+    rowEl.appendChild(recCell);
+    rowEl.appendChild(stillCell);
+    rowEl.appendChild(acctCell);
+    rowEl.appendChild(noteCell);
+    container.appendChild(rowEl);
+
+    // Note panel
     var np = document.createElement('div');
     np.className = 'note-panel' + (row.note ? ' open' : '');
     np.id = 'inc-note-' + i;
-    np.innerHTML = '<textarea class="note-textarea" placeholder="Note..." oninput="updateIncome(' + i + ',\'note\',this.value)">' + esc(row.note||'') + '</textarea>';
+    var ta = document.createElement('textarea');
+    ta.className = 'note-textarea';
+    ta.placeholder = 'Note...';
+    ta.textContent = row.note || '';
+    ta.setAttribute('data-field', 'note');
+    ta.setAttribute('data-inc-idx', i);
+    np.appendChild(ta);
     container.appendChild(np);
   });
   updateIncomeTotals();
@@ -1105,27 +1198,118 @@ function renderExpenseItems(si) {
   container.innerHTML = '';
   sec.items.forEach(function(row, ii) {
     var avail = (row.planned||0) - (row.spent||0);
-    var div = document.createElement('div');
-    div.className = 'budget-row';
-    var acctOpts = ['','Koho','Scotiabank RDSP','Simply Financial','Square'].map(function(a) {
-      return '<option value="' + a + '"' + (a === (row.account||'') ? ' selected' : '') + '>' + (a||'Account') + '</option>';
-    }).join('');
-    div.innerHTML =
-      '<div class="row-name-wrap">' +
-        '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateExpense(' + si + ',' + ii + ',\'name\',this.value)" placeholder="Item name">' +
-        '<input class="row-sub-input" type="text" value="' + esc(row.sub||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'sub\',this.value)" placeholder="Date/frequency...">' +
-      '</div>' +
-      '<div class="amt-cell"><input class="date-input" type="date" value="' + (row.date||'') + '" oninput="updateExpense(' + si + ',' + ii + ',\'date\',this.value)"></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'planned\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.spent||0) + '" oninput="updateExpense(' + si + ',' + ii + ',\'spent\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><div class="amt-display ' + (avail<0?'red':'green') + '" id="exp-avail-' + si + '-' + ii + '">' + fmt(avail) + '</div></div>' +
-      '<div class="amt-cell"><select class="acct-select" onchange="updateExpense(' + si + ',' + ii + ',\'account\',this.value)">' + acctOpts + '</select></div>' +
-      '<div><button class="note-btn' + (row.note ? ' has-note' : '') + '" onclick="toggleNote(\'exp-note-' + si + '-' + ii + '\')">&#128221;</button></div>';
-    container.appendChild(div);
+    var rowEl = document.createElement('div');
+    rowEl.className = 'budget-row';
+    rowEl.setAttribute('data-si', si);
+    rowEl.setAttribute('data-ii', ii);
+
+    // Name wrap
+    var nameWrap = document.createElement('div');
+    nameWrap.className = 'row-name-wrap';
+    var nameIn = document.createElement('input');
+    nameIn.className = 'row-name-input';
+    nameIn.type = 'text';
+    nameIn.value = row.name || '';
+    nameIn.placeholder = 'Item name';
+    nameIn.setAttribute('data-field', 'name');
+    var subIn = document.createElement('input');
+    subIn.className = 'row-sub-input';
+    subIn.type = 'text';
+    subIn.value = row.sub || '';
+    subIn.placeholder = 'Date/frequency...';
+    subIn.setAttribute('data-field', 'sub');
+    nameWrap.appendChild(nameIn);
+    nameWrap.appendChild(subIn);
+
+    // Date
+    var dateCell = document.createElement('div');
+    dateCell.className = 'amt-cell';
+    var dateIn = document.createElement('input');
+    dateIn.className = 'date-input';
+    dateIn.type = 'date';
+    dateIn.value = row.date || '';
+    dateIn.setAttribute('data-field', 'date');
+    dateCell.appendChild(dateIn);
+
+    // Planned
+    var plannedCell = document.createElement('div');
+    plannedCell.className = 'amt-cell';
+    var plannedIn = document.createElement('input');
+    plannedIn.className = 'amt-input';
+    plannedIn.type = 'number';
+    plannedIn.setAttribute('inputmode', 'decimal');
+    plannedIn.setAttribute('min', '0');
+    plannedIn.setAttribute('step', '0.01');
+    plannedIn.value = row.planned || 0;
+    plannedIn.placeholder = '0.00';
+    plannedIn.setAttribute('data-field', 'planned');
+    plannedCell.appendChild(plannedIn);
+
+    // Spent
+    var spentCell = document.createElement('div');
+    spentCell.className = 'amt-cell';
+    var spentIn = document.createElement('input');
+    spentIn.className = 'amt-input';
+    spentIn.type = 'number';
+    spentIn.setAttribute('inputmode', 'decimal');
+    spentIn.setAttribute('min', '0');
+    spentIn.setAttribute('step', '0.01');
+    spentIn.value = row.spent || 0;
+    spentIn.placeholder = '0.00';
+    spentIn.setAttribute('data-field', 'spent');
+    spentCell.appendChild(spentIn);
+
+    // Available
+    var availCell = document.createElement('div');
+    availCell.className = 'amt-cell';
+    var availDiv = document.createElement('div');
+    availDiv.className = 'amt-display ' + (avail < 0 ? 'red' : 'green');
+    availDiv.id = 'exp-avail-' + si + '-' + ii;
+    availDiv.textContent = fmt(avail);
+    availCell.appendChild(availDiv);
+
+    // Account select
+    var acctCell = document.createElement('div');
+    acctCell.className = 'amt-cell';
+    var acctSel = document.createElement('select');
+    acctSel.className = 'acct-select';
+    acctSel.setAttribute('data-field', 'account');
+    ['', 'Koho', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
+      var opt = document.createElement('option');
+      opt.value = a;
+      opt.textContent = a || 'Account';
+      if (a === (row.account || '')) opt.selected = true;
+      acctSel.appendChild(opt);
+    });
+    acctCell.appendChild(acctSel);
+
+    // Note button
+    var noteCell = document.createElement('div');
+    var noteBtn = document.createElement('button');
+    noteBtn.className = 'note-btn' + (row.note ? ' has-note' : '');
+    noteBtn.setAttribute('data-note-target', 'exp-note-' + si + '-' + ii);
+    noteBtn.innerHTML = '&#128221;';
+    noteCell.appendChild(noteBtn);
+
+    rowEl.appendChild(nameWrap);
+    rowEl.appendChild(dateCell);
+    rowEl.appendChild(plannedCell);
+    rowEl.appendChild(spentCell);
+    rowEl.appendChild(availCell);
+    rowEl.appendChild(acctCell);
+    rowEl.appendChild(noteCell);
+    container.appendChild(rowEl);
+
+    // Note panel
     var np = document.createElement('div');
     np.className = 'note-panel' + (row.note ? ' open' : '');
     np.id = 'exp-note-' + si + '-' + ii;
-    np.innerHTML = '<textarea class="note-textarea" placeholder="Note..." oninput="updateExpense(' + si + ',' + ii + ',\'note\',this.value)">' + esc(row.note||'') + '</textarea>';
+    var ta = document.createElement('textarea');
+    ta.className = 'note-textarea';
+    ta.placeholder = 'Note...';
+    ta.textContent = row.note || '';
+    ta.setAttribute('data-field', 'note');
+    np.appendChild(ta);
     container.appendChild(np);
   });
 }
@@ -1623,6 +1807,83 @@ function showToast(msg) {
   setTimeout(function(){ t.classList.remove('show'); }, 2200);
 }
 
+// ============================================================
+// DELEGATED EVENT HANDLERS
+// Handles all income and expense row interactions via bubbling
+// No inline JS in HTML -- reads data-* attributes instead
+// ============================================================
+function initDelegatedHandlers() {
+  // Income rows
+  var incContainer = document.getElementById('income-rows');
+  if (incContainer) {
+    incContainer.addEventListener('input', function(e) {
+      var rowEl = e.target.closest('[data-inc-idx]');
+      if (!rowEl) return;
+      var i = parseInt(rowEl.getAttribute('data-inc-idx'));
+      var field = e.target.getAttribute('data-field');
+      if (field === null) {
+        // Check note textarea (has data-inc-idx directly)
+        var noteIdx = e.target.getAttribute('data-inc-idx');
+        if (noteIdx !== null) {
+          field = 'note';
+          i = parseInt(noteIdx);
+        }
+      }
+      if (field === null) return;
+      var val = (field === 'planned' || field === 'received') ? parseFloat(e.target.value)||0 : e.target.value;
+      updateIncome(i, field, val);
+    });
+    incContainer.addEventListener('change', function(e) {
+      var rowEl = e.target.closest('[data-inc-idx]');
+      if (!rowEl) return;
+      var i = parseInt(rowEl.getAttribute('data-inc-idx'));
+      var field = e.target.getAttribute('data-field');
+      if (!field) return;
+      updateIncome(i, field, e.target.value);
+    });
+    incContainer.addEventListener('focus', function(e) {
+      if (e.target.type === 'number') e.target.select();
+    }, true);
+    incContainer.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-note-target]');
+      if (!btn) return;
+      toggleNote(btn.getAttribute('data-note-target'));
+    });
+  }
+
+  // Expense sections (delegated from tab-budget)
+  var budgetTab = document.getElementById('tab-budget');
+  if (budgetTab) {
+    budgetTab.addEventListener('input', function(e) {
+      var rowEl = e.target.closest('[data-si][data-ii]');
+      if (!rowEl) return;
+      var si = parseInt(rowEl.getAttribute('data-si'));
+      var ii = parseInt(rowEl.getAttribute('data-ii'));
+      var field = e.target.getAttribute('data-field');
+      if (!field) return;
+      var val = (field === 'planned' || field === 'spent') ? parseFloat(e.target.value)||0 : e.target.value;
+      updateExpense(si, ii, field, val);
+    });
+    budgetTab.addEventListener('change', function(e) {
+      var rowEl = e.target.closest('[data-si][data-ii]');
+      if (!rowEl) return;
+      var si = parseInt(rowEl.getAttribute('data-si'));
+      var ii = parseInt(rowEl.getAttribute('data-ii'));
+      var field = e.target.getAttribute('data-field');
+      if (!field) return;
+      updateExpense(si, ii, field, e.target.value);
+    });
+    budgetTab.addEventListener('focus', function(e) {
+      if (e.target.type === 'number') e.target.select();
+    }, true);
+    budgetTab.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-note-target]');
+      if (btn && btn.closest('[data-si]')) {
+        toggleNote(btn.getAttribute('data-note-target'));
+      }
+    });
+  }
+}
 // ============================================================
 // BOOT
 // ============================================================
