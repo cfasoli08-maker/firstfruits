@@ -197,6 +197,20 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 }
 .note-btn:hover{color:var(--gold);background:var(--gold-bg)}
 .note-btn.has-note{color:var(--gold)}
+.del-btn{
+  background:none;border:none;cursor:pointer;font-size:1rem;
+  color:var(--muted);padding:2px 5px;border-radius:4px;line-height:1;
+  transition:color 0.15s,background 0.15s;
+}
+.del-btn:hover{color:var(--red);background:#f9e8e8}
+.move-btn{
+  background:none;border:none;cursor:pointer;font-size:0.75rem;
+  color:var(--muted);padding:1px 3px;border-radius:4px;line-height:1;
+  transition:color 0.15s;
+}
+.move-btn:hover{color:var(--sage)}
+.row-actions{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.day-label{font-size:0.65rem;color:var(--sage);margin-top:2px;text-align:center}
 .note-panel{
   display:none;
   padding:8px 16px 12px;
@@ -890,6 +904,14 @@ function renderAll() {
 // ============================================================
 // INCOME
 // ============================================================
+function dayLabel(dateStr) {
+  if (!dateStr) return '';
+  var d = new Date(dateStr + 'T12:00:00');
+  if (isNaN(d)) return '';
+  var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return days[d.getDay()] + ' ' + months[d.getMonth()] + ' ' + d.getDate();
+}
 function renderIncome() {
   var st = getState();
   var container = document.getElementById('income-rows');
@@ -926,7 +948,12 @@ function renderIncome() {
     dateIn.type = 'date';
     dateIn.value = row.date || '';
     dateIn.setAttribute('data-field', 'date');
+    var daySpan = document.createElement('div');
+    daySpan.className = 'day-label';
+    daySpan.id = 'inc-day-' + i;
+    daySpan.textContent = dayLabel(row.date);
     dateCell.appendChild(dateIn);
+    dateCell.appendChild(daySpan);
 
     // Planned
     var plannedCell = document.createElement('div');
@@ -980,14 +1007,40 @@ function renderIncome() {
     });
     acctCell.appendChild(acctSel);
 
-    // Note button
-    var noteCell = document.createElement('div');
+    // Actions: note + reorder + delete
+    var actionsCell = document.createElement('div');
+    actionsCell.className = 'row-actions';
     var noteBtn = document.createElement('button');
     noteBtn.className = 'note-btn' + (row.note ? ' has-note' : '');
     noteBtn.id = 'inc-note-btn-' + i;
     noteBtn.setAttribute('data-note-target', 'inc-note-' + i);
     noteBtn.innerHTML = '&#128221;';
-    noteCell.appendChild(noteBtn);
+    noteBtn.type = 'button';
+    var upBtn = document.createElement('button');
+    upBtn.className = 'move-btn';
+    upBtn.setAttribute('data-action', 'move-income-up');
+    upBtn.setAttribute('data-idx', i);
+    upBtn.innerHTML = '&#9650;';
+    upBtn.type = 'button';
+    upBtn.title = 'Move up';
+    var downBtn = document.createElement('button');
+    downBtn.className = 'move-btn';
+    downBtn.setAttribute('data-action', 'move-income-down');
+    downBtn.setAttribute('data-idx', i);
+    downBtn.innerHTML = '&#9660;';
+    downBtn.type = 'button';
+    downBtn.title = 'Move down';
+    var delBtn = document.createElement('button');
+    delBtn.className = 'del-btn';
+    delBtn.setAttribute('data-action', 'delete-income');
+    delBtn.setAttribute('data-idx', i);
+    delBtn.innerHTML = '&#10005;';
+    delBtn.type = 'button';
+    delBtn.title = 'Delete row';
+    actionsCell.appendChild(noteBtn);
+    actionsCell.appendChild(upBtn);
+    actionsCell.appendChild(downBtn);
+    actionsCell.appendChild(delBtn);
 
     rowEl.appendChild(nameWrap);
     rowEl.appendChild(dateCell);
@@ -995,7 +1048,7 @@ function renderIncome() {
     rowEl.appendChild(recCell);
     rowEl.appendChild(stillCell);
     rowEl.appendChild(acctCell);
-    rowEl.appendChild(noteCell);
+    rowEl.appendChild(actionsCell);
     container.appendChild(rowEl);
 
     // Note panel
@@ -1102,20 +1155,101 @@ function renderSavings() {
     var avail = (row.planned||0) - (row.spent||0);
     var div = document.createElement('div');
     div.className = 'budget-row';
-    div.innerHTML =
-      '<div class="row-name-wrap">' +
-      '<input class="row-name-input" type="text" value="' + esc(row.name) + '" oninput="updateSavings(' + i + ',\'name\',this.value)" placeholder="Goal name">' +
-      '</div>' +
-      '<div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.planned||0) + '" oninput="updateSavings(' + i + ',\'planned\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><input class="amt-input green" type="number" inputmode="decimal" onfocus="this.select()" min="0" step="0.01" value="' + (row.spent||0) + '" oninput="updateSavings(' + i + ',\'spent\',this.value)" placeholder="0.00"></div>' +
-      '<div class="amt-cell"><div class="amt-display ' + (avail<0?'red':'green') + '" id="sav-avail-'+i+'">' + fmt(avail) + '</div></div>' +
-      '<div class="amt-cell"><select class="acct-select" onchange="updateSavings(' + i + ',\'account\',this.value)">' + ['','Koho','Scotiabank RDSP','Simply Financial','Square'].map(function(a){return '<option value="'+a+'"'+(a===(row.account||'')?'selected':'')+'>'+( a||'Account')+'</option>';}).join('') + '</select></div>' +
-      '<div><button class="note-btn' + (row.note?' has-note':'') + '" onclick="toggleNote(\'sav-note-' + i + '\')">&#128221;</button></div>';
+    div.setAttribute('data-sav-idx', i);
+
+    var nameWrap = document.createElement('div');
+    nameWrap.className = 'row-name-wrap';
+    var nameIn = document.createElement('input');
+    nameIn.className = 'row-name-input';
+    nameIn.type = 'text';
+    nameIn.value = row.name || '';
+    nameIn.placeholder = 'Goal name';
+    nameIn.setAttribute('data-field', 'name');
+    nameWrap.appendChild(nameIn);
+
+    var plannedCell = document.createElement('div');
+    plannedCell.className = 'amt-cell';
+    var plannedIn = document.createElement('input');
+    plannedIn.className = 'amt-input';
+    plannedIn.type = 'number';
+    plannedIn.setAttribute('inputmode', 'decimal');
+    plannedIn.setAttribute('min', '0');
+    plannedIn.setAttribute('step', '0.01');
+    plannedIn.value = row.planned || 0;
+    plannedIn.placeholder = '0.00';
+    plannedIn.setAttribute('data-field', 'planned');
+    plannedCell.appendChild(plannedIn);
+
+    var spentCell = document.createElement('div');
+    spentCell.className = 'amt-cell';
+    var spentIn = document.createElement('input');
+    spentIn.className = 'amt-input green';
+    spentIn.type = 'number';
+    spentIn.setAttribute('inputmode', 'decimal');
+    spentIn.setAttribute('min', '0');
+    spentIn.setAttribute('step', '0.01');
+    spentIn.value = row.spent || 0;
+    spentIn.placeholder = '0.00';
+    spentIn.setAttribute('data-field', 'spent');
+    spentCell.appendChild(spentIn);
+
+    var availCell = document.createElement('div');
+    availCell.className = 'amt-cell';
+    var availDiv = document.createElement('div');
+    availDiv.className = 'amt-display ' + (avail < 0 ? 'red' : 'green');
+    availDiv.id = 'sav-avail-' + i;
+    availDiv.textContent = fmt(avail);
+    availCell.appendChild(availDiv);
+
+    var acctCell = document.createElement('div');
+    acctCell.className = 'amt-cell';
+    var acctSel = document.createElement('select');
+    acctSel.className = 'acct-select';
+    acctSel.setAttribute('data-field', 'account');
+    ['', 'Koho', 'Scotiabank RDSP', 'Simply Financial', 'Square'].forEach(function(a) {
+      var opt = document.createElement('option');
+      opt.value = a;
+      opt.textContent = a || 'Account';
+      if (a === (row.account || '')) opt.selected = true;
+      acctSel.appendChild(opt);
+    });
+    acctCell.appendChild(acctSel);
+
+    var actionsCell = document.createElement('div');
+    actionsCell.className = 'row-actions';
+    var noteBtn = document.createElement('button');
+    noteBtn.className = 'note-btn' + (row.note ? ' has-note' : '');
+    noteBtn.setAttribute('data-note-target', 'sav-note-' + i);
+    noteBtn.innerHTML = '&#128221;';
+    noteBtn.type = 'button';
+    var delBtn = document.createElement('button');
+    delBtn.className = 'del-btn';
+    delBtn.setAttribute('data-action', 'delete-savings');
+    delBtn.setAttribute('data-idx', i);
+    delBtn.innerHTML = '&#10005;';
+    delBtn.type = 'button';
+    delBtn.title = 'Delete goal';
+    actionsCell.appendChild(noteBtn);
+    actionsCell.appendChild(delBtn);
+
+    div.appendChild(nameWrap);
+    div.appendChild(plannedCell);
+    div.appendChild(spentCell);
+    div.appendChild(availCell);
+    div.appendChild(acctCell);
+    div.appendChild(actionsCell);
     container.appendChild(div);
+
     var np = document.createElement('div');
-    np.className = 'note-panel' + (row.note?' open':'');
+    np.className = 'note-panel' + (row.note ? ' open' : '');
     np.id = 'sav-note-' + i;
-    np.innerHTML = '<textarea class="note-textarea" placeholder="Note..." oninput="updateSavings(' + i + ',\'note\',this.value)">' + esc(row.note||'') + '</textarea>';
+    var ta = document.createElement('textarea');
+    ta.className = 'note-textarea';
+    ta.placeholder = 'Note...';
+    ta.textContent = row.note || '';
+    ta.setAttribute('data-field', 'note');
+    ta.setAttribute('data-sav-idx', i);
+    np.appendChild(ta);
     container.appendChild(np);
   });
   updateSavingsTotals();
@@ -1283,13 +1417,49 @@ function renderExpenseItems(si) {
     });
     acctCell.appendChild(acctSel);
 
-    // Note button
-    var noteCell = document.createElement('div');
+    // Day label in date cell
+    var daySpan = document.createElement('div');
+    daySpan.className = 'day-label';
+    daySpan.id = 'exp-day-' + si + '-' + ii;
+    daySpan.textContent = dayLabel(row.date);
+    dateCell.appendChild(daySpan);
+
+    // Actions: note + reorder + delete
+    var actionsCell = document.createElement('div');
+    actionsCell.className = 'row-actions';
     var noteBtn = document.createElement('button');
     noteBtn.className = 'note-btn' + (row.note ? ' has-note' : '');
     noteBtn.setAttribute('data-note-target', 'exp-note-' + si + '-' + ii);
     noteBtn.innerHTML = '&#128221;';
-    noteCell.appendChild(noteBtn);
+    noteBtn.type = 'button';
+    var upBtn = document.createElement('button');
+    upBtn.className = 'move-btn';
+    upBtn.setAttribute('data-action', 'move-expense-up');
+    upBtn.setAttribute('data-si', si);
+    upBtn.setAttribute('data-ii', ii);
+    upBtn.innerHTML = '&#9650;';
+    upBtn.type = 'button';
+    upBtn.title = 'Move up';
+    var downBtn = document.createElement('button');
+    downBtn.className = 'move-btn';
+    downBtn.setAttribute('data-action', 'move-expense-down');
+    downBtn.setAttribute('data-si', si);
+    downBtn.setAttribute('data-ii', ii);
+    downBtn.innerHTML = '&#9660;';
+    downBtn.type = 'button';
+    downBtn.title = 'Move down';
+    var delBtn = document.createElement('button');
+    delBtn.className = 'del-btn';
+    delBtn.setAttribute('data-action', 'delete-expense');
+    delBtn.setAttribute('data-si', si);
+    delBtn.setAttribute('data-ii', ii);
+    delBtn.innerHTML = '&#10005;';
+    delBtn.type = 'button';
+    delBtn.title = 'Delete row';
+    actionsCell.appendChild(noteBtn);
+    actionsCell.appendChild(upBtn);
+    actionsCell.appendChild(downBtn);
+    actionsCell.appendChild(delBtn);
 
     rowEl.appendChild(nameWrap);
     rowEl.appendChild(dateCell);
@@ -1297,7 +1467,7 @@ function renderExpenseItems(si) {
     rowEl.appendChild(spentCell);
     rowEl.appendChild(availCell);
     rowEl.appendChild(acctCell);
-    rowEl.appendChild(noteCell);
+    rowEl.appendChild(actionsCell);
     container.appendChild(rowEl);
 
     // Note panel
@@ -1853,14 +2023,79 @@ function initDelegatedHandlers() {
       var field = e.target.getAttribute('data-field');
       if (!field) return;
       updateIncome(i, field, e.target.value);
+      if (field === 'date') {
+        var dayEl = document.getElementById('inc-day-' + i);
+        if (dayEl) dayEl.textContent = dayLabel(e.target.value);
+      }
     });
     incContainer.addEventListener('focus', function(e) {
       if (e.target.type === 'number') e.target.select();
     }, true);
     incContainer.addEventListener('click', function(e) {
       var btn = e.target.closest('[data-note-target]');
-      if (!btn) return;
-      toggleNote(btn.getAttribute('data-note-target'));
+      if (btn) { toggleNote(btn.getAttribute('data-note-target')); return; }
+      var action = e.target.closest('[data-action]');
+      if (!action) return;
+      var act = action.getAttribute('data-action');
+      var idx = parseInt(action.getAttribute('data-idx'));
+      var st = getState();
+      if (act === 'delete-income') {
+        if (st.income.length <= 1) return;
+        st.income.splice(idx, 1);
+        saveStorage(); renderIncome(); updateSummary();
+      } else if (act === 'move-income-up' && idx > 0) {
+        var tmp = st.income[idx]; st.income[idx] = st.income[idx-1]; st.income[idx-1] = tmp;
+        saveStorage(); renderIncome();
+      } else if (act === 'move-income-down' && idx < st.income.length - 1) {
+        var tmp = st.income[idx]; st.income[idx] = st.income[idx+1]; st.income[idx+1] = tmp;
+        saveStorage(); renderIncome();
+      }
+    });
+  }
+
+  // Savings (delegated from savings-rows parent)
+  var savContainer = document.getElementById('savings-rows');
+  if (savContainer) {
+    savContainer.addEventListener('input', function(e) {
+      var rowEl = e.target.closest('[data-sav-idx]');
+      if (!rowEl) {
+        var idx2 = e.target.getAttribute('data-sav-idx');
+        if (idx2 !== null) {
+          var st2 = getState();
+          if (!st2.savings[parseInt(idx2)]) return;
+          st2.savings[parseInt(idx2)].note = e.target.value;
+          saveStorage();
+        }
+        return;
+      }
+      var i2 = parseInt(rowEl.getAttribute('data-sav-idx'));
+      var field2 = e.target.getAttribute('data-field');
+      if (!field2) return;
+      updateSavings(i2, field2, e.target.value);
+    });
+    savContainer.addEventListener('change', function(e) {
+      var rowEl = e.target.closest('[data-sav-idx]');
+      if (!rowEl) return;
+      var i2 = parseInt(rowEl.getAttribute('data-sav-idx'));
+      var field2 = e.target.getAttribute('data-field');
+      if (!field2) return;
+      updateSavings(i2, field2, e.target.value);
+    });
+    savContainer.addEventListener('focus', function(e) {
+      if (e.target.type === 'number') e.target.select();
+    }, true);
+    savContainer.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-note-target]');
+      if (btn) { toggleNote(btn.getAttribute('data-note-target')); return; }
+      var action = e.target.closest('[data-action]');
+      if (!action) return;
+      var act = action.getAttribute('data-action');
+      var idx = parseInt(action.getAttribute('data-idx'));
+      var st = getState();
+      if (act === 'delete-savings') {
+        st.savings.splice(idx, 1);
+        saveStorage(); renderSavings();
+      }
     });
   }
 
@@ -1885,14 +2120,34 @@ function initDelegatedHandlers() {
       var field = e.target.getAttribute('data-field');
       if (!field) return;
       updateExpense(si, ii, field, e.target.value);
+      // Update day label when date changes
+      if (field === 'date') {
+        var dayEl = document.getElementById('exp-day-' + si + '-' + ii);
+        if (dayEl) dayEl.textContent = dayLabel(e.target.value);
+      }
     });
     budgetTab.addEventListener('focus', function(e) {
       if (e.target.type === 'number') e.target.select();
     }, true);
     budgetTab.addEventListener('click', function(e) {
       var btn = e.target.closest('[data-note-target]');
-      if (btn && btn.closest('[data-si]')) {
-        toggleNote(btn.getAttribute('data-note-target'));
+      if (btn && btn.closest('[data-si]')) { toggleNote(btn.getAttribute('data-note-target')); return; }
+      var action = e.target.closest('[data-action]');
+      if (!action) return;
+      var act = action.getAttribute('data-action');
+      var si = parseInt(action.getAttribute('data-si'));
+      var ii = parseInt(action.getAttribute('data-ii'));
+      var st = getState();
+      if (act === 'delete-expense') {
+        if (st.sections[si].items.length <= 1) return;
+        st.sections[si].items.splice(ii, 1);
+        saveStorage(); renderExpenseItems(si); updateExpenseTotals(si); updateSummary();
+      } else if (act === 'move-expense-up' && ii > 0) {
+        var tmp = st.sections[si].items[ii]; st.sections[si].items[ii] = st.sections[si].items[ii-1]; st.sections[si].items[ii-1] = tmp;
+        saveStorage(); renderExpenseItems(si);
+      } else if (act === 'move-expense-down' && ii < st.sections[si].items.length - 1) {
+        var tmp = st.sections[si].items[ii]; st.sections[si].items[ii] = st.sections[si].items[ii+1]; st.sections[si].items[ii+1] = tmp;
+        saveStorage(); renderExpenseItems(si);
       }
     });
   }
