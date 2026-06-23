@@ -682,11 +682,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 <div class="tab-content" id="tab-reports">
   <div class="chart-card">
     <div class="chart-title">Spending by Category</div>
-    <div class="chart-wrap"><canvas id="categoryChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="categoryChart" width="400" height="220"></canvas></div>
   </div>
   <div class="chart-card">
     <div class="chart-title">Income vs Expenses</div>
-    <div class="chart-wrap"><canvas id="incomeExpenseChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="incomeExpenseChart" width="400" height="220"></canvas></div>
   </div>
 </div>
 
@@ -861,7 +861,7 @@ function switchTab(id, btn) {
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
   if (id==='cashflow') renderCashFlow();
-  if (id==='reports') setTimeout(function(){ renderReports(); }, 50);
+  if (id==='reports') renderReports();
 }
 
 function toggleSection(id) {
@@ -1576,7 +1576,7 @@ function renderReports() {
   charts.category = new Chart(ctx1,{
     type:'doughnut',
     data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11}}}}}
+    options:{responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11}}}}}
   });
 
   var totalIn=0, totalOut=0;
@@ -1596,7 +1596,7 @@ function renderReports() {
       }]
     },
     options:{
-      responsive:true,maintainAspectRatio:false,
+      responsive:false,maintainAspectRatio:false,
       plugins:{legend:{display:false}},
       scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v.toLocaleString();}}}}
     }
