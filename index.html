@@ -35,7 +35,8 @@
   --radius-sm:10px;
 }
 html{font-size:16px;-webkit-text-size-adjust:100%}
-body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-height:100vh;padding-bottom:80px;max-width:960px;margin:0 auto;position:relative}
+body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-height:100vh;padding-bottom:80px}
+#app-wrap{max-width:960px;margin:0 auto;position:relative;min-height:100vh}
 
 /* HEADER */
 .app-header{
@@ -552,6 +553,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 <div class="toast" id="toast"></div>
 
+<div id="app-wrap">
 <header class="app-header">
   <div class="app-header-center">
     <div class="app-logo">
@@ -2280,5 +2282,6 @@ function initDelegatedHandlers() {
 // ============================================================
 window.addEventListener('load', init);
 </script>
+</div>
 </body>
 </html>
