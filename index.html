@@ -49,6 +49,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   position:sticky;
   top:0;
   z-index:200;
+  max-width:960px;
+  margin:0 auto;
+  left:0;right:0;
 }
 .app-header-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;}
 .app-logo{display:flex;align-items:center;gap:10px}
@@ -71,6 +74,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   z-index:190;
   border-bottom:1px solid rgba(0,0,0,0.08);
   border-top:1px solid rgba(0,0,0,0.06);
+  max-width:960px;
+  margin:0 auto;
 }
 .summary-item{text-align:center}
 .summary-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#7A8FA6;margin-bottom:2px}
@@ -90,6 +95,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   top:116px;
   z-index:180;
   box-shadow:0 2px 6px rgba(0,0,0,0.07);
+  max-width:960px;
+  margin:0 auto;
 }
 .tab-btn{
   font-family:var(--font-body);
@@ -2103,7 +2110,7 @@ function clearMonthData() {
 // HELPERS
 // ============================================================
 function fmt(n) {
-  return '$' + (parseFloat(n)||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return '$' + Math.round(parseFloat(n)||0).toLocaleString();
 }
 
 function esc(s) {
