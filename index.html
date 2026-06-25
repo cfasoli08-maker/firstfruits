@@ -666,9 +666,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
           <div class="row-name">Tithe</div>
           <div class="row-sub tithe-label">Auto: 10% of total received</div>
         </div>
-        <div class="amt-cell"><div class="amt-display gold" id="tithe-planned">$0.00</div></div>
-        <div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" id="tithe-given" value="0" min="0" step="0.01" oninput="onTitheGiven()" placeholder="0.00"></div>
-        <div class="amt-cell"><div class="amt-display" id="tithe-remaining">$0.00</div></div>
+        <div class="amt-cell"><div class="amt-display gold" id="tithe-planned">$0</div></div>
+        <div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" id="tithe-given" value="0" min="0" step="1" oninput="onTitheGiven()" placeholder="0"></div>
+        <div class="amt-cell"><div class="amt-display" id="tithe-remaining">$0</div></div>
         <div class="amt-cell"><input class="amt-input" type="text" id="tithe-account" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>
         <div><button class="note-btn" onclick="toggleNote('tithe-note')" id="tithe-note-btn">&#128221;</button></div>
       </div>
