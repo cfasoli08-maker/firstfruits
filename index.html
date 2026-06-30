@@ -49,7 +49,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   position:sticky;
   top:0;
   z-index:200;
-  max-width:960px;
+  max-width:920px;
   margin:0 auto;
   left:0;right:0;
 }
@@ -74,7 +74,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   z-index:190;
   border-bottom:1px solid rgba(0,0,0,0.08);
   border-top:1px solid rgba(0,0,0,0.06);
-  max-width:960px;
+  max-width:920px;
   margin:0 auto;
 }
 .summary-item{text-align:center}
@@ -95,7 +95,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   top:116px;
   z-index:180;
   box-shadow:0 2px 6px rgba(0,0,0,0.07);
-  max-width:960px;
+  max-width:920px;
   margin:0 auto;
 }
 .tab-btn{
@@ -149,7 +149,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* COLUMN HEADERS */
 .col-headers{
   display:grid;
-  grid-template-columns:1fr 130px 100px 100px 120px 60px 60px;
+  grid-template-columns:1fr 130px 100px 100px 90px 120px 60px;
   gap:4px;
   padding:8px 16px 6px;
   border-bottom:1px solid var(--border);
@@ -160,7 +160,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* ROW */
 .budget-row{
   display:grid;
-  grid-template-columns:1fr 130px 100px 100px 120px 60px 60px;
+  grid-template-columns:1fr 130px 100px 100px 90px 120px 60px;
   gap:4px;
   padding:10px 16px;
   border-bottom:1px solid rgba(221,213,192,0.4);
@@ -251,7 +251,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* SECTION TOTALS */
 .section-total{
   display:grid;
-  grid-template-columns:1fr 130px 100px 100px 120px 60px 60px;
+  grid-template-columns:1fr 130px 100px 100px 90px 120px 60px;
   gap:4px;
   padding:10px 16px;
   background:var(--surface2);
@@ -282,6 +282,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* TITHE */
 .tithe-row{background:var(--gold-bg)}
+#sec-tithe .col-headers,
+#sec-tithe .budget-row{grid-template-columns:1fr 90px 90px 90px 90px 120px 60px}
 .tithe-label{font-size:0.72rem;color:var(--gold);font-weight:600;letter-spacing:0.04em}
 
 /* CASH FLOW TAB */
@@ -502,9 +504,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 @media(min-width:900px){
   body{max-width:1100px;margin:0 auto}
   .tab-content{padding:0 20px 20px}
-  .col-headers{grid-template-columns:1fr 130px 110px 110px 120px 60px 60px}
-  .budget-row{grid-template-columns:1fr 130px 110px 110px 120px 60px 60px}
-  .section-total{grid-template-columns:1fr 130px 110px 110px 120px 60px 60px}
+  .col-headers{grid-template-columns:1fr 130px 105px 105px 95px 130px 60px}
+  .budget-row{grid-template-columns:1fr 130px 105px 105px 95px 130px 60px}
+  .section-total{grid-template-columns:1fr 130px 105px 105px 95px 130px 60px}
 }
 
 /* EDITABLE ROW NAMES */
@@ -655,6 +657,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
     <div class="section-body">
       <div class="col-headers">
         <div class="col-head">Item</div>
+        <div class="col-head">Should Be</div>
         <div class="col-head">Planned</div>
         <div class="col-head">Given</div>
         <div class="col-head">Remaining</div>
@@ -666,7 +669,13 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
           <div class="row-name">Tithe</div>
           <div class="row-sub tithe-label">Auto: 10% of total received</div>
         </div>
-        <div class="amt-cell"><div class="amt-display gold" id="tithe-planned">$0</div></div>
+        <div class="amt-cell"><div class="amt-display gold" id="tithe-should-be">$0</div></div>
+        <div class="amt-cell">
+          <div class="amt-cell-wrap">
+            <span class="dollar-sign">$</span>
+            <input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" id="tithe-planned-input" value="0" min="0" step="1" oninput="onTithePlanned()" placeholder="0">
+          </div>
+        </div>
         <div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" id="tithe-given" value="0" min="0" step="1" oninput="onTitheGiven()" placeholder="0"></div>
         <div class="amt-cell"><div class="amt-display" id="tithe-remaining">$0</div></div>
         <div class="amt-cell"><input class="amt-input" type="text" id="tithe-account" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>
@@ -781,7 +790,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         <div class="settings-desc">Paste your Google Apps Script deployment URL</div>
       </div>
     </div>
-    <textarea class="settings-input" id="appsScriptUrl" rows="3" style="width:100%;margin-top:8px;border-radius:8px;padding:8px;font-size:0.82rem;resize:none" placeholder="https://script.google.com/macros/s/..."></textarea>
+    <input type="text" class="settings-input" id="appsScriptUrl" style="width:100%;margin-top:8px;border-radius:8px;padding:8px;font-size:0.82rem" placeholder="https://script.google.com/macros/s/...">
     <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn btn-sage" onclick="syncNow()">&#9729; Sync Now</button>
       <button class="btn btn-outline" onclick="loadFromSheets()">&#8595; Pull from Sheets</button>
@@ -879,6 +888,32 @@ function getMonthKey() {
   return currentYear + '-' + String(currentMonth+1).padStart(2,'0');
 }
 
+function getTuesdaysInMonth(year, monthIndex) {
+  // Returns 'YYYY-MM-DD' strings for the 1st through 4th Tuesday of the given month (0-indexed month)
+  var tuesdays = [];
+  var d = new Date(year, monthIndex, 1);
+  while (d.getMonth() === monthIndex) {
+    if (d.getDay() === 2) { // 2 = Tuesday
+      var mm = String(d.getMonth()+1).padStart(2,'0');
+      var dd = String(d.getDate()).padStart(2,'0');
+      tuesdays.push(d.getFullYear() + '-' + mm + '-' + dd);
+    }
+    d.setDate(d.getDate()+1);
+  }
+  return tuesdays;
+}
+
+function backfillAquiferDates(monthState, year, monthIndex) {
+  var tuesdays = getTuesdaysInMonth(year, monthIndex);
+  var weekIds = ['inc_aq_w1','inc_aq_w2','inc_aq_w3','inc_aq_w4'];
+  monthState.income.forEach(function(row) {
+    var idx = weekIds.indexOf(row.id);
+    if (idx !== -1 && !row.date && tuesdays[idx]) {
+      row.date = tuesdays[idx];
+    }
+  });
+}
+
 function getState() {
   var mk = getMonthKey();
   if (!state[mk]) {
@@ -891,6 +926,7 @@ function getState() {
       accounts: {Koho:0,'Scotiabank RDSP':0,'Simply Financial':0,Square:0}
     };
   }
+  backfillAquiferDates(state[mk], currentYear, currentMonth);
   return state[mk];
 }
 
