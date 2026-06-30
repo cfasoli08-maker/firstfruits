@@ -149,7 +149,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* COLUMN HEADERS */
 .col-headers{
   display:grid;
-  grid-template-columns:1fr 130px 100px 100px 90px 120px 60px;
+  grid-template-columns:1fr 60px 100px 100px 90px 120px 60px;
   gap:4px;
   padding:8px 16px 6px;
   border-bottom:1px solid var(--border);
@@ -160,7 +160,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* ROW */
 .budget-row{
   display:grid;
-  grid-template-columns:1fr 130px 100px 100px 90px 120px 60px;
+  grid-template-columns:1fr 60px 100px 100px 90px 120px 60px;
   gap:4px;
   padding:10px 16px;
   border-bottom:1px solid rgba(221,213,192,0.4);
@@ -251,7 +251,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 /* SECTION TOTALS */
 .section-total{
   display:grid;
-  grid-template-columns:1fr 130px 100px 100px 90px 120px 60px;
+  grid-template-columns:1fr 60px 100px 100px 90px 120px 60px;
   gap:4px;
   padding:10px 16px;
   background:var(--surface2);
@@ -497,12 +497,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   .tab-bar{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
   .tab-bar::-webkit-scrollbar{display:none}
   .tab-btn{padding:12px 10px 10px;font-size:0.72rem;white-space:nowrap;flex-shrink:0}
-  .date-input{font-size:0.64rem;padding:3px 2px}
+  .date-input{font-size:0.78rem;padding:3px 2px;text-align:center}
   .col-account{display:none}
   .col-head{font-size:0.56rem;letter-spacing:0.02em;line-height:1.15;white-space:normal;word-break:break-word}
-  .col-headers{grid-template-columns:1fr 62px 36px 36px 40px 30px;align-items:end}
-  .budget-row{grid-template-columns:1fr 62px 36px 36px 40px 30px}
-  .section-total{grid-template-columns:1fr 62px 36px 36px 40px 30px}
+  .col-headers{grid-template-columns:1fr 46px 40px 40px 44px 30px;align-items:end}
+  .budget-row{grid-template-columns:1fr 46px 40px 40px 44px 30px}
+  .section-total{grid-template-columns:1fr 46px 40px 40px 44px 30px}
   #sec-tithe .col-headers,
   #sec-tithe .budget-row{grid-template-columns:1fr 46px 46px 46px 50px 30px}
   #sec-savings .col-headers,
@@ -518,9 +518,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 @media(min-width:900px){
   body{max-width:1100px;margin:0 auto}
   .tab-content{padding:0 20px 20px}
-  .col-headers{grid-template-columns:1fr 130px 105px 105px 95px 130px 60px}
-  .budget-row{grid-template-columns:1fr 130px 105px 105px 95px 130px 60px}
-  .section-total{grid-template-columns:1fr 130px 105px 105px 95px 130px 60px}
+  .col-headers{grid-template-columns:1fr 60px 105px 105px 95px 130px 60px}
+  .budget-row{grid-template-columns:1fr 60px 105px 105px 95px 130px 60px}
+  .section-total{grid-template-columns:1fr 60px 105px 105px 95px 130px 60px}
 }
 
 /* EDITABLE ROW NAMES */
@@ -551,6 +551,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   width:100%;border:1px solid var(--border);border-radius:6px;
   padding:4px 4px;font-family:var(--font-body);font-size:0.72rem;
   color:var(--body);background:var(--surface);cursor:pointer;
+  text-align:center;
 }
 .date-input::-webkit-calendar-picker-indicator{
   opacity:0.6;
@@ -1018,8 +1019,10 @@ function dayLabel(dateStr) {
   var d = new Date(dateStr + 'T12:00:00');
   if (isNaN(d)) return '';
   var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return days[d.getDay()] + ' ' + months[d.getMonth()] + ' ' + d.getDate();
+  return days[d.getDay()] + ' ' + d.getDate();
+}
+function getDaysInMonth(year, monthIndex) {
+  return new Date(year, monthIndex+1, 0).getDate();
 }
 function renderIncome() {
   var st = getState();
@@ -1052,34 +1055,23 @@ function renderIncome() {
     // Date
     var dateCell = document.createElement('div');
     dateCell.className = 'amt-cell';
-    var dateIn = document.createElement('input');
+    var dateIn = document.createElement('select');
     dateIn.className = 'date-input';
-    dateIn.type = 'date';
-    dateIn.value = row.date || '';
-    if (!row.date) {
-      var mm0 = String(currentMonth+1).padStart(2,'0');
-      dateIn.setAttribute('data-default-anchor', currentYear + '-' + mm0 + '-01');
-    }
     dateIn.setAttribute('data-field', 'date');
-    dateIn.addEventListener('click', function(e){
-      if (!this.value) {
-        var anchor = this.getAttribute('data-default-anchor');
-        if (anchor) {
-          this.value = anchor;
-          this.setAttribute('data-pending-anchor', '1');
-        }
-      }
-      try{ this.showPicker(); }catch(err){}
-    });
-    dateIn.addEventListener('input', function(e){
-      this.removeAttribute('data-pending-anchor');
-    });
-    dateIn.addEventListener('blur', function(e){
-      if (this.getAttribute('data-pending-anchor') === '1') {
-        this.value = '';
-        this.removeAttribute('data-pending-anchor');
-      }
-    });
+    var blankOpt = document.createElement('option');
+    blankOpt.value = '';
+    blankOpt.textContent = 'Day';
+    dateIn.appendChild(blankOpt);
+    var daysInMonth = getDaysInMonth(currentYear, currentMonth);
+    for (var dnum = 1; dnum <= daysInMonth; dnum++) {
+      var opt = document.createElement('option');
+      var mm = String(currentMonth+1).padStart(2,'0');
+      var dd = String(dnum).padStart(2,'0');
+      opt.value = currentYear + '-' + mm + '-' + dd;
+      opt.textContent = dnum;
+      if (row.date === opt.value) opt.selected = true;
+      dateIn.appendChild(opt);
+    }
     var daySpan = document.createElement('div');
     daySpan.className = 'day-label';
     daySpan.id = 'inc-day-' + i;
@@ -1518,34 +1510,23 @@ function renderExpenseItems(si) {
     // Date
     var dateCell = document.createElement('div');
     dateCell.className = 'amt-cell';
-    var dateIn = document.createElement('input');
+    var dateIn = document.createElement('select');
     dateIn.className = 'date-input';
-    dateIn.type = 'date';
-    dateIn.value = row.date || '';
-    if (!row.date) {
-      var mm0 = String(currentMonth+1).padStart(2,'0');
-      dateIn.setAttribute('data-default-anchor', currentYear + '-' + mm0 + '-01');
-    }
     dateIn.setAttribute('data-field', 'date');
-    dateIn.addEventListener('click', function(e){
-      if (!this.value) {
-        var anchor = this.getAttribute('data-default-anchor');
-        if (anchor) {
-          this.value = anchor;
-          this.setAttribute('data-pending-anchor', '1');
-        }
-      }
-      try{ this.showPicker(); }catch(err){}
-    });
-    dateIn.addEventListener('input', function(e){
-      this.removeAttribute('data-pending-anchor');
-    });
-    dateIn.addEventListener('blur', function(e){
-      if (this.getAttribute('data-pending-anchor') === '1') {
-        this.value = '';
-        this.removeAttribute('data-pending-anchor');
-      }
-    });
+    var blankOpt = document.createElement('option');
+    blankOpt.value = '';
+    blankOpt.textContent = 'Day';
+    dateIn.appendChild(blankOpt);
+    var daysInMonth = getDaysInMonth(currentYear, currentMonth);
+    for (var dnum = 1; dnum <= daysInMonth; dnum++) {
+      var opt = document.createElement('option');
+      var mm = String(currentMonth+1).padStart(2,'0');
+      var dd = String(dnum).padStart(2,'0');
+      opt.value = currentYear + '-' + mm + '-' + dd;
+      opt.textContent = dnum;
+      if (row.date === opt.value) opt.selected = true;
+      dateIn.appendChild(opt);
+    }
     dateCell.appendChild(dateIn);
 
     // Planned
