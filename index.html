@@ -491,10 +491,23 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 
 /* MOBILE */
 @media(max-width:640px){
-  .col-headers{grid-template-columns:1fr 90px 80px 80px 100px 50px 50px}
-  .budget-row{grid-template-columns:1fr 90px 80px 80px 100px 50px 50px}
-  .section-total{grid-template-columns:1fr 90px 80px 80px 100px 50px 50px}
-  .amt-input{font-size:0.82rem;padding:3px 4px}
+  .app-title{display:none}
+  .app-logo svg{width:26px;height:26px}
+  .month-label{font-size:0.85rem;min-width:auto}
+  .tab-bar{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
+  .tab-bar::-webkit-scrollbar{display:none}
+  .tab-btn{padding:12px 10px 10px;font-size:0.72rem;white-space:nowrap;flex-shrink:0}
+  .date-input{font-size:0.64rem;padding:3px 2px}
+  .col-account{display:none}
+  .col-headers{grid-template-columns:1fr 82px 40px 40px 44px 34px}
+  .budget-row{grid-template-columns:1fr 82px 40px 40px 44px 34px}
+  .section-total{grid-template-columns:1fr 82px 40px 40px 44px 34px}
+  #sec-tithe .col-headers,
+  #sec-tithe .budget-row{grid-template-columns:1fr 50px 50px 50px 56px 34px}
+  #sec-savings .col-headers,
+  #sec-savings .budget-row,
+  #sec-savings .section-total{grid-template-columns:1fr 50px 50px 56px 34px}
+  .amt-input{font-size:0.78rem;padding:3px 3px}
   .summary-amount{font-size:1.05rem}
   .accounts-grid{grid-template-columns:1fr}
   .summary-cards{grid-template-columns:1fr}
@@ -629,7 +642,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         <div class="col-head">Planned</div>
         <div class="col-head">Received</div>
         <div class="col-head">Still to Receive</div>
-        <div class="col-head">Account</div>
+        <div class="col-head col-account">Account</div>
         <div class="col-head"></div>
       </div>
       <div id="income-rows"></div>
@@ -661,7 +674,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         <div class="col-head">Planned</div>
         <div class="col-head">Given</div>
         <div class="col-head">Remaining</div>
-        <div class="col-head">Account</div>
+        <div class="col-head col-account">Account</div>
         <div class="col-head"></div>
       </div>
       <div class="budget-row">
@@ -678,7 +691,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         </div>
         <div class="amt-cell"><input class="amt-input" type="number" inputmode="decimal" onfocus="this.select()" id="tithe-given" value="0" min="0" step="1" oninput="onTitheGiven()" placeholder="0"></div>
         <div class="amt-cell"><div class="amt-display" id="tithe-remaining">$0</div></div>
-        <div class="amt-cell"><input class="amt-input" type="text" id="tithe-account" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>
+        <div class="amt-cell col-account"><input class="amt-input" type="text" id="tithe-account" placeholder="Account" style="color:var(--muted);font-size:0.8rem"></div>
         <div><button class="note-btn" onclick="toggleNote('tithe-note')" id="tithe-note-btn">&#128221;</button></div>
       </div>
       <div class="note-panel" id="tithe-note">
@@ -702,7 +715,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
         <div class="col-head">Planned</div>
         <div class="col-head">Saved</div>
         <div class="col-head">Available</div>
-        <div class="col-head">Account</div>
+        <div class="col-head col-account">Account</div>
         <div class="col-head"></div>
       </div>
       <div id="savings-rows"></div>
@@ -1126,7 +1139,7 @@ function renderIncome() {
 
     // Account select
     var acctCell = document.createElement('div');
-    acctCell.className = 'amt-cell';
+    acctCell.className = 'amt-cell col-account';
     var acctSel = document.createElement('select');
     acctSel.className = 'acct-select';
     acctSel.setAttribute('data-field', 'account');
@@ -1348,7 +1361,7 @@ function renderSavings() {
     availCell.appendChild(availDiv);
 
     var acctCell = document.createElement('div');
-    acctCell.className = 'amt-cell';
+    acctCell.className = 'amt-cell col-account';
     var acctSel = document.createElement('select');
     acctSel.className = 'acct-select';
     acctSel.setAttribute('data-field', 'account');
@@ -1452,7 +1465,7 @@ function renderExpenseSections() {
           '<div class="col-head">Planned</div>' +
           '<div class="col-head">Spent</div>' +
           '<div class="col-head">Available</div>' +
-          '<div class="col-head">Account</div>' +
+          '<div class="col-head col-account">Account</div>' +
           '<div class="col-head"></div>' +
         '</div>' +
         '<div id="exp-rows-' + si + '"></div>' +
@@ -1587,7 +1600,7 @@ function renderExpenseItems(si) {
 
     // Account select
     var acctCell = document.createElement('div');
-    acctCell.className = 'amt-cell';
+    acctCell.className = 'amt-cell col-account';
     var acctSel = document.createElement('select');
     acctSel.className = 'acct-select';
     acctSel.setAttribute('data-field', 'account');
