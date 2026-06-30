@@ -403,7 +403,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   margin-bottom:16px;
 }
 .chart-title{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--charcoal);margin-bottom:16px}
-.chart-wrap{position:relative;height:220px}
+.chart-wrap{position:relative;height:280px}
 
 /* NOTES */
 .global-notes-card{
@@ -775,15 +775,15 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
 <div class="tab-content" id="tab-reports">
   <div class="chart-card">
     <div class="chart-title">Spending by Category</div>
-    <div class="chart-wrap"><canvas id="categoryChart" width="400" height="220"></canvas></div>
+    <div class="chart-wrap"><canvas id="categoryChart" width="620" height="280"></canvas></div>
   </div>
   <div class="chart-card">
     <div class="chart-title">Income Sources</div>
-    <div class="chart-wrap"><canvas id="incomeSourceChart" width="400" height="220"></canvas></div>
+    <div class="chart-wrap"><canvas id="incomeSourceChart" width="620" height="280"></canvas></div>
   </div>
   <div class="chart-card">
     <div class="chart-title">Income vs Expenses</div>
-    <div class="chart-wrap"><canvas id="incomeExpenseChart" width="400" height="220"></canvas></div>
+    <div class="chart-wrap"><canvas id="incomeExpenseChart" width="620" height="280"></canvas></div>
   </div>
 </div>
 
@@ -1024,6 +1024,12 @@ function dayLabel(dateStr) {
 function getDaysInMonth(year, monthIndex) {
   return new Date(year, monthIndex+1, 0).getDate();
 }
+function weekdayAbbr(dateStr) {
+  var d = new Date(dateStr + 'T12:00:00');
+  if (isNaN(d)) return '';
+  var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  return days[d.getDay()];
+}
 function renderIncome() {
   var st = getState();
   var container = document.getElementById('income-rows');
@@ -1068,7 +1074,7 @@ function renderIncome() {
       var mm = String(currentMonth+1).padStart(2,'0');
       var dd = String(dnum).padStart(2,'0');
       opt.value = currentYear + '-' + mm + '-' + dd;
-      opt.textContent = dnum;
+      opt.textContent = weekdayAbbr(opt.value) + ' ' + dnum;
       if (row.date === opt.value) opt.selected = true;
       dateIn.appendChild(opt);
     }
@@ -1523,7 +1529,7 @@ function renderExpenseItems(si) {
       var mm = String(currentMonth+1).padStart(2,'0');
       var dd = String(dnum).padStart(2,'0');
       opt.value = currentYear + '-' + mm + '-' + dd;
-      opt.textContent = dnum;
+      opt.textContent = weekdayAbbr(opt.value) + ' ' + dnum;
       if (row.date === opt.value) opt.selected = true;
       dateIn.appendChild(opt);
     }
@@ -1954,7 +1960,7 @@ function renderReports() {
       charts.category = new Chart(canvas1.getContext('2d'),{
         type:'doughnut',
         data:{labels:spendLabels,datasets:[{data:spendData,backgroundColor:spendColors,borderWidth:2,borderColor:'#fff'}]},
-        options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11},color:'#302E28'}}}}
+        options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:11},color:'#302E28'}}}}
       });
     } else {
       var ctx1=canvas1.getContext('2d'); ctx1.clearRect(0,0,canvas1.width,canvas1.height);
@@ -1967,7 +1973,7 @@ function renderReports() {
       charts.incSrc = new Chart(canvas3.getContext('2d'),{
         type:'doughnut',
         data:{labels:incLabels,datasets:[{data:incData,backgroundColor:incColors,borderWidth:2,borderColor:'#fff'}]},
-        options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'DM Sans',size:11},color:'#302E28'}}}}
+        options:{animation:false,responsive:false,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'DM Sans',size:11},color:'#302E28'}}}}
       });
     } else {
       var ctx3=canvas3.getContext('2d'); ctx3.clearRect(0,0,canvas3.width,canvas3.height);
