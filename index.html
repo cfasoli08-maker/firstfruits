@@ -1006,8 +1006,30 @@ function renderIncome() {
     dateIn.className = 'date-input';
     dateIn.type = 'date';
     dateIn.value = row.date || '';
+    if (!row.date) {
+      var mm0 = String(currentMonth+1).padStart(2,'0');
+      dateIn.setAttribute('data-default-anchor', currentYear + '-' + mm0 + '-01');
+    }
     dateIn.setAttribute('data-field', 'date');
-    dateIn.addEventListener('click', function(e){ try{ this.showPicker(); }catch(err){} });
+    dateIn.addEventListener('click', function(e){
+      if (!this.value) {
+        var anchor = this.getAttribute('data-default-anchor');
+        if (anchor) {
+          this.value = anchor;
+          this.setAttribute('data-pending-anchor', '1');
+        }
+      }
+      try{ this.showPicker(); }catch(err){}
+    });
+    dateIn.addEventListener('input', function(e){
+      this.removeAttribute('data-pending-anchor');
+    });
+    dateIn.addEventListener('blur', function(e){
+      if (this.getAttribute('data-pending-anchor') === '1') {
+        this.value = '';
+        this.removeAttribute('data-pending-anchor');
+      }
+    });
     var daySpan = document.createElement('div');
     daySpan.className = 'day-label';
     daySpan.id = 'inc-day-' + i;
@@ -1450,8 +1472,30 @@ function renderExpenseItems(si) {
     dateIn.className = 'date-input';
     dateIn.type = 'date';
     dateIn.value = row.date || '';
+    if (!row.date) {
+      var mm0 = String(currentMonth+1).padStart(2,'0');
+      dateIn.setAttribute('data-default-anchor', currentYear + '-' + mm0 + '-01');
+    }
     dateIn.setAttribute('data-field', 'date');
-    dateIn.addEventListener('click', function(e){ try{ this.showPicker(); }catch(err){} });
+    dateIn.addEventListener('click', function(e){
+      if (!this.value) {
+        var anchor = this.getAttribute('data-default-anchor');
+        if (anchor) {
+          this.value = anchor;
+          this.setAttribute('data-pending-anchor', '1');
+        }
+      }
+      try{ this.showPicker(); }catch(err){}
+    });
+    dateIn.addEventListener('input', function(e){
+      this.removeAttribute('data-pending-anchor');
+    });
+    dateIn.addEventListener('blur', function(e){
+      if (this.getAttribute('data-pending-anchor') === '1') {
+        this.value = '';
+        this.removeAttribute('data-pending-anchor');
+      }
+    });
     dateCell.appendChild(dateIn);
 
     // Planned
