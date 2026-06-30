@@ -537,11 +537,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--body);min-hei
   color:var(--body);background:var(--surface);cursor:pointer;
 }
 .date-input::-webkit-calendar-picker-indicator{
-  opacity:0.35;
-  font-size:0.7em;
+  opacity:0.6;
+  font-size:1em;
   cursor:pointer;
-  padding:0;
-  margin:0;
+  padding:2px;
+  margin:0 0 0 2px;
 }
 .date-input:focus{outline:none;border-color:var(--sage)}
 
@@ -1007,6 +1007,7 @@ function renderIncome() {
     dateIn.type = 'date';
     dateIn.value = row.date || '';
     dateIn.setAttribute('data-field', 'date');
+    dateIn.addEventListener('click', function(e){ try{ this.showPicker(); }catch(err){} });
     var daySpan = document.createElement('div');
     daySpan.className = 'day-label';
     daySpan.id = 'inc-day-' + i;
@@ -1450,6 +1451,7 @@ function renderExpenseItems(si) {
     dateIn.type = 'date';
     dateIn.value = row.date || '';
     dateIn.setAttribute('data-field', 'date');
+    dateIn.addEventListener('click', function(e){ try{ this.showPicker(); }catch(err){} });
     dateCell.appendChild(dateIn);
 
     // Planned
